@@ -1674,7 +1674,7 @@
 			}
 		},
 		"/projects/{id}": {
-			"put": {
+			"patch": {
 				"operationId": "UpdateProject",
 				"responses": {
 					"200": {
@@ -1696,11 +1696,7 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"description": "O ID do projeto a ser atualizado.",
@@ -1916,7 +1912,7 @@
 					}
 				]
 			},
-			"put": {
+			"patch": {
 				"operationId": "UpdatePerspective",
 				"responses": {
 					"200": {
@@ -1951,11 +1947,7 @@
 				"tags": [
 					"Perspectives"
 				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"description": "O ID da perspectiva a ser atualizada.",
@@ -2252,6 +2244,56 @@
 					}
 				},
 				"description": "Retorna uma lista ordenada dos itens que estão no carrossel.",
+				"tags": [
+					"Carousel"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/carousel/inactive": {
+			"get": {
+				"operationId": "GetAllInactiveCarouselItems",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CarouselResponseType"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Carousel"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/carousel/all": {
+			"get": {
+				"operationId": "GetAllCarouselCandidates",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CarouselResponseType"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
 				"tags": [
 					"Carousel"
 				],

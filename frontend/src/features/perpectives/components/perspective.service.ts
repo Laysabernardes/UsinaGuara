@@ -70,7 +70,7 @@ export class PerspectiveService {
      * @returns {Promise<PerspectiveResponseType>} A perspectiva atualizada.
      */
     static async update(id: string, data: Partial<PerspectiveRequest>): Promise<PerspectiveResponseType> {
-        const response = await api.put(`/perspectives/${id}`, data);
+        const response = await api.patch(`/perspectives/${id}`, data);
         return response.data;
     }
 

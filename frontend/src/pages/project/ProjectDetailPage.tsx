@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProjectService } from '../../features/projects/project.service';
 import { PerspectiveService } from '../../features/perpectives/components/perspective.service';
-import type { ProjectResponseType } from '../../features/projects/components/project.types';
+import type { ProjectResponseType } from '../../features/projects/project.types';
 import type { PerspectiveResponseType } from '../../features/perpectives/components/FormPerspective/perspective.types';
 import { ContentBlockRenderer } from '../../features/perpectives/components/ContentBlockRenderer/index';
 

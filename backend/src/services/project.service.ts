@@ -97,6 +97,8 @@ export class ProjectService {
     id: string,
     input: UpdateProjectInput
   ): Promise<ProjectResponseType | null> {
+
+    // 1. LÓGICA DE VALIDAÇÃO DE ORDEM (PERMANECE)
     if (input.isCarousel && input.orderCarousel !== undefined) {
       const orderExists = await ProjectModel.findOne({
         orderCarousel: input.orderCarousel,
@@ -108,10 +110,17 @@ export class ProjectService {
         );
       }
     }
+
+    // 2. CORREÇÃO CRÍTICA: Lógica para DESATIVAR o item se a ordem for removida
     const dataForDatabase = this.transformInputForDatabase(input);
+
+
+    // 3. EXECUÇÃO DO UPDATE (MUITO IMPORTANTE: new: true e, como é PATCH, não precisa de mais nada)
     const project = await ProjectModel.findByIdAndUpdate(id, dataForDatabase, {
       new: true,
+      runValidators: true, // Adicionei isso para garantir que o Mongoose valide a ordem
     }).lean();
+
     if (!project) return null;
     return toProjectResponse(project);
   }

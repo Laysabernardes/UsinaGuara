@@ -6,10 +6,13 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 
 //import { FormProject } from "../../components/formProject/index";
 import { FormPerspective } from "../../features/perpectives/components/FormPerspective/index";
+import { FormProject } from "../../features/projects/components/FormProject/index";
+import { FormCarouselHighlights} from "../../features/carousel/index";
+import { FormCarouselAdd } from "../../features/carousel/FormCarouselAdd/index";
 
 // Tipos para garantir a consistência do nosso estado
-type CollectionType = "Project" | "Perspective" | "Timeline" | "People" | "";
-type ActionType = "Create" | "Update" | "Delete" | "";
+type CollectionType = "Project" | "Perspective" | "Carousel" | "Timeline" | "People" | "";
+type ActionType = "Create" | "Update" | "Delete" | "Manage" | "Add" | "";
 type FeedbackType = { type: "success" | "error"; message: string };
 
 export default function AdmManagement() {
@@ -31,7 +34,7 @@ export default function AdmManagement() {
   useEffect(() => {
     setAction(""); // Reseta para o valor inicial vazio
   }, [collection]);
-  
+
   // Função que será passada para os formulários filhos
   const handleFormSubmit = () => {
     setFeedback({ type: "success", message: "Operação concluída com sucesso!" });
@@ -62,14 +65,12 @@ export default function AdmManagement() {
               {/* Componente de Feedback renderizado aqui */}
               {feedback && (
                 <div
-                  className={`p-3 rounded-lg text-white text-center transition-opacity duration-300 ${
-                    feedback.type === "success" ? "bg-green-600/90" : "bg-red-600/90"
-                  }`}
+                  className={`p-3 rounded-lg text-white text-center transition-opacity duration-300 ${feedback.type === "success" ? "bg-green-600/90" : "bg-red-600/90"
+                    }`}
                 >
                   {feedback.message}
                 </div>
               )}
-
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Selection
                   id="collection"
@@ -77,6 +78,8 @@ export default function AdmManagement() {
                   value={collection}
                   onChange={(e) => setCollection(e.target.value as CollectionType)}
                   options={[
+                    // CORREÇÃO 3: Adiciona a opção de Gestão de Carrossel
+                    { id: "Carousel", text: "Gestão do Carrossel" },
                     { id: "Project", text: "Projetos" },
                     { id: "Perspective", text: "Perspectivas" },
                     // { id: "Timeline", text: "Linha do Tempo" },
@@ -89,26 +92,40 @@ export default function AdmManagement() {
                   title="Selecione uma ação"
                   value={action}
                   onChange={(e) => setAction(e.target.value as ActionType)}
-                  options={[
-                    { id: "Create", text: "Criar" },
-                    { id: "Update", text: "Atualizar" },
-                    { id: "Delete", text: "Deletar" },
-                  ]}
+                  options={
+                    // CORREÇÃO 4: Filtra as ações dependendo da coleção
+                    collection === 'Carousel'
+                      ? [{ id: 'Manage', text: 'Gerenciar Destaques' }, {
+                        id: 'Add', text: 'Adicionar Novo Item'
+                      }]
+                      : [
+                        { id: "Create", text: "Criar" },
+                        { id: "Update", text: "Atualizar" },
+                        { id: "Delete", text: "Deletar" },
+                      ]
+                  }
                   required
                   disabled={!collection}
                 />
               </div>
               <div className="mt-6 border-t border-gray-700 pt-6">
-                {collection === "Project" && action ? (
-                  <div className="p-4 border border-dashed border-gray-600 rounded-md">
-                    <p className="text-gray-400 text-center">O formulário de Projetos será implementado aqui.</p>
-                  </div>
-                ) : collection === "Perspective" && action ? (
-                  <FormPerspective 
-                    action={action} 
-                    onFormSubmit={handleFormSubmit}
-                  />
+                {/* Renderização do Form de Gestão */}
+                {collection === "Carousel" && action === "Manage" && (
+                  <FormCarouselHighlights /> // Sua tabela de edição/remoção
+                )}
+
+                {/* NOVO BLOCO: Renderização da Tela de Adição */}
+                {collection === "Carousel" && action === "Add" && (
+                  <FormCarouselAdd /> // Chamamos o novo componente
+                )}
+
+                {/* ... (Renderização de Project e Perspective existentes) ... */}
+                {collection === "Project" && action && action !== "Manage" ? (
+                  <FormProject action={action as "Create" | "Update" | "Delete"} onFormSubmit={handleFormSubmit} />
+                ) : collection === "Perspective" && action && action !== "Manage" ? (
+                  <FormPerspective action={action as "Create" | "Update" | "Delete"} onFormSubmit={handleFormSubmit} />
                 ) : null}
+
               </div>
             </div>
           </div>

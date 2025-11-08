@@ -31,6 +31,10 @@ const router = createBrowserRouter([
    element: <ProjectsPage />,
   },
   {
+ path: "/projeto",
+ element: <ProjectsPage />,
+},
+  {
     path: "guara-adm",
     element: (
       <ProtectedRoute>

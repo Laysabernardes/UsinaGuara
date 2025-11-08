@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags, Response, Security, Query } from 'tsoa';
+import { Body, Controller, Delete, Get, Path, Patch, Post, Put, Route, SuccessResponse, Tags, Response, Security, Query } from 'tsoa';
 import { z } from 'zod';
 import { ProjectService } from '../services/project.service';
 import { ProjectResponseType } from '../dtos/project.dto';
@@ -138,9 +138,8 @@ export class ProjectController extends Controller {
    * @param id O ID do projeto a ser atualizado.
    * @param body Dados parciais do projeto para atualização.
    */
-  @Put("{id}")
+  @Patch("{id}")
   @Response("404", "Not Found")
-  @Security("jwt")
   public async updateProject(@Path() id: string, @Body() body: UpdateProjectInput): Promise<ProjectResponseType> {
     const updatedProject = await ProjectService.update(id, body);
     if (!updatedProject) {

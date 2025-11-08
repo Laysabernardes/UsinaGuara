@@ -13,4 +13,15 @@ export class CarouselController extends Controller {
   public async getAllCarouselOrder(): Promise<CarouselResponseType[]> {
     return await CarouselService.getAllCarouselOrder();
   }
+
+  @Get("/inactive")
+  public async getAllInactiveCarouselItems(): Promise<CarouselResponseType[]> {
+    return await CarouselService.getAllInactiveCarouselItems();
+  }
+
+  @Get("/all")
+  public async getAllCarouselCandidates(): Promise<CarouselResponseType[]> {
+    return await CarouselService.getAllCarouselCandidates();
+  }
+
 }

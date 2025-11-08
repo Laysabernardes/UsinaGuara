@@ -133,6 +133,19 @@ export interface IPerspective extends Document {
    */
   banner: string;
 
+  // ======================================================================
+  // CAMPOS DO CARROSSEL 
+  // ======================================================================
+  
+  /** Indica se deve ser exibida no carrossel de destaque. */
+  isCarousel?: boolean; 
+  
+  /** Ordem de exibição no carrossel. */
+  orderCarousel?: number;
+  
+  /** URL extra para o carrossel (se necessário). */
+  extraURL?: string; 
+
   /**
    * Data de criação do documento, gerenciada automaticamente pelo Mongoose via `timestamps`.
    * @type {Date}
@@ -183,6 +196,9 @@ const perspectiveSchema = new Schema<IPerspective>(
       type: carouselSchema,
       required: false,
     },
+    isCarousel: { type: Boolean, default: false }, 
+    orderCarousel: { type: Number, required: false },
+    extraURL: { type: String, required: false }, 
     banner: { type: String },
   },
   { timestamps: true } // Adiciona e gerencia 'createdAt' e 'updatedAt' automaticamente.

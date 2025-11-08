@@ -859,8 +859,7 @@ export function RegisterRoutes(app: Router) {
                 id: {"in":"path","name":"id","required":true,"dataType":"string"},
                 body: {"in":"body","name":"body","required":true,"ref":"UpdateProjectInput"},
         };
-        app.put('/projects/:id',
-            authenticateMiddleware([{"jwt":[]}]),
+        app.patch('/projects/:id',
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.updateProject)),
 
@@ -1073,8 +1072,7 @@ export function RegisterRoutes(app: Router) {
                 perspectiveId: {"in":"path","name":"perspectiveId","required":true,"dataType":"string"},
                 body: {"in":"body","name":"body","required":true,"ref":"UpdatePerspectiveInput"},
         };
-        app.put('/perspectives/:perspectiveId',
-            authenticateMiddleware([{"jwt":[]}]),
+        app.patch('/perspectives/:perspectiveId',
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController)),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController.prototype.updatePerspective)),
 
@@ -1304,6 +1302,64 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getAllCarouselOrder',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsCarouselController_getAllInactiveCarouselItems: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/carousel/inactive',
+            ...(fetchMiddlewares<RequestHandler>(CarouselController)),
+            ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllInactiveCarouselItems)),
+
+            async function CarouselController_getAllInactiveCarouselItems(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsCarouselController_getAllInactiveCarouselItems, request, response });
+
+                const controller = new CarouselController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllInactiveCarouselItems',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsCarouselController_getAllCarouselCandidates: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/carousel/all',
+            ...(fetchMiddlewares<RequestHandler>(CarouselController)),
+            ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllCarouselCandidates)),
+
+            async function CarouselController_getAllCarouselCandidates(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsCarouselController_getAllCarouselCandidates, request, response });
+
+                const controller = new CarouselController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllCarouselCandidates',
                 controller,
                 response,
                 next,

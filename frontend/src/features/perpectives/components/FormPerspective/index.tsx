@@ -17,6 +17,10 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
         alert("O formulário contém erros! Verifique o console do navegador (F12) para ver os detalhes.");
     };
 
+    // Mapeamento das opções (permanece inalterado)
+    const projectOptions = projects.map(p => ({ id: p._id, text: p.title }));
+    const peopleOptions = people.map(p => ({ id: p._id, text: p.name }));
+
     return (
         <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-6 p-4">
             {(action === "Update" || action === "Delete") && (
@@ -43,7 +47,7 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                     <fieldset className="border border-gray-700 p-4 rounded-md">
                         <legend className="text-lg font-semibold px-2">Informações Principais</legend>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Selection id="projectId" title="Projeto Associado" {...register("projectId")} options={projects.map(p => ({ id: p._id, text: p.title }))} required />
+                            <Selection id="projectId" title="Projeto Associado" {...register("projectId")} options={projectOptions} required />
                             <TypeInput id="title" title="Título da Perspectiva" {...register("title")} required />
                             <TypeInput id="slug" title="Slug (URL)" {...register("slug")} required />
                             <TypeInput id="order" type="number" title="Ordem" {...register("order", { valueAsNumber: true })} />
@@ -63,7 +67,7 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                                     id="authors"
                                     name={field.name}
                                     title="Autores"
-                                    options={people.map(p => ({ id: p._id, text: p.name }))}
+                                    options={peopleOptions}
                                     value={field.value || []}
                                     setValue={(newValue) => field.onChange(newValue)}
                                 />
@@ -71,16 +75,14 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                         />
                     </fieldset>
 
+                    {/* Opções de Destaque - AGORA SIMPLES */}
                     <fieldset className="border border-gray-700 p-4 rounded-md">
-                        <legend className="text-lg font-semibold px-2">Opções do Carrossel</legend>
+                        <legend className="text-lg font-semibold px-2">Opções de Carrossel</legend>
                         <div className="flex items-center gap-4">
                             <input id="isCarousel" type="checkbox" {...register("isCarousel")} className="h-5 w-5" />
-                            <label htmlFor="isCarousel">Incluir no Carrossel Principal?</label>
+                            <label htmlFor="isCarousel">Quero incluir no Carrossel Principal?</label>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 mt-2">
-                            <TypeInput id="orderCarousel" type="number" title="Ordem no Carrossel" {...register("orderCarousel", { valueAsNumber: true })} />
-                            <TypeInput id="extraURL" title="URL Extra (Carrossel)" {...register("extraURL")} />
-                        </div>
+                        {/* CAMPOS orderCarousel e extraURL REMOVIDOS */}
                     </fieldset>
 
                     <button type="submit" disabled={isLoading} className="w-full p-3 bg-green-600 hover:bg-green-500 rounded text-white text-xl font-bold transition-colors">

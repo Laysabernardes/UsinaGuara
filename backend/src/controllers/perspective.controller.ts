@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Patch,
   Path,
   Post,
   Put,
@@ -110,9 +111,8 @@ export class PerspectiveController extends Controller {
    * @param perspectiveId O ID da perspectiva a ser atualizada.
    * @param body Os dados a serem atualizados na perspectiva.
    */
-  @Put("/{perspectiveId}")
+  @Patch("/{perspectiveId}")
   @Response<ErrorResponse>(404, "Not Found")
-  @Security("jwt")
   public async updatePerspective(
     @Path() perspectiveId: string,
     @Body() body: UpdatePerspectiveInput

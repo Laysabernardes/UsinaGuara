@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import type { ProjectResponseType } from './project.types'; 
+import type { ProjectResponseType } from '../project.types'; 
 
 interface ProjectCardProps {
   project: ProjectResponseType;

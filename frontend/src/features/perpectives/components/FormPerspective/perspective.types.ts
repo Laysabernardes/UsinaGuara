@@ -1,5 +1,5 @@
 import type { PeopleResponseType } from "../../../people/components/people.types";
-import type { ProjectResponseType } from '../../../projects/components/project.types';
+import type { ProjectResponseType } from "../../../projects/project.types";
 
 
 // --- TIPOS DOS BLOCOS DE CONTEÚDO ---
