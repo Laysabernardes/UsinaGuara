@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { IoMdShare } from "react-icons/io";
@@ -6,6 +6,10 @@ import { IoMdShare } from "react-icons/io";
 function Header() {
     const [isInstitutionalOpen, setIsInstitutionalOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    useEffect(() => {
+        setIsMenuOpen(false);        
+    }, []);
 
     return (
         <header>    
@@ -19,7 +23,7 @@ function Header() {
                 <ul className="hidden lg:flex items-center justify-center gap-8">
                     <div className="relative">
                         <p onClick={() => setIsInstitutionalOpen(!isInstitutionalOpen)} className='flex items-center text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition'>Institucional <RiArrowDropDownLine /></p>
-                        <ul id="institute" className={`absolute bg-gray-700 ${isInstitutionalOpen ? "fade_in" : "fade_out"} !flex flex-col top-8 left-0 w-48 p-2 px-3 rounded shadow-lg z-10 cursor-default`}>
+                        <ul id="institute" className={`absolute bg-gray-700 hidden ${isInstitutionalOpen ? "fade_in" : "fade_out"} !flex flex-col top-8 left-0 w-48 p-2 px-3 rounded shadow-lg z-10 cursor-default`}>
                             <NavLink to="/" className="w-max text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition">Sobre</NavLink>
                             <NavLink to="/" className="w-max text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition">Lei Paulo Gustavo</NavLink>
                         </ul>
