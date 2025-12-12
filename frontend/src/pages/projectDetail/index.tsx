@@ -6,7 +6,7 @@ import type { ProjectResponseType } from '../../features/projects/project.types'
 import type { PerspectiveResponseType } from '../../features/perpectives/components/FormPerspective/perspective.types';
 import { ContentBlockRenderer } from '../../features/perpectives/components/ContentBlockRenderer/index';
 
-export default function ProjectDetailPage() {
+export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [project, setProject] = useState<ProjectResponseType | null>(null);
   const [perspectives, setPerspectives] = useState<PerspectiveResponseType[]>([]);

@@ -110,7 +110,7 @@ export function FormProject({
 
   const getCarouselOrder = async (currentOrder?: number) => {
     try {
-      const carouselNumbers = await CarouselService.getAllCarouselOrder(token);
+      const carouselNumbers = await CarouselService.getAllCarouselOrder();
 
       const usedOrders = carouselNumbers
         .map((item) => item.orderCarousel)

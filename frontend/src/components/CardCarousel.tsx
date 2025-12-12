@@ -7,7 +7,7 @@ interface CardCarouselProps {
   subtitle: string;
   img: string;
   slug: string;
-  collection: "projetos" | "perspectivas";
+  collection:  "project" | "perspective";
 }
 
 const CardCarousel = ({variant, date, title, subtitle, img, slug, collection}: CardCarouselProps) => {
@@ -22,7 +22,7 @@ const CardCarousel = ({variant, date, title, subtitle, img, slug, collection}: C
             <h3 className="text-xl font-bold overflow-hidden mb-2">{title}</h3>
           </div>
           <p className="text-sm text-gray-400 max-h-20 !h-20 overflow-hidden">{subtitle}</p>
-          <Link to={collection === "projetos" ? `/projetos/${slug}` : `/perspectivas/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">
+          <Link to={collection === "project" ? `/projetos/${slug}` : `/perspectivas/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">
             Ler mais        
           </Link>
       </div>

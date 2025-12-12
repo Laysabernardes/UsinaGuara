@@ -6,9 +6,9 @@ import Home from "./pages/home";
 import AdmManagement from "./pages/admManagement";
 import Login from "./pages/login";
 import ProtectedRoute from "./service/ProtectedRoute";
-import PerspectiveDetailPage from "./pages/perpective/PerspectiveDetailPage";
-import ProjectDetailPage from "./pages/project/ProjectDetailPage";
 import ProjectsPage from "./features/projects/ProjectsPage";
+import ProjectPage from "./pages/project";
+import ProjectDetail from "./pages/projectDetail";
 
 const router = createBrowserRouter([
   {
@@ -19,21 +19,18 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  { path: "/projetos/:slug", 
-    element: <ProjectDetailPage /> 
-  },
-  {
-    path: "/perspectiva/:slug",
-    element: <PerspectiveDetailPage />,
-  },
   {
    path: "/projetos",
    element: <ProjectsPage />,
   },
-  {
- path: "/projeto",
- element: <ProjectsPage />,
-},
+  { 
+    path: "/projetos/:slug", 
+    element: <ProjectPage /> 
+  },
+  { 
+    path: "/projetos/:slug/complete",
+    element: <ProjectDetail />
+  },
   {
     path: "guara-adm",
     element: (

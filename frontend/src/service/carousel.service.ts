@@ -11,14 +11,8 @@ export interface CarouselResponseType {
 }
 
 export const CarouselService = {
-  getAllCarouselOrder: async (
-    token: string
-  ): Promise<CarouselResponseType[]> => {
-    const response = await api.get<CarouselResponseType[]>("/carousel", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  getAllCarouselOrder: async (): Promise<CarouselResponseType[]> => {
+    const response = await api.get<CarouselResponseType[]>("/carousel");
     return response.data;
   },
 };

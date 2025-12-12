@@ -63,7 +63,6 @@ function Header() {
                         Entre em contato                        
                     </button> 
                     <IoMdShare className='lg:hidden block text-2xl text-red-500 cursor-pointer transition hover:text-red-400'/>
-
                 </ul>
             </div>
         </header>
