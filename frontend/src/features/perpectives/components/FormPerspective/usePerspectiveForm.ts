@@ -11,7 +11,7 @@ import { ProjectService } from "../../../projects/project.service";
 
 // DTOs (Tipos de Resposta)
 import type { PerspectiveResponseType } from "./perspective.types";
-import type { PeopleResponseType } from "../../../people/components/people.types";
+import type { PeopleResponseType } from "../../../people/people.types";
 import type { ProjectResponseType } from "../../../projects/project.types";
 
 export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFormSubmit: () => void) {

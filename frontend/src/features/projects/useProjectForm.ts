@@ -14,7 +14,7 @@ import { ProjectService } from "./project.service";
 import { PeopleService } from "../../service/people.service"; // Ajuste o caminho conforme necessário
 
 // DTOs (Tipos de Resposta de Lookups)
-import type { PeopleResponseType } from "../people/components/people.types"; // Ajuste o caminho conforme necessário
+import type { PeopleResponseType } from "../people/people.types"; // Ajuste o caminho conforme necessário
 
 // 1. Defina o tipo de dados de entrada do formulário com inferência do Zod
 type Inputs = z.infer<typeof FormProjectData>;

@@ -4,7 +4,7 @@ export default interface PeopleResponse {
   kind: string;
   description: [];
   contact: string;
-  imageUrl: any[];
+  imageUrl: string;
   createdAt: string;
   updatedAt: string;
 }

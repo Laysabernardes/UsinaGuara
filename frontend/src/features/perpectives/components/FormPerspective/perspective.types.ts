@@ -1,4 +1,4 @@
-import type { PeopleResponseType } from "../../../people/components/people.types";
+import type { PeopleResponseType } from "../../../people/people.types";
 import type { ProjectResponseType } from "../../../projects/project.types";
 
 
