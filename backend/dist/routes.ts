@@ -245,6 +245,26 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PaginationMeta": {
+        "dataType": "refObject",
+        "properties": {
+            "page": {"dataType":"double","required":true},
+            "limit": {"dataType":"double","required":true},
+            "total": {"dataType":"double","required":true},
+            "totalPages": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PaginatedCarouselResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "items": {"dataType":"array","array":{"dataType":"refObject","ref":"CarouselResponseType"},"required":true},
+            "meta": {"ref":"PaginationMeta","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "LoginResponseType": {
         "dataType": "refObject",
         "properties": {
@@ -1296,8 +1316,10 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsCarouselController_getAllCarouselOrder: Record<string, TsoaRoute.ParameterSchema> = {
+                page: {"in":"query","name":"page","dataType":"double"},
+                limit: {"in":"query","name":"limit","dataType":"double"},
         };
-        app.get('/carousel',
+        app.get('/carousel/page',
             ...(fetchMiddlewares<RequestHandler>(CarouselController)),
             ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllCarouselOrder)),
 
@@ -1313,6 +1335,35 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getAllCarouselOrder',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsCarouselController_getAllCarouselFlat: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/carousel',
+            ...(fetchMiddlewares<RequestHandler>(CarouselController)),
+            ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllCarouselFlat)),
+
+            async function CarouselController_getAllCarouselFlat(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsCarouselController_getAllCarouselFlat, request, response });
+
+                const controller = new CarouselController();
+
+              await templateService.apiHandler({
+                methodName: 'getAllCarouselFlat',
                 controller,
                 response,
                 next,

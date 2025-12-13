@@ -933,6 +933,53 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"PaginationMeta": {
+				"properties": {
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"page",
+					"limit",
+					"total",
+					"totalPages"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedCarouselResponse": {
+				"properties": {
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/CarouselResponseType"
+						},
+						"type": "array"
+					},
+					"meta": {
+						"$ref": "#/components/schemas/PaginationMeta"
+					}
+				},
+				"required": [
+					"items",
+					"meta"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"LoginResponseType": {
 				"properties": {
 					"user": {
@@ -2248,9 +2295,52 @@
 				]
 			}
 		},
-		"/carousel": {
+		"/carousel/page": {
 			"get": {
 				"operationId": "GetAllCarouselOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedCarouselResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Retorna os itens do carrossel com paginação",
+				"summary": "Lista paginada do carrossel",
+				"tags": [
+					"Carousel"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/carousel": {
+			"get": {
+				"operationId": "GetAllCarouselFlat",
 				"responses": {
 					"200": {
 						"description": "Ok",

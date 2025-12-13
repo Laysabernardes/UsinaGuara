@@ -1,9 +1,9 @@
-import { CarouselResponseType } from "../dtos/carousel.dto";
+import { CarouselResponseType, PaginatedCarouselResponse } from "../dtos/carousel.dto";
 import { ProjectService } from "./project.service";
 import { PerspectiveService } from "./perspective.service";
 
 export class CarouselService {
-    static async getAllCarouselOrder(): Promise<CarouselResponseType[]> {
+    static async getAllCarouselOrder(page: number, limit: number): Promise<PaginatedCarouselResponse> {
 
         // 1. Buscando todos os dados
         const [allProjects, allPerspectives] = await Promise.all([
@@ -41,14 +41,32 @@ export class CarouselService {
                 extraURL: p.extraURL,
             }));
 
-        // 4. Combina e ordena os resultados
-        response = [...projectItems, ...perspectiveItems];
+        const orderedItems = [...projectItems, ...perspectiveItems].sort(
+            (a, b) => (a.orderCarousel ?? 0) - (b.orderCarousel ?? 0)
+        );
 
-        // 5. Ordena pelo campo orderCarousel (Crescente: 1, 2, 3...)
-        response.sort((a, b) => (a.orderCarousel ?? 0) - (b.orderCarousel ?? 0));
+        const total = orderedItems.length;
+        const totalPages = Math.ceil(total / limit);
+        const start = (page - 1) * limit;
+        const end = start + limit;
 
-        return response;
+
+        return {
+            items: orderedItems.slice(start, end),
+            meta: {
+                page,
+                limit,
+                total,
+                totalPages,
+            },
+        };
     }
+
+    static async getAllCarouselFlat(): Promise<CarouselResponseType[]> {
+        const result = await this.getAllCarouselOrder(1, 999);
+        return result.items;
+    }
+
 
     static async getAllInactiveCarouselItems(): Promise<CarouselResponseType[]> {
 
@@ -150,6 +168,6 @@ export class CarouselService {
         return response;
     }
 
-    
+
 
 }
