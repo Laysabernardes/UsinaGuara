@@ -1,18 +1,21 @@
-import homeBanner from "../../assets/homeBanner.png";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { DestaqueSection } from "../../components/DestaqueSection";
+import homeBanner from "../assets/homeBanner.png";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { DestaqueSection } from "../components/DestaqueSection";
 import Slider from "react-slick";
-import CardCarousel from "../../components/CardCarousel";
-import Parceiros from "../../components/Parceiros";
+import CardCarousel from "../components/CardCarousel";
+import Parceiros from "../components/Parceiros";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useState, useEffect } from "react";
-import { CarouselService, type CarouselResponseType } from "../../service/carousel.service";
+import { CarouselService, type CarouselResponseType } from "../service/carousel.service";
+import { ProjectService } from "../service/projects/project.service";
+import { type PaginatedProjectsResponse } from "../service/projects/project.types";
 
 function Home() {
   const [slidesToShow, setSlidesToShow] = useState(3);
   const [carouselData, setCarouselData] = useState<CarouselResponseType[]>([]);
+  const [lastProjectsData, setLastProjectsData] = useState<PaginatedProjectsResponse>();
 
   const getAllCarousel = async () => {
     try {
@@ -23,8 +26,28 @@ function Home() {
     }
   };
 
+  const getAllProjectsAndOrderByDate = async () => {
+    try {
+      const projects = await ProjectService.getAllProjects(1, 99999);
+      projects.data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      setLastProjectsData(projects);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  function convertDate(isoString: string): string {
+  return new Date(isoString).toLocaleString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+}
+
+
   useEffect(() => {
     getAllCarousel();
+    getAllProjectsAndOrderByDate();
 
     const handleResize = () => {
       if (window.innerWidth < 640) {
@@ -42,6 +65,8 @@ function Home() {
   }, []);
 
   const settings = {
+    autoplay: true,
+    autoplaySpeed: 5000,
     infinite: true,
     speed: 500,
     slidesToShow: slidesToShow,
@@ -78,12 +103,12 @@ function Home() {
             {carouselData.map((card, index) => (
               <CardCarousel
                 key={index}
-                variant="dark"
+                variant="short"
+                theme="dark"
                 title={card.title}
                 subtitle={card.title}
                 img={card.banner ? card.banner : "https://static.vecteezy.com/ti/fotos-gratis/t2/57068323-solteiro-fresco-vermelho-morango-em-mesa-verde-fundo-comida-fruta-doce-macro-suculento-plantar-imagem-foto.jpg"}
-                slug={"fabril"}
-                collection={card.collection_type}
+                slug={card.slug}
               />
             ))}
           </Slider>
@@ -97,16 +122,16 @@ function Home() {
             Últimas Novidades
           </h2>
           <Slider {...settings}>
-            {carouselData.map((card, index) => (
+            {lastProjectsData?.data.map((card, index) => (
               <CardCarousel
                 key={index}
-                variant="light"
-                date={card.title}
+                variant="long"
+                theme="light"
+                date={convertDate(card.createdAt)}
                 title={card.title}
-                subtitle={card.title}
+                subtitle={card.subtitle? card.subtitle : ""}
                 img={card.banner ? card.banner : "https://static.vecteezy.com/ti/fotos-gratis/t2/57068323-solteiro-fresco-vermelho-morango-em-mesa-verde-fundo-comida-fruta-doce-macro-suculento-plantar-imagem-foto.jpg"}
-                slug={"fabril"}
-                collection={card.collection_type}
+                slug={card.slug}
               />
             ))}
           </Slider>

@@ -2,13 +2,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import Home from "./pages/home";
-import AdmManagement from "./pages/admManagement";
-import Login from "./pages/login";
+import Home from "./pages/Home";
+import AdmManagement from "./pages/AdmManagement";
+import Login from "./pages/Login";
 import ProtectedRoute from "./service/ProtectedRoute";
-import ProjectsPage from "./features/projects/ProjectsPage";
-import ProjectPage from "./pages/project";
-import ProjectDetail from "./pages/projectDetail";
+import AllProjects from "./pages/AllProjects";
+import ProjectPage from "./pages/Project";
+import ProjectDetail from "./pages/ProjectDetail";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
   },
   {
    path: "/projetos",
-   element: <ProjectsPage />,
+   element: <AllProjects />,
   },
   { 
     path: "/projetos/:slug", 

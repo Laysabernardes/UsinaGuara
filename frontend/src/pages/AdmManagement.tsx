@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Selection } from "../../components/inputs";
+import { Selection } from "../components/inputs";
 import { Link } from "react-router-dom";
 import { FaGear } from "react-icons/fa6";
 import { RiArrowGoBackFill } from "react-icons/ri";
 
 //import { FormProject } from "../../components/formProject/index";
-import { FormPerspective } from "../../features/perpectives/components/FormPerspective/index";
-import { FormProject } from "../../features/projects/components/FormProject/index";
-import { FormCarouselHighlights} from "../../features/carousel/index";
-import { FormCarouselAdd } from "../../features/carousel/FormCarouselAdd/index";
+import { FormPerspective } from "../features/perpectives/components/FormPerspective/index";
+import { FormProject } from "../features/projects/components/FormProject/index";
+import { FormCarouselHighlights} from "../features/carousel/index";
+import { FormCarouselAdd } from "../features/carousel/FormCarouselAdd/index";
 
 // Tipos para garantir a consistência do nosso estado
 type CollectionType = "Project" | "Perspective" | "Carousel" | "Timeline" | "People" | "";

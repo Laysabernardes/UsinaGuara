@@ -3,6 +3,7 @@ import api from "../lib/api";
 export interface CarouselResponseType {
   _id: string;
   title: string;
+  slug: string;
   collection_type: "project" | "perspective";
   banner?: string;
   isCarousel?: boolean;

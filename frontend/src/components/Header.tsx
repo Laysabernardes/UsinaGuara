@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import logo from "../assets/logo.png";
 import { IoMdShare } from "react-icons/io";
 
 function Header() {
-    const [isInstitutionalOpen, setIsInstitutionalOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
@@ -19,15 +18,11 @@ function Header() {
                 <a href="#" className='cursor-pointer transition hover:text-gray-300'>usinaguara@gmail.com</a>
             </div>
             <nav className="flex items-center justify-between py-5 px-5 xs:px-13 bg-gray-900">
-                <NavLink to="/" className="text-2xl font-bold text-white cursor-pointer drop-shadow-md drop-shadow-transparent transition hover:drop-shadow-red-900">Usina Guará</NavLink>
+                <NavLink to="/" className="w-12 h-12 cursor-pointer drop-shadow-md drop-shadow-transparent transition hover:drop-shadow-red-900">
+                    <img src={logo} alt="logo Usina Guará"/>
+                </NavLink>
                 <ul className="hidden lg:flex items-center justify-center gap-8">
-                    <div className="relative">
-                        <p onClick={() => setIsInstitutionalOpen(!isInstitutionalOpen)} className='flex items-center text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition'>Institucional <RiArrowDropDownLine /></p>
-                        <ul id="institute" className={`absolute bg-gray-700 hidden ${isInstitutionalOpen ? "fade_in" : "fade_out"} !flex flex-col top-8 left-0 w-48 p-2 px-3 rounded shadow-lg z-10 cursor-default`}>
-                            <NavLink to="/" className="w-max text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition">Sobre</NavLink>
-                            <NavLink to="/" className="w-max text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition">Lei Paulo Gustavo</NavLink>
-                        </ul>
-                    </div>
+                    <NavLink to="/sobre" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Usina Guará</NavLink>
                     <NavLink to="/projetos" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Projetos</NavLink>
                     <NavLink to="/parceiros" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Nossos Parceiros</NavLink>
                     <a href="/projetos#" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Instagram</a>
@@ -49,13 +44,7 @@ function Header() {
             </nav>
             <div className={`absolute bg-gray-900 z-100 w-full h-screen lg:hidden ${isMenuOpen && window.innerWidth <= 1024 ? "fade_in" : "fade_out"}`}>
                 <ul className="lg:hidden flex flex-col items-center justify-center gap-8">
-                    <div className='flex flex-col items-center'>
-                        <p onClick={() => setIsInstitutionalOpen(!isInstitutionalOpen)} className='flex items-center text-gray-400 border-b-2 border-transparent  hover:text-gray-300 hover:border-gray-300 cursor-pointer transition'>Institucional <RiArrowDropDownLine /></p>
-                        <ul id="institute" className={`bg-gray-700 ${isInstitutionalOpen ? "fade_in" : "fade_out"} flex-col top-8 left-0 w-48 p-2 px-3 rounded shadow-lg z-10 cursor-default`}>
-                            <NavLink to="/" className="w-max text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition">Sobre</NavLink><br/>
-                            <NavLink to="/" className="w-max text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 cursor-pointer transition">Lei Paulo Gustavo</NavLink>
-                        </ul>
-                    </div>
+                    <NavLink to="/sobre" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Usina Guará</NavLink>
                     <NavLink to="/projetos" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Projetos</NavLink>
                     <NavLink to="/parceiros" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Nossos Parceiros</NavLink>
                     <a href="/projetos#" className="text-gray-400 border-b-2 border-transparent hover:text-gray-300 hover:border-gray-300 transition">Instagram</a>

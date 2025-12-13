@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ProjectService } from '../../features/projects/project.service';
-import type { ProjectResponseType } from '../../features/projects/project.types';
+import { ProjectService } from '../features/projects/project.service';
+import type { ProjectResponseType } from '../features/projects/project.types';
 import { Link } from "react-router-dom";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import Person from "../../components/Person";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Person from "../components/Person";
 
 export default function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
