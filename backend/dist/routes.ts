@@ -131,6 +131,15 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"extraURL":{"dataType":"string"},"banner":{"dataType":"string"},"orderCarousel":{"dataType":"double"},"isCarousel":{"dataType":"boolean"},"status":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["draft"]},{"dataType":"enum","enums":["published"]}]},"team":{"dataType":"array","array":{"dataType":"string"}},"about_html":{"dataType":"string"},"year":{"dataType":"double"},"category":{"dataType":"string"},"slug":{"dataType":"string"},"subtitle":{"dataType":"string"},"title":{"dataType":"string"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IProjectDTO": {
+        "dataType": "refObject",
+        "properties": {
+            "_id": {"dataType":"string","required":true},
+            "slug": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ITextBlock": {
         "dataType": "refObject",
         "properties": {
@@ -185,7 +194,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "_id": {"dataType":"string","required":true},
-            "projectId": {"dataType":"string","required":true},
+            "project": {"ref":"IProjectDTO","required":true},
             "title": {"dataType":"string","required":true},
             "slug": {"dataType":"string","required":true},
             "order": {"dataType":"double","required":true},

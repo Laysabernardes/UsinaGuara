@@ -409,6 +409,22 @@
 				},
 				"type": "object"
 			},
+			"IProjectDTO": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"slug": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_id",
+					"slug"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ITextBlock": {
 				"description": "Representa um bloco de texto (parágrafo).",
 				"properties": {
@@ -532,8 +548,8 @@
 					"_id": {
 						"type": "string"
 					},
-					"projectId": {
-						"type": "string"
+					"project": {
+						"$ref": "#/components/schemas/IProjectDTO"
 					},
 					"title": {
 						"type": "string"
@@ -588,7 +604,7 @@
 				},
 				"required": [
 					"_id",
-					"projectId",
+					"project",
 					"title",
 					"slug",
 					"order",

@@ -49,6 +49,11 @@ interface IReferenceDTO {
   text: string;
 }
 
+interface IProjectDTO {
+  _id: string;
+  slug: string;
+}
+
 /**
  * @interface PerspectiveResponseType
  * @description Define a estrutura de dados de uma "Perspectiva" como ela é enviada
@@ -56,7 +61,7 @@ interface IReferenceDTO {
  */
 export interface PerspectiveResponseType {
   _id: string;
-  projectId: string; // O ID do projeto pai
+  project: IProjectDTO; // O ID do projeto pai
   title: string;
   slug: string;
   order: number;

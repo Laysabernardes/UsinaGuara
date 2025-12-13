@@ -24,15 +24,30 @@ type UpdatePerspectiveInput = z.infer<typeof updatePerspectiveSchema>["body"];
  */
 const toPerspectiveResponse = (perspective: any): PerspectiveResponseType => {
   return {
-    ...perspective,
     _id: perspective._id.toString(),
-    projectId: perspective.projectId.toString(),
-    // Garante que os autores sejam um array, mesmo que venha nulo/undefined
-    authors: perspective.authors || [],
+
+    title: perspective.title,
+    slug: perspective.slug,
+    order: perspective.order,
+
+    project: {
+      _id: perspective.projectId._id.toString(),
+      slug: perspective.projectId.slug,
+    },
+
+    contentBlocks: perspective.contentBlocks ?? [],
+    references: perspective.references ?? [],
+    authors: perspective.authors ?? [],
+    banner: perspective.banner,
+
+    isCarousel: perspective.isCarousel,
+    orderCarousel: perspective.orderCarousel,
+    extraURL: perspective.extraURL,
+
+    createdAt: perspective.createdAt,
+    updatedAt: perspective.updatedAt,
   };
 };
-
-
 
 /**
  * @class PerspectiveService
@@ -50,11 +65,11 @@ export class PerspectiveService {
   ): Promise<PerspectiveResponseType> {
     try {
       const perspective = await PerspectiveModel.create(input);
-      // Popula os dados dos autores para retornar o objeto completo.
-      await perspective.populate({ path: "authors", model: "Person" });
+
+      await perspective.populate([{ path: "authors", model: "Person" }, { path: "projectId", select: "slug" },]);
       return toPerspectiveResponse(perspective.toObject());
     } catch (error: any) {
-      // Tratamento de erro específico para chave única (slug duplicado).
+
       if (error.code === 11000 && error.keyPattern?.slug) {
         throw new Error("Este slug de perspectiva já está em uso.");
       }
@@ -70,7 +85,13 @@ export class PerspectiveService {
    * @returns {Promise<PerspectiveResponseType[]>} Um array com todas as perspectivas.
    */
   static async findAll(): Promise<PerspectiveResponseType[]> {
-    const perspectives = await PerspectiveModel.find().lean();
+    const perspectives = await PerspectiveModel.find()
+      .populate({
+        path: "projectId",
+        select: "slug",
+      })
+      .populate("authors")
+      .lean();
     return perspectives.map(toPerspectiveResponse);
   }
 
@@ -83,6 +104,10 @@ export class PerspectiveService {
     projectId: string
   ): Promise<PerspectiveResponseType[]> {
     const perspectives = await PerspectiveModel.find({ projectId })
+      .populate({
+        path: "projectId",
+        select: "slug",
+      })
       .populate("authors")
       .lean();
     return perspectives.map(toPerspectiveResponse);
@@ -95,6 +120,10 @@ export class PerspectiveService {
    */
   static async findById(id: string): Promise<PerspectiveResponseType | null> {
     const perspective = await PerspectiveModel.findById(id)
+      .populate({
+        path: "projectId",
+        select: "slug",
+      })
       .populate("authors")
       .lean();
     if (!perspective) return null;
@@ -108,8 +137,11 @@ export class PerspectiveService {
    */
   static async findBySlug(slug: string): Promise<PerspectiveResponseType | null> {
     const perspective = await PerspectiveModel.findOne({ slug })
+      .populate({
+        path: "projectId",
+        select: "slug",
+      })
       .populate("authors")
-      .populate("projectId")
       .lean();
     if (!perspective) return null;
     return toPerspectiveResponse(perspective);
@@ -124,13 +156,13 @@ export class PerspectiveService {
 
   static async checkIfOrderExists(order: number, currentId: string): Promise<boolean> {
     const perspective = await PerspectiveModel.findOne({
-        orderCarousel: order,
-        _id: { $ne: currentId }, // Exclui o documento que estamos atualizando
-        isCarousel: true, // Opcional, mas mais preciso: só checa se o item está ativo
+      orderCarousel: order,
+      _id: { $ne: currentId }, // Exclui o documento que estamos atualizando
+      isCarousel: true, // Opcional, mas mais preciso: só checa se o item está ativo
     }).lean();
 
     return !!perspective; // Retorna true se um documento for encontrado, false caso contrário
-}
+  }
   static async update(
     id: string,
     // Note que UpdatePerspectiveInput deve ser tipado como parcial (Partial<T>)
@@ -140,13 +172,9 @@ export class PerspectiveService {
     // 1. Defina a constante de dados que será enviada ao Mongoose
     const dataForDatabase = { ...input };
 
-    // ======================================================================
-    // REGRA DE NEGÓCIO DO CARROSSEL: (isCarousel precisa ser False se orderCarousel for removido)
-    // ======================================================================
 
     // 2. VALIDAÇÃO DE ORDEM (Prevenção de Ordem Duplicada)
     if (input.isCarousel && input.orderCarousel !== undefined && input.orderCarousel !== null) {
-      // Você precisará de uma função para checar se a ordem já está em uso
       const orderExists = await PerspectiveService.checkIfOrderExists(input.orderCarousel, id);
 
       if (orderExists) {
@@ -159,7 +187,7 @@ export class PerspectiveService {
     // 3. EXECUÇÃO DO UPDATE (O Mongoose faz o PATCH por padrão)
     const perspective = await PerspectiveModel.findByIdAndUpdate(id, dataForDatabase, {
       new: true,
-      runValidators: true, // Garante que as validações do Schema Mongoose são executadas
+      runValidators: true, 
     })
       .populate("authors")
       .lean();
