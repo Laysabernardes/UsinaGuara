@@ -83,7 +83,7 @@ export class ProjectService {
   /**
    * Cria um novo projeto.
    * @param {ProjectRequestType} data - Os dados do projeto a ser criado.
-   * @returns {Promise<ProjectResponseType>} O projeto recém-criado.
+   * @returns {Promise<ProjectResponseType>} 
    */
   static async create(data: ProjectRequestType): Promise<ProjectResponseType> {
     const response = await api.post('/projects', data);

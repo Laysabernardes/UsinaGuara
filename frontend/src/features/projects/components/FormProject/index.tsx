@@ -1,48 +1,45 @@
 import { Controller } from "react-hook-form";
-// Renomeie os inputs conforme o nome do seu componente
 import { TypeInput, Selection, MultiSelect } from "../../../../components/inputs";
-// Importa o hook customizado do Projeto
 import { useProjectForm } from "../../useProjectForm";
 
-// Assumindo que você tem os tipos definidos no useProjectForm
 interface FormProjectProps {
     action: "Create" | "Update" | "Delete";
     onFormSubmit: () => void;
 }
 
 export function FormProject({ action, onFormSubmit }: FormProjectProps) {
-    // Puxa toda a lógica do hook useProjectForm
     const { formMethods, state, actions } = useProjectForm(action, onFormSubmit);
-
-    // Desestrutura os métodos do React Hook Form
     const { register, control, handleSubmit } = formMethods;
-
-    // Desestrutura os estados e ações do hook
     const { allProjects, people, selectedProjectId, isLoading, error } = state;
     const { setSelectedProjectId, onSubmit, handleDelete } = actions;
 
-    // Renderização de estados de carregamento e erro
+
     if (isLoading) return <p className="text-center p-4 text-gray-400">Carregando dados de Projetos e Pessoas...</p>;
     if (error) return <p className="text-center p-4 text-red-500">Erro: {error}</p>;
 
-    // Função de validação (reutilizada do seu código)
     const onInvalid = (errors: any) => {
         console.error("ERROS DE VALIDAÇÃO DO FORMULÁRIO:", errors);
         alert("O formulário contém erros! Verifique o console do navegador (F12) para ver os detalhes.");
     };
 
-    // Mapeamento das opções de Projeto para o seletor
     const projectOptions = allProjects.map(p => ({
         id: p._id,
         text: `${p.title} (${p.year})`
     }));
 
-    // Mapeamento das opções de Pessoas para o MultiSelect (Team)
     const peopleOptions = people.map(p => ({
         id: p._id,
         text: p.name
     }));
 
+    const categoryOptions = [
+        { id: "URBANIZAÇÃO", text: "Urbanização" },
+        { id: "SUSTENTABILIDADE", text: "Sustentabilidade" },
+        { id: "HABITAÇÃO SOCIAL", text: "Habitação Social" },
+        { id: "ARTE COMUNITÁRIA", text: "Arte Comunitária" },
+        { id: "ARQUITETURA", text: "Arquitetura" },
+        { id: "GERAL", text: "Geral" },
+    ];
 
     return (
         <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-6 p-4">
@@ -71,7 +68,6 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                 </div>
             )}
 
-            {/* Renderiza o formulário principal para Criar ou se um Projeto for selecionado para Update */}
             {(action === "Create" || (action === "Update" && selectedProjectId)) && (
                 <>
                     <fieldset className="border border-gray-700 p-4 rounded-md">
@@ -82,13 +78,26 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                             <TypeInput id="subtitle" title="Subtítulo (Opcional)" {...register("subtitle")} />
                             <TypeInput id="slug" title="Slug (URL)" {...register("slug")} required />
 
-                            <TypeInput id="category" title="Categoria" {...register("category")} required />
+                            <Controller
+                                control={control}
+                                name="category"
+                                render={({ field }) => (
+                                    <Selection
+                                        id="category"
+                                        title="Categoria"
+                                        options={categoryOptions}
+                                        value={field.value || ""}
+                                        onChange={field.onChange}
+                                        required
+                                    />
+                                )}
+                            />
 
                             <TypeInput
                                 id="year"
                                 type="number"
                                 title="Ano de Conclusão"
-                                {...register("year", { valueAsNumber: true })} // Importante para o Zod coerce
+                                {...register("year", { valueAsNumber: true })}
                                 required
                             />
 
@@ -98,7 +107,6 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                                 name="status"
                                 render={({ field }) => (
                                     <Selection
-                                        // Mantendo seus estilos
                                         id="status"
                                         title="Status"
                                         options={[
@@ -126,15 +134,18 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                     </fieldset>
 
                     <fieldset className="border border-gray-700 p-4 rounded-md">
-                        <legend className="text-lg font-semibold px-2 text-light-3">Metadados e Equipe</legend>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {/* MultiSelect para Team */}
+                        <legend className="text-lg font-semibold px-2 text-light-3">
+                            Metadados e Equipe
+                        </legend>
+
+                        <div className="grid grid-cols-1 gap-4">
+
+                            {/* Equipe ocupa 100% */}
                             <Controller
                                 control={control}
                                 name="team"
                                 render={({ field }) => (
                                     <MultiSelect
-                                        // Mantendo seus estilos
                                         id="team"
                                         name={field.name}
                                         title="Equipe"
@@ -144,11 +155,16 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                                     />
                                 )}
                             />
-                            <TypeInput id="banner" title="URL do Banner" {...register("banner")} />
+                            {/* Banner abaixo */}
+                            <TypeInput
+                                id="banner"
+                                title="URL do Banner"
+                                {...register("banner")}
+                            />
                         </div>
                     </fieldset>
 
-                    {/* Opções de Destaque - AGORA SIMPLES */}
+                    {/* Opções de Destaque*/}
                     <fieldset className="border border-gray-700 p-4 rounded-md">
                         <legend className="text-lg font-semibold px-2 text-light-3">Opções de Carrossel</legend>
                         <div className="flex items-center gap-4">
@@ -160,7 +176,7 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                             />
                             <label htmlFor="isCarousel" className="text-light-3">Quero incluir no Carrossel Principal?</label>
                         </div>
-                        {/* CAMPOS orderCarousel e extraURL REMOVIDOS */}
+                        {/* CAMPOS orderCarousel */}
                     </fieldset>
 
                     <button

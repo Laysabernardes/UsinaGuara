@@ -54,7 +54,6 @@ const ProjectsPage: React.FC = () => {
 
         } catch (err) {
             console.error('Fetch error:', err);
-            // Mensagem de erro em English, conforme sua instrução
             setError("Error loading projects. Please check API connection.");
             setProjects([]);
         } finally {
