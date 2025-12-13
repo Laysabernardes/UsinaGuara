@@ -32,7 +32,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const categoryString = category ? category : 'Geral'; 
   const mainCategory = categoryString.trim().toUpperCase();; 
 
-  const projectUrl = `/projetos/${slug}`; 
+  const projectUrl = `/projeto/${slug}`; 
   
   const { badgeClasses, linkClass } = getCategoryClasses(mainCategory);
   console.log("Categoria atual:", mainCategory);

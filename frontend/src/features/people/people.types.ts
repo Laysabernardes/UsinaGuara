@@ -7,7 +7,7 @@ export interface PeopleBase {
   kind: string;
   description: string[]; // Idealmente, seria string[]
   contact: string;
-  imageUrl: string[]; // Idealmente, seria string[]
+  imageUrl?: string;
 }
 
 /**

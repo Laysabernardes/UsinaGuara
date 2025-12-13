@@ -109,6 +109,7 @@ function Home() {
                 subtitle={card.title}
                 img={card.banner ? card.banner : "https://static.vecteezy.com/ti/fotos-gratis/t2/57068323-solteiro-fresco-vermelho-morango-em-mesa-verde-fundo-comida-fruta-doce-macro-suculento-plantar-imagem-foto.jpg"}
                 slug={card.slug}
+                collection={card.collection_type}
               />
             ))}
           </Slider>
@@ -132,6 +133,7 @@ function Home() {
                 subtitle={card.subtitle? card.subtitle : ""}
                 img={card.banner ? card.banner : "https://static.vecteezy.com/ti/fotos-gratis/t2/57068323-solteiro-fresco-vermelho-morango-em-mesa-verde-fundo-comida-fruta-doce-macro-suculento-plantar-imagem-foto.jpg"}
                 slug={card.slug}
+                collection={"project"}
               />
             ))}
           </Slider>

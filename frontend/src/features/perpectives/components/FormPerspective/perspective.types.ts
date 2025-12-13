@@ -1,4 +1,4 @@
-import type { PeopleResponseType } from "../../../people/components/people.types";
+import type { PeopleResponseType } from "../../../people/people.types";
 import type { ProjectResponseType } from "../../../projects/project.types";
 
 
@@ -17,7 +17,7 @@ export type IContentBlock = ITextBlock | ITitleBlock | IImageBlock | IHighlightB
  */
 export interface PerspectiveRequest {
   _id?: string;
-  projectId: string;
+  project: {  id: string; slug: string };
   title: string;
   slug: string;
   order: number;
@@ -38,7 +38,7 @@ export interface PerspectiveRequest {
  */
 export interface PerspectiveResponseType {
   _id: string;
-  projectId:  ProjectResponseType;
+  project:  { id: string; slug: string };
   title: string;
   slug: string;
   order: number;

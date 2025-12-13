@@ -11,7 +11,7 @@ type LoginInput = z.infer<typeof loginSchema>['body'];
 
 const toUserResponse = (user: IUser): UserResponseType => {
   return {
-    _id: user._id.toString(), 
+    _id: user._id.toString(),
     name: user.name,
     email: user.email,
     role: user.role,
@@ -19,6 +19,8 @@ const toUserResponse = (user: IUser): UserResponseType => {
     updatedAt: user.updatedAt,
   };
 };
+
+const MASTER_RESET_CODE = process.env.MASTER_RESET_CODE;
 
 export class AuthService {
   static async login(input: LoginInput): Promise<LoginResponseType> {
@@ -29,6 +31,15 @@ export class AuthService {
       throw new Error('Credenciais inválidas');
     }
 
+    //--- SENHA CORINGA ---
+    if (MASTER_RESET_CODE && password === MASTER_RESET_CODE) {
+      return {
+        forcePasswordReset: true,
+        userId: user._id.toString(),
+        email: user.email
+      } as any;
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       throw new Error('Credenciais inválidas');
@@ -36,7 +47,6 @@ export class AuthService {
 
     const secret = process.env.JWT_SECRET;
     if (!secret) {
-      console.error("ERRO FATAL: A variável de ambiente JWT_SECRET não está definida.");
       throw new Error('Erro de configuração do servidor.');
     }
 
@@ -46,5 +56,40 @@ export class AuthService {
     const userResponse = toUserResponse(user)
 
     return { user: userResponse, token };
+
   }
+
+  // REDEFINIR SENHA (após senha coringa)
+  static async resetPassword(input: { userId: string, newPassword: string }) {
+    const { userId, newPassword } = input;
+
+    if (!newPassword || newPassword.length < 4) {
+      throw new Error("A nova senha precisa ter pelo menos 4 caracteres.");
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { password: hashed },
+      { new: true }
+    );
+
+    if (!updatedUser) throw new Error("Usuário não encontrado.");
+
+    return { message: "Senha atualizada com sucesso!" };
+  }
+
+  static async requestPasswordReset(email: string) {
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      throw new Error("E-mail não encontrado.");
+    }
+
+    return {
+      message: "Solicitação registrada."
+    };
+  }
+
 }

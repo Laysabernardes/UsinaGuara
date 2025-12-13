@@ -8,9 +8,10 @@ interface CardCarouselProps {
   subtitle: string;
   img: string;
   slug: string;
+  collection: "project" | "perspective";
 }
 
-const CardCarousel = ({variant, theme, date, title, subtitle, img, slug}: CardCarouselProps) => {
+const CardCarousel = ({variant, theme, date, title, subtitle, img, slug, collection}: CardCarouselProps) => {
   return (
     <>
     {variant === "long" ? (
@@ -24,7 +25,7 @@ const CardCarousel = ({variant, theme, date, title, subtitle, img, slug}: CardCa
           <h3 className="text-xl font-bold overflow-hidden mb-2">{title}</h3>
         </div>
         <p className="text-sm text-gray-400 line-clamp-3 mb-2">{subtitle}</p>
-        <Link to={`/projetos/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">
+        <Link to={collection === "project" ? `/projeto/${slug}` : `/perspectiva/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">
           Ler mais        
         </Link>
       </div>
@@ -38,7 +39,7 @@ const CardCarousel = ({variant, theme, date, title, subtitle, img, slug}: CardCa
         <div>
           <h3 className="text-2xl font-bold overflow-hidden mb-2">{title}</h3>
         </div>
-        <Link to={`/projetos/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">
+        <Link to={collection === "project" ? `/projeto/${slug}` : `/perspectiva/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">
           Ler mais        
         </Link>
       </div>

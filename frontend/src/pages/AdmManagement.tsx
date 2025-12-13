@@ -9,6 +9,7 @@ import { FormPerspective } from "../features/perpectives/components/FormPerspect
 import { FormProject } from "../features/projects/components/FormProject/index";
 import { FormCarouselHighlights} from "../features/carousel/index";
 import { FormCarouselAdd } from "../features/carousel/FormCarouselAdd/index";
+import { FormPeople } from "../features/people/components/FormPeople/index";
 
 // Tipos para garantir a consistência do nosso estado
 type CollectionType = "Project" | "Perspective" | "Carousel" | "Timeline" | "People" | "";
@@ -82,8 +83,7 @@ export default function AdmManagement() {
                     { id: "Carousel", text: "Gestão do Carrossel" },
                     { id: "Project", text: "Projetos" },
                     { id: "Perspective", text: "Perspectivas" },
-                    // { id: "Timeline", text: "Linha do Tempo" },
-                    // { id: "People", text: "Pessoas" },
+                    { id: "People", text: "Pessoas" },
                   ]}
                   required
                 />
@@ -124,8 +124,9 @@ export default function AdmManagement() {
                   <FormProject action={action as "Create" | "Update" | "Delete"} onFormSubmit={handleFormSubmit} />
                 ) : collection === "Perspective" && action && action !== "Manage" ? (
                   <FormPerspective action={action as "Create" | "Update" | "Delete"} onFormSubmit={handleFormSubmit} />
+                ) : collection === "People" && action && action !== "Manage" ? (
+                  <FormPeople action={action as "Create" | "Update" | "Delete"} onFormSubmit={handleFormSubmit} />
                 ) : null}
-
               </div>
             </div>
           </div>

@@ -900,6 +900,9 @@
 					"title": {
 						"type": "string"
 					},
+					"slug": {
+						"type": "string"
+					},
 					"collection_type": {
 						"type": "string",
 						"enum": [
@@ -924,7 +927,55 @@
 				"required": [
 					"_id",
 					"title",
+					"slug",
 					"collection_type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginationMeta": {
+				"properties": {
+					"page": {
+						"type": "number",
+						"format": "double"
+					},
+					"limit": {
+						"type": "number",
+						"format": "double"
+					},
+					"total": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalPages": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"page",
+					"limit",
+					"total",
+					"totalPages"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PaginatedCarouselResponse": {
+				"properties": {
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/CarouselResponseType"
+						},
+						"type": "array"
+					},
+					"meta": {
+						"$ref": "#/components/schemas/PaginationMeta"
+					}
+				},
+				"required": [
+					"items",
+					"meta"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -951,6 +1002,25 @@
 						"type": "string"
 					},
 					"email": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"RequestResetInput": {
+				"properties": {
+					"email": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"ResetPasswordInput": {
+				"properties": {
+					"newPassword": {
+						"type": "string"
+					},
+					"userId": {
 						"type": "string"
 					}
 				},
@@ -2225,9 +2295,52 @@
 				]
 			}
 		},
-		"/carousel": {
+		"/carousel/page": {
 			"get": {
 				"operationId": "GetAllCarouselOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PaginatedCarouselResponse"
+								}
+							}
+						}
+					}
+				},
+				"description": "Retorna os itens do carrossel com paginação",
+				"summary": "Lista paginada do carrossel",
+				"tags": [
+					"Carousel"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/carousel": {
+			"get": {
+				"operationId": "GetAllCarouselFlat",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -2330,6 +2443,87 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/LoginInput"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/request-password-reset": {
+			"post": {
+				"operationId": "RequestPasswordReset",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "E-mail não encontrado"
+					}
+				},
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RequestResetInput"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/reset-password": {
+			"post": {
+				"operationId": "ResetPassword",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ResetPasswordInput"
 							}
 						}
 					}

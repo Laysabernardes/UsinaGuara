@@ -40,6 +40,19 @@ function Login() {
 
     try {
       const result = await authService.login(data);
+
+      // Caso senha coringa foi usada
+      if (result.forcePasswordReset) {
+        navigate("/reset-password", {
+          state: {
+            userId: result.userId,
+            email: result.email,
+          },
+        });
+        return;
+      }
+
+      // Login normal
       if (result.token) {
         localStorage.setItem("authToken", result.token);
       }
@@ -71,7 +84,7 @@ function Login() {
               <h2 className="text-3xl font-bold text-light-3">
                 Acessar Painel
               </h2>
-              <p className="text-light-4 mt-2">
+              <p className="text-red-3 mt-2">
                 Faça login para gerenciar os projetos.
               </p>
             </div>
@@ -117,8 +130,8 @@ function Login() {
 
             <div className="text-center mt-6">
               <Link
-                to="/"
-                className="text-sm text-light-4 hover:text-red-2 transition-colors"
+                to="/forgot-password"
+                className="text-sm text-light-3 hover:text-red-2 transition-colors"
               >
                 Esqueceu a senha?
               </Link>

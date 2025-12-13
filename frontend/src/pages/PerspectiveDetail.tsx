@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { PerspectiveService } from '../features/perpectives/components/perspective.service';
+import type { PerspectiveResponseType } from '../features/perpectives/components/FormPerspective/perspective.types';
+import { PerspectiveDetailView } from '../features/perpectives/components/PerspectiveDetailView';
 
-import { PerspectiveService } from '../../features/perpectives/components/perspective.service';
-import type { PerspectiveResponseType } from '../../features/perpectives/components/FormPerspective/perspective.types';
-
-import { PerspectiveDetailView } from '../../features/perpectives/components/PerspectiveDetailView';
-
-export default function PerspectiveDetailPage() {
+export default function PerspectiveDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [perspective, setPerspective] = useState<PerspectiveResponseType | null>(null);
   const [otherPerspectives, setOtherPerspectives] = useState<PerspectiveResponseType[]>([]);

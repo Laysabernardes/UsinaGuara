@@ -9,7 +9,10 @@ import ProtectedRoute from "./service/ProtectedRoute";
 import AllProjects from "./pages/AllProjects";
 import ProjectPage from "./pages/Project";
 import ProjectDetail from "./pages/ProjectDetail";
-
+import PerspectiveDetail from "./pages/PerspectiveDetail";
+import Parceiros from "./pages/Parceiros";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,12 +27,28 @@ const router = createBrowserRouter([
    element: <AllProjects />,
   },
   { 
-    path: "/projetos/:slug", 
+    path: "/projeto/:slug", 
     element: <ProjectPage /> 
   },
   { 
-    path: "/projetos/:slug/complete",
+    path: "/projeto/:slug/complete",
     element: <ProjectDetail />
+  },
+    { 
+    path: "/perspectiva/:slug",
+    element: <PerspectiveDetail />
+  },
+  { 
+    path: "/parceiros",
+    element: <Parceiros />
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />
   },
   {
     path: "guara-adm",

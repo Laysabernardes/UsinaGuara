@@ -12,7 +12,12 @@ import type { ProjectFormData } from './project.schema';
 interface TeamMemberType {
     _id: string;
     name: string;
-    // Adicione outros campos de pessoa aqui, se forem relevantes (ex: role, photoUrl)
+    kind: string;
+    description: string[];
+    contact?: string;
+    imageUrl?: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 // --- TIPOS DE RESPOSTA DA API (RESPONSE) ---

@@ -75,15 +75,26 @@ export default function ProjectDetailPage() {
           <div className='w-full flex flex-col items-start'>
             <h3 className="text-2xl font-bold mb-4">Equipe</h3>
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Person/>
-              <Person/>
-              <Person/>
-              <Person/>
+              {project.team?.length ? (
+                project.team.map((person) => (
+                  <Person
+                    key={person._id}
+                    id={person._id}
+                    name={person.name}
+                    kind={person.kind}
+                    contact={person.contact ?? "Não informado"}
+                    imageUrl={person.imageUrl ?? "/img/default.png"}
+                    description={person.description}
+                  />
+                ))
+              ) : (
+                <p className="text-gray-400">Nenhuma pessoa cadastrada para este projeto.</p>
+              )}
             </div>
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

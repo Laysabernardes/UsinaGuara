@@ -1,12 +1,14 @@
 import api from '../../lib/api';
 
-interface LoginCredentials {
+export interface LoginCredentials {
   email: string;
   password: string;
 }
 
-interface LoginResponse {
-  user: {
+export interface LoginResponse {
+  forcePasswordReset?: boolean;
+
+  user?: {
     _id: string;
     name: string;
     email: string;
@@ -14,22 +16,50 @@ interface LoginResponse {
     createdAt: string;
     updatedAt: string;
   };
-  token: string;
+
+  token?: string;
+
+  userId?: string;
+  email?: string;
 }
 
-// Objeto que agrupa todas as funções de autenticação
+export interface RequestPasswordResetResponse {
+  message: string;
+}
+
+export interface ResetPasswordPayload {
+  userId: string;
+  newPassword: string;
+}
+
+
 export const authService = {
-  /**
-   * Envia as credenciais de login para a API.
-   * @param credentials - Um objeto com email e senha.
-   * @returns A promessa com os dados da resposta (token e usuário).
-   */
-  login: async (credentials: LoginCredentials): Promise<LoginResponse> => {
-    const response = await api.post<LoginResponse>('/auth/login', credentials);
+  // LOGIN
+  async login(credentials: LoginCredentials): Promise<LoginResponse> {
+    const response = await api.post<LoginResponse>(
+      '/auth/login',
+      credentials
+    );
     return response.data;
   },
 
-  // Futuramente, você pode adicionar outras funções aqui:
-  // register: async (data) => { ... },
-  // logout: async () => { ... },
+  async requestPasswordReset(
+    email: string
+  ): Promise<RequestPasswordResetResponse> {
+    const response = await api.post<RequestPasswordResetResponse>(
+      '/auth/request-password-reset',
+      { email }
+    );
+    return response.data;
+  },
+
+  async resetPassword(
+    payload: ResetPasswordPayload
+  ): Promise<{ message: string }> {
+    const response = await api.post<{ message: string }>(
+      '/auth/reset-password',
+      payload
+    );
+    return response.data;
+  },
 };
