@@ -21,7 +21,7 @@ export function PerspectiveDetailView({ perspective, otherPerspectives }: Perspe
         >
           <div className="p-4">
             <h1 className="text-5xl font-bold">{perspective.title}</h1>
-            <NavLink to={`/projeto/${'perspective.project.slug'}`}>
+            <NavLink to={`/projeto/${perspective.project.slug}`}>
               <h2 className="text-2x1 font-semibold mt-5 text-gray-5 border-2 border-gray-5 rounded-2xl transition hover:bg-gray-2 cursor-pointer">
                 Ver projeto completo
               </h2>
