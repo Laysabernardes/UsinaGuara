@@ -21,17 +21,15 @@ import {
   updatePerspectiveSchema,
 } from "../zod/schemas/perspective.schema";
 
-// Tipos inferidos do Zod para uso nos parâmetros do controller
 type CreatePerspectiveInput = z.infer<typeof createPerspectiveSchema>["body"];
 type UpdatePerspectiveInput = z.infer<typeof updatePerspectiveSchema>["body"];
 
-// Um tipo para respostas de erro consistentes
 interface ErrorResponse {
   message: string;
 }
 
 @Tags("Perspectives")
-@Route("perspectives") // Define uma rota base para todos os métodos
+@Route("perspectives") 
 export class PerspectiveController extends Controller {
 
   /**

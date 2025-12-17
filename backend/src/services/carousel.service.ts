@@ -118,10 +118,7 @@ export class CarouselService {
         return response;
     }
 
-    /**
-     * NOVO: Busca TODOS os itens que são CANDIDATOS ao carrossel (ativos e inativos),
-     * sem filtro de status (isCarousel).
-     */
+    
     static async getAllCarouselCandidates(): Promise<CarouselResponseType[]> {
 
         // 1. Buscando todos os dados

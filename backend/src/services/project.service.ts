@@ -157,8 +157,6 @@ export class ProjectService {
     const query = {};
 
     try {
-      // Para debug, adicione este log no backend:
-      console.log(`Service - Page: ${safePage}, Limit: ${numLimit}, Skip: ${skipIndex}`);
 
       // 1. Busca do total de documentos
       const totalCount = await ProjectModel.countDocuments(query);

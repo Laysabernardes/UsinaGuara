@@ -50,6 +50,4 @@ export class AuthController extends Controller {
       return { message: error.message };
     }
   }
-
-
 }

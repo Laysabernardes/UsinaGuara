@@ -59,7 +59,6 @@ export class AuthService {
 
   }
 
-  // REDEFINIR SENHA (após senha coringa)
   static async resetPassword(input: { userId: string, newPassword: string }) {
     const { userId, newPassword } = input;
 

@@ -58,7 +58,6 @@ export class PersonController extends Controller {
       this.setStatus(204);
     } catch (error: any) {
       this.setStatus(404);
-      // O middleware de erro no app.ts irá capturar e logar
       throw error;
     }
   }

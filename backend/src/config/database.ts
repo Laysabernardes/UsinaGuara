@@ -13,7 +13,6 @@ export const connectDB = async () => {
 
   try {
     await mongoose.connect(MONGO_URI)
-    console.log('MongoDB conectado com sucesso.');
 
   } catch (error) {
     console.error('Erro ao conectar com o MongoDB:', error);
