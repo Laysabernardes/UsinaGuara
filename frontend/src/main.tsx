@@ -13,6 +13,8 @@ import PerspectiveDetail from "./pages/PerspectiveDetail";
 import Parceiros from "./pages/Parceiros";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Sobre from "./pages/Sobre";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />
+  },
+  {
+    path: "/sobre",
+    element: <Sobre />
   },
   {
     path: "guara-adm",
