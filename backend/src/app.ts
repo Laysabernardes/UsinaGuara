@@ -6,12 +6,12 @@ import express, {
 } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import { ValidateError } from 'tsoa';
-import cors from 'cors'; 
+import cors from 'cors';
 import { ZodError } from "zod";
 
 import { connectDB } from './config/database';
 // @ts-ignore
-import { RegisterRoutes } from '../dist/routes'; 
+import { RegisterRoutes } from '../dist/routes';
 
 /**
  * Função principal que inicializa a infraestrutura, middlewares e rotas.
@@ -36,15 +36,40 @@ const startServer = async () => {
    * Configuração dinâmica da Documentação Swagger.
    * Consome o swagger.json gerado pelo TSOA.
    */
-  app.use('/api-docs', swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
+  app.use('/api-docs', swaggerUi.serve, async (req: ExRequest, res: ExResponse) => {
     try {
       const swaggerDocument = await import('../dist/swagger.json');
-      res.send(swaggerUi.generateHTML(swaggerDocument));
+
+      const swaggerOptions = {
+        ...swaggerDocument,
+        info: {
+          ...swaggerDocument.info,
+          description: `
+API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usina Guará.
+
+**Desenvolvido por:**
+* [Laysa Bernardes](https://github.com/Laysabernardes) (Backend, Database Architecture & Infra)
+* [Lucas Lopes](https://github.com/LucasLoopsT) (Frontend & UX)
+          `,
+        },
+        servers: [
+          {
+            url: 'http://localhost:3000',
+            description: 'Servidor Local (Desenvolvimento)'
+          },
+          {
+            url: 'https://site-v5hr.onrender.com',
+            description: 'Servidor de Produção (Render)'
+          }
+        ]
+      };
+
+      res.send(swaggerUi.generateHTML(swaggerOptions));
     } catch (error) {
-      res.status(404).send("Documentação não encontrada. Execute 'npm run dev' para gerar.");
+      res.status(404).send("Documentação não encontrada.");
     }
   });
-  
+
   // Registra as rotas geradas automaticamente pelo TSOA
   RegisterRoutes(app);
 
@@ -79,7 +104,7 @@ const startServer = async () => {
 
       // Tratamento específico para conflitos de banco (ex: slugs duplicados)
       if (err.message === 'Este slug já está em uso.') {
-          return res.status(409).json({ message: err.message });
+        return res.status(409).json({ message: err.message });
       }
       return res.status(500).json({
         message: "Internal Server Error",

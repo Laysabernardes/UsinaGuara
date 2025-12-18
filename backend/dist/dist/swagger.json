@@ -975,8 +975,7 @@
             "jwt": {
                 "type": "apiKey",
                 "name": "Authorization",
-                "in": "header",
-                "description": "Token JWT no formato 'Bearer {token}'"
+                "in": "header"
             }
         }
     },
@@ -2405,10 +2404,7 @@
     },
     "servers": [
         {
-            "url": "https://[object Object]/"
-        },
-        {
-            "url": "https://[object Object]/"
+            "url": "/"
         }
     ]
 }
