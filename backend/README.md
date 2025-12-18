@@ -1,6 +1,6 @@
 <div align="center">
  <img 
-    src="../frontend/src/assets/bg_sobre.jpg" 
+    src="../frontend/src/assets/img.png" 
     alt="Header Usina Guará" 
     width="100%" 
     height="200px" 
