@@ -1,4 +1,3 @@
-
 {
   "entryFile": "src/app.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
@@ -6,6 +5,16 @@
   "spec": {
     "outputDirectory": "dist",
     "specVersion": 3,
+    "servers": [
+      {
+        "url": "http://localhost:3000",
+        "description": "Servidor Local (Desenvolvimento)"
+      },
+      {
+        "url": "https://site-v5hr.onrender.com",
+        "description": "Servidor de Produção (Render)"
+      }
+    ],
     "securityDefinitions": {
       "jwt": {
         "type": "apiKey",

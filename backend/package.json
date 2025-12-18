@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "usina-guara-backend",
   "version": "1.0.0",
-  "description": "Backend para o TCC Usina Guara",
+  "description": "API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usina Guará. Desenvolvido para fins sociais.",
   "main": "dist/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,6 +10,16 @@
     "start": "node dist/src/app.js",
     "dev": "npm run tsoa:build && concurrently \"tsoa routes -w\" \"tsoa spec -w\" \"ts-node-dev --respawn src/app.ts\""
   },
+  "contributors": [
+    {
+      "name": "Laysa Bernardes",
+      "url": "https://github.com/Laysabernardes"
+    },
+    {
+      "name": "Lucas Lopes",
+      "url": "https://github.com/LucasLoopsT"
+    }
+  ],
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",

@@ -1,9 +1,10 @@
-import { Controller, Get, Query, Route, Tags } from "tsoa";
+import { Controller, Get, Query, Route, Tags, Security } from "tsoa";
 import { CarouselResponseType, PaginatedCarouselResponse } from "../dtos/carousel.dto";
 import { CarouselService } from "../services/carousel.service";
 
 @Route("carousel")
 @Tags("Carousel")
+@Security("jwt")
 export class CarouselController extends Controller {
 
   /**
