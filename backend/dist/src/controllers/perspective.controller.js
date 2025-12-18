@@ -154,7 +154,6 @@ __decorate([
 ], PerspectiveController.prototype, "deletePerspective", null);
 exports.PerspectiveController = PerspectiveController = __decorate([
     (0, tsoa_1.Tags)("Perspectives"),
-    (0, tsoa_1.Route)("perspectives"),
-    (0, tsoa_1.Security)("jwt")
+    (0, tsoa_1.Route)("perspectives")
 ], PerspectiveController);
 //# sourceMappingURL=perspective.controller.js.map

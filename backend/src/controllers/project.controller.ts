@@ -14,7 +14,7 @@ interface PaginatedProjectsResponse {
 
 @Route("projects")
 @Tags("Projects")
-@Security("jwt")
+
 export class ProjectController extends Controller {
 
   /**
@@ -140,6 +140,7 @@ export class ProjectController extends Controller {
    */
   @Patch("{id}")
   @Response("404", "Not Found")
+  @Security("jwt")
   public async updateProject(@Path() id: string, @Body() body: UpdateProjectInput): Promise<ProjectResponseType> {
     const updatedProject = await ProjectService.update(id, body);
     if (!updatedProject) {

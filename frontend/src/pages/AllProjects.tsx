@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ProjectCard from '../components/ProjectCard';
+import LoadingOverlay from '../components/LoadingOverlay'; // 1. Importe o componente
 import { ProjectService } from '../service/projects/project.service';
-import type { ProjectResponseType, PaginatedProjectsResponse } from '../service/projects/project.types';
+import type { ProjectResponseType, PaginatedProjectsResponse } from '../features/projects/project.types';
 import background from "../assets/bg_projetos.png";
 
 // Lista de categorias MOCKADA (Inalterada)
@@ -34,7 +35,7 @@ const AllProjects: React.FC = () => {
     const fetchProjects = async (page: number, category: string, append: boolean = false) => {
         // Se estiver na página 1 e for uma nova categoria, limpa a tela imediatamente
         if (!append) setProjects([]);
-        setLoading(true);
+        setLoading(true); // Ativa o spinner
         setError(null);
 
         try {
@@ -56,11 +57,13 @@ const AllProjects: React.FC = () => {
 
         } catch (err) {
             console.error('Fetch error:', err);
+            console.log(err);
             // Mensagem de erro em English, conforme sua instrução
             setError("Error loading projects. Please check API connection.");
             setProjects([]);
+            
         } finally {
-            setLoading(false);
+            setLoading(false); // Desativa o spinner (sucesso ou erro)
         }
     };
 
@@ -70,28 +73,34 @@ const AllProjects: React.FC = () => {
         fetchProjects(1, activeCategory, false);
     }, [activeCategory]);
 
-    // --- Função para Carregar Mais (Botão) ---
-    const handleLoadMore = () => {
-        if (currentPage < totalPages) {
-            fetchProjects(currentPage + 1, activeCategory, true);
-        }
-    };
-
     // --- Funções de UI (Inalteradas) ---
     const handleFilterClick = (category: string) => {
         if (category === activeCategory) return;
         setActiveCategory(category);
     };
 
-    const hasMorePages = currentPage < totalPages;
-
     if (error) {
-        return <div className="text-red-500 p-8 bg-gray-900 min-h-screen"><h1>API Error</h1><p>{error}</p></div>;
+        return (
+            <div className="flex items-center justify-center text-red-500 p-8 bg-gray-900 min-h-screen text-center">
+                <div>
+                    <h1 className="text-2xl font-bold mb-2">API Error</h1>
+                    <p>{error}</p>
+                    <button 
+                        onClick={() => window.location.reload()} 
+                        className="mt-4 px-4 py-2 bg-red-600 text-white rounded"
+                    >
+                        Retry
+                    </button>
+                </div>
+            </div>
+        );
     }
 
     return (
         <>
             <Header />
+            {loading && <LoadingOverlay />}
+            
             <article className="bg-gray-900 min-h-screen text-gray-200">
                 {/* Banner */}
                 <section className="relative w-full h-[50vh] flex flex-col items-center justify-center text-center bg-cover bg-center text-white"

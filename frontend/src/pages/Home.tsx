@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useState, useEffect } from "react";
 import { CarouselService, type CarouselResponseType } from "../service/carousel.service";
 import { ProjectService } from "../service/projects/project.service";
-import { type PaginatedProjectsResponse } from "../service/projects/project.types";
+import { type PaginatedProjectsResponse, type ProjectResponseType } from "../features/projects/project.types";
 
 function Home() {
   const [slidesToShow, setSlidesToShow] = useState(3);
@@ -29,15 +29,20 @@ function Home() {
   const getAllProjectsAndOrderByDate = async () => {
     try {
       const projects = await ProjectService.getAllProjects(1, 99999);
-      const sortedProjects = projects.data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      
+      // TIPAGEM ADICIONADA: (a: ProjectResponseType, b: ProjectResponseType)
+      const sortedProjects = projects.data
+        .sort((a: ProjectResponseType, b: ProjectResponseType) => 
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
         .slice(0, 7);
+
       setLastProjectsData({ ...projects, data: sortedProjects });
     } catch (e) {
       console.log(e);
     }
   };
-
+  
   function convertDate(isoString: string): string {
   return new Date(isoString).toLocaleString('pt-BR', {
     day: '2-digit',

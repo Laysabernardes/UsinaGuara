@@ -16,7 +16,7 @@ interface ErrorResponse {
 
 @Tags("Perspectives")
 @Route("perspectives") 
-@Security("jwt")
+
 export class PerspectiveController extends Controller {
 
   /**

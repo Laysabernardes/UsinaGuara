@@ -4,7 +4,6 @@ import { CarouselService } from "../services/carousel.service";
 
 @Route("carousel")
 @Tags("Carousel")
-@Security("jwt")
 export class CarouselController extends Controller {
 
   /**

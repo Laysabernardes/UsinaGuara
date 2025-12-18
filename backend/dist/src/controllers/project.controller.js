@@ -201,6 +201,7 @@ __decorate([
 __decorate([
     (0, tsoa_1.Patch)("{id}"),
     (0, tsoa_1.Response)("404", "Not Found"),
+    (0, tsoa_1.Security)("jwt"),
     __param(0, (0, tsoa_1.Path)()),
     __param(1, (0, tsoa_1.Body)()),
     __metadata("design:type", Function),
@@ -219,7 +220,6 @@ __decorate([
 ], ProjectController.prototype, "deleteProject", null);
 exports.ProjectController = ProjectController = __decorate([
     (0, tsoa_1.Route)("projects"),
-    (0, tsoa_1.Tags)("Projects"),
-    (0, tsoa_1.Security)("jwt")
+    (0, tsoa_1.Tags)("Projects")
 ], ProjectController);
 //# sourceMappingURL=project.controller.js.map

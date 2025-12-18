@@ -1,5 +1,5 @@
 import api from "../../lib/api";
-import type { ProjectRequestType, ProjectResponseType, PaginatedProjectsResponse } from "./project.types";
+import type { ProjectRequestType, ProjectResponseType, PaginatedProjectsResponse } from "../../features/projects/project.types";
 
 export class ProjectService {
 
