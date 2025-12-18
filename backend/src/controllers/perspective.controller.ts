@@ -1,18 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Patch,
-  Path,
-  Post,
-  Put,
-  Route,
-  SuccessResponse,
-  Tags,
-  Response,
-  Security,
-} from "tsoa";
+import { Body, Controller, Delete, Get, Patch, Path, Post, Put, Route, SuccessResponse, Tags, Response, Security} from "tsoa";
 import { z } from "zod";
 import { PerspectiveService } from "../services/perspective.service";
 import { PerspectiveResponseType } from "../dtos/perspective.dto";

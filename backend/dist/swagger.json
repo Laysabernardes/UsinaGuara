@@ -64,7 +64,8 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"description": "Definições de entrada para criação e atualização.\r\nUpdateUserInput é definido localmente para permitir atualizações parciais (opcionais)."
 			},
 			"UpdateUserInput": {
 				"properties": {
@@ -84,89 +85,8 @@
 				},
 				"type": "object"
 			},
-			"TimelineEventResponseType": {
-				"properties": {
-					"_id": {
-						"type": "string"
-					},
-					"projectId": {
-						"type": "string"
-					},
-					"title": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"description_html": {
-						"type": "string"
-					},
-					"imageUrl": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"_id",
-					"projectId",
-					"title",
-					"order",
-					"description_html",
-					"imageUrl",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"CreateTimelineEventInput": {
-				"properties": {
-					"imageUrl": {
-						"type": "string"
-					},
-					"description_html": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"title": {
-						"type": "string"
-					},
-					"projectId": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"UpdateTimelineEventInput": {
-				"properties": {
-					"imageUrl": {
-						"type": "string"
-					},
-					"description_html": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"title": {
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
 			"PersonResponseType": {
+				"description": "Representa a estrutura de dados de uma pessoa (colaborador, escrito etc.) \r\nretornada pela API.",
 				"properties": {
 					"_id": {
 						"type": "string"
@@ -706,6 +626,13 @@
 						},
 						"type": "array"
 					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"projectId": {
+						"type": "string"
+					},
 					"extraURL": {
 						"type": "string"
 					},
@@ -722,14 +649,7 @@
 					"slug": {
 						"type": "string"
 					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
 					"title": {
-						"type": "string"
-					},
-					"projectId": {
 						"type": "string"
 					}
 				},
@@ -836,6 +756,10 @@
 						},
 						"type": "array"
 					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
 					"extraURL": {
 						"type": "string"
 					},
@@ -851,10 +775,6 @@
 					},
 					"slug": {
 						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
 					},
 					"title": {
 						"type": "string"
@@ -883,7 +803,8 @@
 						"type": "string"
 					}
 				},
-				"type": "object"
+				"type": "object",
+				"description": "Inferência de tipos a partir dos schemas Zod.\r\nGarante que as mutações (Post/Put) sigam estritamente o contrato definido no Zod."
 			},
 			"UpdatePersonInput": {
 				"properties": {
@@ -909,6 +830,7 @@
 				"type": "object"
 			},
 			"CarouselResponseType": {
+				"description": "Representa um item individual dentro do carrossel.\r\nEsta interface é usada tanto para a exibição simplificada quanto para a paginada.",
 				"properties": {
 					"_id": {
 						"type": "string"
@@ -924,7 +846,8 @@
 						"enum": [
 							"project",
 							"perspective"
-						]
+						],
+						"description": "Define a origem do conteúdo:\r\n'project': Referencia um projeto .\r\n'perspective': Referencia uma perspectiva."
 					},
 					"banner": {
 						"type": "string"
@@ -950,6 +873,7 @@
 				"additionalProperties": false
 			},
 			"PaginationMeta": {
+				"description": "Metadados para controle de navegação em listas extensas.",
 				"properties": {
 					"page": {
 						"type": "number",
@@ -978,6 +902,7 @@
 				"additionalProperties": false
 			},
 			"PaginatedCarouselResponse": {
+				"description": "Resposta padrão para endpoints de listagem que utilizam paginação.",
 				"properties": {
 					"items": {
 						"items": {
@@ -997,12 +922,15 @@
 				"additionalProperties": false
 			},
 			"LoginResponseType": {
+				"description": "Representa a estrutura de resposta enviada ao cliente após uma autenticação bem-sucedida.",
 				"properties": {
 					"user": {
-						"$ref": "#/components/schemas/UserResponseType"
+						"$ref": "#/components/schemas/UserResponseType",
+						"description": "* Dados do perfil do usuário autenticado (geralmente omitindo a senha por segurança)."
 					},
 					"token": {
-						"type": "string"
+						"type": "string",
+						"description": "* Token de acesso (geralmente JWT) que deve ser enviado nas próximas requisições \r\ndentro do header 'Authorization: Bearer <token>'."
 					}
 				},
 				"required": [
@@ -1056,12 +984,7 @@
 		"title": "backend",
 		"version": "1.0.0",
 		"description": "Backend para o TCC Usina Guara",
-		"license": {
-			"name": "ISC"
-		},
-		"contact": {
-			"name": "Laysa Bernardes"
-		}
+		"contact": {}
 	},
 	"paths": {
 		"/users": {
@@ -1082,6 +1005,8 @@
 						"description": "Conflict - Email já está em uso"
 					}
 				},
+				"description": "Cria um novo usuário no sistema.",
+				"summary": "Registrar novo usuário",
 				"tags": [
 					"Users"
 				],
@@ -1092,11 +1017,13 @@
 				],
 				"parameters": [],
 				"requestBody": {
+					"description": "Dados obrigatórios do usuário (email, password, etc)",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/CreateUserInput"
+								"$ref": "#/components/schemas/CreateUserInput",
+								"description": "Dados obrigatórios do usuário (email, password, etc)"
 							}
 						}
 					}
@@ -1119,6 +1046,8 @@
 						}
 					}
 				},
+				"description": "Lista todos os usuários cadastrados.",
+				"summary": "Listar usuários",
 				"tags": [
 					"Users"
 				],
@@ -1148,6 +1077,8 @@
 						"description": "Not Found"
 					}
 				},
+				"description": "Lista todos os usuários cadastrados.",
+				"summary": "Listar usuários",
 				"tags": [
 					"Users"
 				],
@@ -1184,6 +1115,7 @@
 						"description": "Not Found"
 					}
 				},
+				"description": "Atualiza informações de um usuário existente.",
 				"tags": [
 					"Users"
 				],
@@ -1194,6 +1126,7 @@
 				],
 				"parameters": [
 					{
+						"description": "ID do usuário a ser modificado",
 						"in": "path",
 						"name": "id",
 						"required": true,
@@ -1203,11 +1136,13 @@
 					}
 				],
 				"requestBody": {
+					"description": "Campos opcionais para atualização",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/UpdateUserInput"
+								"$ref": "#/components/schemas/UpdateUserInput",
+								"description": "Campos opcionais para atualização"
 							}
 						}
 					}
@@ -1223,6 +1158,7 @@
 						"description": "Not Found"
 					}
 				},
+				"description": "Remove um usuário do sistema.",
 				"tags": [
 					"Users"
 				],
@@ -1233,194 +1169,9 @@
 				],
 				"parameters": [
 					{
+						"description": "ID do usuário a ser excluído",
 						"in": "path",
 						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/projects/{projectId}/timeline": {
-			"post": {
-				"operationId": "CreateTimelineEvent",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/TimelineEventResponseType"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Timeline"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "projectId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateTimelineEventInput"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetTimelineEventsForProject",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TimelineEventResponseType"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Timeline"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "projectId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/timeline/{timelineEventId}": {
-			"get": {
-				"operationId": "GetTimelineEventById",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/TimelineEventResponseType"
-								}
-							}
-						}
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"tags": [
-					"Timeline"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "timelineEventId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"put": {
-				"operationId": "UpdateTimelineEvent",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/TimelineEventResponseType"
-								}
-							}
-						}
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"tags": [
-					"Timeline"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "timelineEventId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/UpdateTimelineEventInput"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "DeleteTimelineEvent",
-				"responses": {
-					"204": {
-						"description": "No Content"
-					},
-					"404": {
-						"description": "Not Found"
-					}
-				},
-				"tags": [
-					"Timeline"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "timelineEventId",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -2149,6 +1900,7 @@
 						}
 					}
 				},
+				"description": "Registra uma nova pessoa no sistema.\r\nRequer autenticação JWT.",
 				"tags": [
 					"People"
 				],
@@ -2159,11 +1911,13 @@
 				],
 				"parameters": [],
 				"requestBody": {
+					"description": "Dados da pessoa (validados via Zod)",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/CreatePersonInput"
+								"$ref": "#/components/schemas/CreatePersonInput",
+								"description": "Dados da pessoa (validados via Zod)"
 							}
 						}
 					}
@@ -2186,12 +1940,14 @@
 						}
 					}
 				},
+				"description": "Recupera uma lista de pessoas.",
 				"tags": [
 					"People"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"description": "Filtro opcional para categorizar o tipo de pessoa (ex: 'colaborador', 'cliente')",
 						"in": "query",
 						"name": "kind",
 						"required": false,
@@ -2220,12 +1976,14 @@
 						"description": "Not Found"
 					}
 				},
+				"description": "Busca os detalhes de uma pessoa específica pelo ID único.",
 				"tags": [
 					"People"
 				],
 				"security": [],
 				"parameters": [
 					{
+						"description": "Identificador UUID ou ID do banco de dados",
 						"in": "path",
 						"name": "id",
 						"required": true,
@@ -2252,6 +2010,7 @@
 						"description": "Not Found"
 					}
 				},
+				"description": "Atualiza os dados de uma pessoa existente.\r\nRequer autenticação JWT.",
 				"tags": [
 					"People"
 				],
@@ -2262,6 +2021,7 @@
 				],
 				"parameters": [
 					{
+						"description": "ID da pessoa a ser editada",
 						"in": "path",
 						"name": "id",
 						"required": true,
@@ -2291,6 +2051,7 @@
 						"description": "Not Found"
 					}
 				},
+				"description": "Remove permanentemente uma pessoa do registro.\r\nRequer autenticação JWT.",
 				"tags": [
 					"People"
 				],
@@ -2301,6 +2062,7 @@
 				],
 				"parameters": [
 					{
+						"description": "ID da pessoa a ser excluída",
 						"in": "path",
 						"name": "id",
 						"required": true,
@@ -2326,7 +2088,7 @@
 						}
 					}
 				},
-				"description": "Retorna os itens do carrossel com paginação",
+				"description": "Obtém itens do carrossel com suporte a paginação.\r\nÚtil para listagens longas no painel administrativo.\r\n*",
 				"summary": "Lista paginada do carrossel",
 				"tags": [
 					"Carousel"
@@ -2334,6 +2096,7 @@
 				"security": [],
 				"parameters": [
 					{
+						"description": "Página atual (padrão: 1)",
 						"in": "query",
 						"name": "page",
 						"required": false,
@@ -2343,6 +2106,7 @@
 						}
 					},
 					{
+						"description": "Itens por página (padrão: 10)",
 						"in": "query",
 						"name": "limit",
 						"required": false,
@@ -2372,7 +2136,8 @@
 						}
 					}
 				},
-				"description": "Retorna uma lista ordenada dos itens que estão no carrossel.",
+				"description": "Retorna apenas os itens ativos e ordenados para exibição no site (formato flat).",
+				"summary": "Lista simplificada para o frontend público",
 				"tags": [
 					"Carousel"
 				],
@@ -2398,6 +2163,7 @@
 						}
 					}
 				},
+				"description": "Recupera itens que estão marcados como inativos ou ocultos.",
 				"tags": [
 					"Carousel"
 				],
@@ -2423,6 +2189,7 @@
 						}
 					}
 				},
+				"description": "Retorna todos os itens que podem ser adicionados ao carrossel (Candidatos).\r\nGeralmente usado em seletores de busca no admin.",
 				"tags": [
 					"Carousel"
 				],
@@ -2448,17 +2215,20 @@
 						"description": "Unauthorized - Credenciais inválidas"
 					}
 				},
+				"description": "Autentica um usuário e retorna um token de acesso.",
 				"tags": [
 					"Authentication"
 				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"description": "Objeto contendo as credenciais (email e password)",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/LoginInput"
+								"$ref": "#/components/schemas/LoginInput",
+								"description": "Objeto contendo as credenciais (email e password)"
 							}
 						}
 					}
@@ -2491,17 +2261,20 @@
 						"description": "E-mail não encontrado"
 					}
 				},
+				"description": "Inicia o fluxo de recuperação de senha enviando um e-mail com instruções/token.",
 				"tags": [
 					"Authentication"
 				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"description": "Objeto contendo o e-mail do usuário",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/RequestResetInput"
+								"$ref": "#/components/schemas/RequestResetInput",
+								"description": "Objeto contendo o e-mail do usuário"
 							}
 						}
 					}
@@ -2529,17 +2302,20 @@
 						}
 					}
 				},
+				"description": "Define uma nova senha para o usuário utilizando o codigo padrao",
 				"tags": [
 					"Authentication"
 				],
 				"security": [],
 				"parameters": [],
 				"requestBody": {
+					"description": "Objeto contendo o token e a nova senha",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/ResetPasswordInput"
+								"$ref": "#/components/schemas/ResetPasswordInput",
+								"description": "Objeto contendo o token e a nova senha"
 							}
 						}
 					}

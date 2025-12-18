@@ -1,22 +1,13 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Path,
-  Post,
-  Put,
-  Route,
-  SuccessResponse,
-  Tags,
-  Response,
-  Security
-} from 'tsoa';
+import { Body,Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags, Response, Security} from 'tsoa';
 import { z } from 'zod';
 import { UserService } from '../services/user.service';
 import { UserResponseType } from '../dtos/user.dto';
 import { createUserSchema } from '../zod/schemas/user.schema';
 
+/**
+ * Definições de entrada para criação e atualização.
+ * UpdateUserInput é definido localmente para permitir atualizações parciais (opcionais).
+ */
 type CreateUserInput = z.infer<typeof createUserSchema>['body'];
 type UpdateUserInput = {
   name?: string;
@@ -29,6 +20,11 @@ type UpdateUserInput = {
 @Security("jwt")
 export class UserController extends Controller {
 
+  /**
+   * Cria um novo usuário no sistema.
+   * @param body Dados obrigatórios do usuário (email, password, etc)
+   * @summary Registrar novo usuário
+   */
   @Post("/")
   @SuccessResponse("201", "Created")
   @Response("409", "Conflict - Email já está em uso")
@@ -43,11 +39,19 @@ export class UserController extends Controller {
     }
   }
 
+  /**
+   * Lista todos os usuários cadastrados.
+   * @summary Listar usuários
+   */
   @Get("/")
   public async findUsers(): Promise<UserResponseType[]> {
     return await UserService.findAll();
   }
 
+  /**
+   * Lista todos os usuários cadastrados.
+   * @summary Listar usuários
+   */
   @Get("{id}")
   @Response("404", "Not Found")
   public async getUserById(@Path() id: string): Promise<UserResponseType> {
@@ -59,6 +63,11 @@ export class UserController extends Controller {
     return user;
   }
 
+  /**
+   * Atualiza informações de um usuário existente.
+   * @param id ID do usuário a ser modificado
+   * @param body Campos opcionais para atualização
+   */
   @Put("{id}")
   @Response("404", "Not Found")
   public async updateUser(@Path() id: string, @Body() body: UpdateUserInput): Promise<UserResponseType> {
@@ -70,6 +79,10 @@ export class UserController extends Controller {
     return updatedUser;
   }
 
+  /**
+   * Remove um usuário do sistema.
+   * @param id ID do usuário a ser excluído
+   */
   @Delete("{id}")
   @SuccessResponse("204", "No Content")
   @Response("404", "Not Found")

@@ -1,15 +1,20 @@
 import { Schema, model, Document } from 'mongoose';
 
+// Interface que define a estrutura do documento Person
 export interface IPerson extends Document {
-  name: string;
+  name: string; // Nome completo da pessoa
   kind: string; // Ex: "Membro da Equipe", "Colaborador", "Autor"
-  description: string[];
-  contact?: string; 
-  imageUrl?: string;
+  description: string[]; // Pode conter múltiplas descrições ou parágrafos 
+  contact?: string; // Informações de contato opcionais
+  imageUrl?: string; // URL da imagem da pessoa
   createdAt: Date;
   updatedAt: Date;
 }
 
+/**
+ * Definição do Schema do Mongoose.
+ * Este objeto determina como os dados serão validados e armazenados no MongoDB.
+ */
 const personSchema = new Schema<IPerson>({
   name: { 
     type: String, 

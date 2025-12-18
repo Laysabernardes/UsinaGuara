@@ -13,6 +13,10 @@ type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>['body'];
 @Tags("Authentication")
 export class AuthController extends Controller {
 
+  /**
+   * Autentica um usuário e retorna um token de acesso.
+   * @param body Objeto contendo as credenciais (email e password)
+   */
   @Post("/login")
   @Response(401, "Unauthorized - Credenciais inválidas")
   public async login(@Body() body: LoginInput): Promise<LoginResponseType> {
@@ -26,6 +30,10 @@ export class AuthController extends Controller {
     }
   }
 
+  /**
+   * Inicia o fluxo de recuperação de senha enviando um e-mail com instruções/token.
+   * @param body Objeto contendo o e-mail do usuário
+   */
   @Post("/request-password-reset")
   @Response(404, "E-mail não encontrado")
   public async requestPasswordReset(@Body() body: RequestResetInput): Promise<{ message: string }> {
@@ -39,6 +47,10 @@ export class AuthController extends Controller {
     }
   }
 
+  /**
+   * Define uma nova senha para o usuário utilizando o codigo padrao
+   * @param body Objeto contendo o token e a nova senha
+   */
   @Post("/reset-password")
   public async resetPassword(@Body() body: ResetPasswordInput) {
     try {

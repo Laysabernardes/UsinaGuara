@@ -1,0 +1,2331 @@
+{
+    "openapi": "3.0.0",
+    "components": {
+        "examples": {},
+        "headers": {},
+        "parameters": {},
+        "requestBodies": {},
+        "responses": {},
+        "schemas": {
+            "UserResponseType": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "editor"
+                        ]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "email",
+                    "role",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "CreateUserInput": {
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "editor"
+                        ]
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "description": "Definições de entrada para criação e atualização.\r\nUpdateUserInput é definido localmente para permitir atualizações parciais (opcionais)."
+            },
+            "UpdateUserInput": {
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "editor"
+                        ]
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PersonResponseType": {
+                "description": "Representa a estrutura de dados de uma pessoa (colaborador, escrito etc.) \r\nretornada pela API.",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "kind": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "contact": {
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "name",
+                    "kind",
+                    "description",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ProjectResponseType": {
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "O identificador único do projeto no banco de dados."
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "about_html": {
+                        "type": "string"
+                    },
+                    "team": {
+                        "items": {
+                            "$ref": "#/components/schemas/PersonResponseType"
+                        },
+                        "type": "array"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "draft",
+                            "published"
+                        ]
+                    },
+                    "isCarousel": {
+                        "type": "boolean",
+                        "description": "Flag booleana que indica se o projeto deve aparecer no carrossel principal."
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double",
+                        "description": "O número que define a ordem de exibição do projeto no carrossel."
+                    },
+                    "banner": {
+                        "type": "string",
+                        "description": "A URL da imagem principal (banner) do projeto."
+                    },
+                    "extraURL": {
+                        "type": "string",
+                        "description": "Uma URL adicional que pode ser usada para um link específico no carrossel."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "title",
+                    "subtitle",
+                    "slug",
+                    "category",
+                    "year",
+                    "about_html",
+                    "team",
+                    "status",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "CreateProjectInput": {
+                "properties": {
+                    "extraURL": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isCarousel": {
+                        "type": "boolean"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "draft",
+                            "published"
+                        ]
+                    },
+                    "team": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "about_html": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedProjectsResponse": {
+                "properties": {
+                    "data": {
+                        "items": {
+                            "$ref": "#/components/schemas/ProjectResponseType"
+                        },
+                        "type": "array"
+                    },
+                    "totalPages": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "required": [
+                    "data",
+                    "totalPages"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "UpdateProjectInput": {
+                "properties": {
+                    "extraURL": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isCarousel": {
+                        "type": "boolean"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "draft",
+                            "published"
+                        ]
+                    },
+                    "team": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "about_html": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "IProjectDTO": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "slug"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ITextBlock": {
+                "description": "Representa um bloco de texto (parágrafo).",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "text"
+                        ],
+                        "nullable": false
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "type",
+                    "content"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "ITitleBlock": {
+                "description": "Representa um bloco de título (subtítulo).",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "title"
+                        ],
+                        "nullable": false
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "type",
+                    "content"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IImageBlock": {
+                "description": "Representa um bloco de imagem com legenda.",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "image"
+                        ],
+                        "nullable": false
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "caption": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "type",
+                    "imageUrl",
+                    "caption"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IHighlightBlock": {
+                "description": "Representa um bloco de texto em destaque.",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "highlight"
+                        ],
+                        "nullable": false
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "type",
+                    "content"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "IContentBlock": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/ITextBlock"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ITitleBlock"
+                    },
+                    {
+                        "$ref": "#/components/schemas/IImageBlock"
+                    },
+                    {
+                        "$ref": "#/components/schemas/IHighlightBlock"
+                    }
+                ],
+                "description": "Tipo união que representa qualquer um dos blocos de conteúdo possíveis."
+            },
+            "IReferenceDTO": {
+                "description": "DTO para as referências.",
+                "properties": {
+                    "text": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "text"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "PerspectiveResponseType": {
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "project": {
+                        "$ref": "#/components/schemas/IProjectDTO"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "contentBlocks": {
+                        "items": {
+                            "$ref": "#/components/schemas/IContentBlock"
+                        },
+                        "type": "array",
+                        "description": "O corpo do conteúdo, estruturado como um array de blocos."
+                    },
+                    "references": {
+                        "items": {
+                            "$ref": "#/components/schemas/IReferenceDTO"
+                        },
+                        "type": "array"
+                    },
+                    "authors": {
+                        "items": {
+                            "$ref": "#/components/schemas/PersonResponseType"
+                        },
+                        "type": "array"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "isCarousel": {
+                        "type": "boolean"
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "extraURL": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "project",
+                    "title",
+                    "slug",
+                    "order",
+                    "contentBlocks",
+                    "references",
+                    "authors",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "CreatePerspectiveInput": {
+                "properties": {
+                    "authors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "references": {
+                        "items": {
+                            "properties": {
+                                "text": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "array"
+                    },
+                    "contentBlocks": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "text"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "title"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "caption": {
+                                            "type": "string"
+                                        },
+                                        "imageUrl": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "image"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "highlight"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            ]
+                        },
+                        "type": "array"
+                    },
+                    "order": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "projectId": {
+                        "type": "string"
+                    },
+                    "extraURL": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isCarousel": {
+                        "type": "boolean"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "message"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "UpdatePerspectiveInput": {
+                "properties": {
+                    "authors": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "references": {
+                        "items": {
+                            "properties": {
+                                "text": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "array"
+                    },
+                    "contentBlocks": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "text"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "title"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "caption": {
+                                            "type": "string"
+                                        },
+                                        "imageUrl": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "image"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "highlight"
+                                            ],
+                                            "nullable": false
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            ]
+                        },
+                        "type": "array"
+                    },
+                    "order": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "extraURL": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "isCarousel": {
+                        "type": "boolean"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CreatePersonInput": {
+                "properties": {
+                    "contact": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "kind": {
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "description": "Inferência de tipos a partir dos schemas Zod.\r\nGarante que as mutações (Post/Put) sigam estritamente o contrato definido no Zod."
+            },
+            "UpdatePersonInput": {
+                "properties": {
+                    "contact": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array"
+                    },
+                    "kind": {
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "CarouselResponseType": {
+                "description": "Representa um item individual dentro do carrossel.\r\nEsta interface é usada tanto para a exibição simplificada quanto para a paginada.",
+                "properties": {
+                    "_id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "collection_type": {
+                        "type": "string",
+                        "enum": [
+                            "project",
+                            "perspective"
+                        ],
+                        "description": "Define a origem do conteúdo:\r\n'project': Referencia um projeto .\r\n'perspective': Referencia uma perspectiva."
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "isCarousel": {
+                        "type": "boolean"
+                    },
+                    "orderCarousel": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "extraURL": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "_id",
+                    "title",
+                    "slug",
+                    "collection_type"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "PaginationMeta": {
+                "description": "Metadados para controle de navegação em listas extensas.",
+                "properties": {
+                    "page": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "limit": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "total": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "totalPages": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "required": [
+                    "page",
+                    "limit",
+                    "total",
+                    "totalPages"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "PaginatedCarouselResponse": {
+                "description": "Resposta padrão para endpoints de listagem que utilizam paginação.",
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/CarouselResponseType"
+                        },
+                        "type": "array"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                },
+                "required": [
+                    "items",
+                    "meta"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "LoginResponseType": {
+                "description": "Representa a estrutura de resposta enviada ao cliente após uma autenticação bem-sucedida.",
+                "properties": {
+                    "user": {
+                        "$ref": "#/components/schemas/UserResponseType",
+                        "description": "* Dados do perfil do usuário autenticado (geralmente omitindo a senha por segurança)."
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "* Token de acesso (geralmente JWT) que deve ser enviado nas próximas requisições \r\ndentro do header 'Authorization: Bearer <token>'."
+                    }
+                },
+                "required": [
+                    "user",
+                    "token"
+                ],
+                "type": "object",
+                "additionalProperties": false
+            },
+            "LoginInput": {
+                "properties": {
+                    "password": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RequestResetInput": {
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ResetPasswordInput": {
+                "properties": {
+                    "newPassword": {
+                        "type": "string"
+                    },
+                    "userId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "jwt": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token JWT no formato 'Bearer {token}'"
+            }
+        }
+    },
+    "info": {
+        "title": "backend",
+        "version": "1.0.0",
+        "description": "Backend para o TCC Usina Guara",
+        "contact": {}
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "operationId": "CreateUser",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict - Email já está em uso"
+                    }
+                },
+                "description": "Cria um novo usuário no sistema.",
+                "summary": "Registrar novo usuário",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [],
+                "requestBody": {
+                    "description": "Dados obrigatórios do usuário (email, password, etc)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateUserInput",
+                                "description": "Dados obrigatórios do usuário (email, password, etc)"
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "FindUsers",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Lista todos os usuários cadastrados.",
+                "summary": "Listar usuários",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": []
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "operationId": "GetUserById",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Lista todos os usuários cadastrados.",
+                "summary": "Listar usuários",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "UpdateUser",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Atualiza informações de um usuário existente.",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "ID do usuário a ser modificado",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Campos opcionais para atualização",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserInput",
+                                "description": "Campos opcionais para atualização"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "DeleteUser",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Remove um usuário do sistema.",
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "ID do usuário a ser excluído",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/projects": {
+            "post": {
+                "operationId": "CreateProject",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    }
+                },
+                "description": "Cria um novo projeto.",
+                "summary": "Cria um novo projeto.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [],
+                "requestBody": {
+                    "description": "Dados para a criação do novo projeto.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateProjectInput",
+                                "description": "Dados para a criação do novo projeto."
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "GetAllProjects",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaginatedProjectsResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna uma lista de todos os projetos, com paginação.",
+                "summary": "Retorna todos os projetos (paginado).",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O número da página desejada (padrão 1).",
+                        "in": "query",
+                        "name": "page",
+                        "required": false,
+                        "schema": {
+                            "default": 1,
+                            "format": "double",
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "description": "O número de itens por página (padrão 9).",
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "default": 6,
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/projects/status/{status}": {
+            "get": {
+                "operationId": "GetProjectsByStatus",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjectResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Filtra projetos por um status específico.",
+                "summary": "Filtra projetos por status.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O status para filtrar. Valores aceitos: 'draft' ou 'published'.",
+                        "in": "path",
+                        "name": "status",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "draft",
+                                "published"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "/projects/carousel": {
+            "get": {
+                "operationId": "GetCarouselItems",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjectResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna todos os projetos que fazem parte do carrossel.",
+                "summary": "Retorna itens do carrossel (sem ordem).",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/projects/carousel/sorted": {
+            "get": {
+                "operationId": "GetCarouselItemsSorted",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjectResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna todos os projetos do carrossel, em ordem crescente.",
+                "summary": "Retorna itens do carrossel (ordenados).",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/projects/with-banner": {
+            "get": {
+                "operationId": "GetProjectsWithBanner",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjectResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Busca projetos que possuem um banner definido.",
+                "summary": "Busca projetos com banner.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/projects/with-extra-url": {
+            "get": {
+                "operationId": "GetProjectsWithExtraUrl",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjectResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Busca projetos que possuem uma URL extra definida no carrossel.",
+                "summary": "Busca projetos com URL extra.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/projects/{slug}": {
+            "get": {
+                "operationId": "GetProjectBySlug",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Busca um projeto único pelo seu slug.",
+                "summary": "Busca um projeto por slug.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O slug único do projeto a ser recuperado.",
+                        "in": "path",
+                        "name": "slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/projects/category/{category}": {
+            "get": {
+                "operationId": "GetProjectsByCategory",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaginatedProjectsResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Filtra projetos por uma categoria específica e retorna uma lista paginada.",
+                "summary": "Filtra projetos por categoria (paginado).",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "A categoria para filtrar.",
+                        "in": "path",
+                        "name": "category",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "O número da página desejada (padrão 1).",
+                        "in": "query",
+                        "name": "page",
+                        "required": false,
+                        "schema": {
+                            "default": 1,
+                            "format": "double",
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "description": "O número de itens por página (padrão 9).",
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "default": 6,
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/projects/{id}": {
+            "patch": {
+                "operationId": "UpdateProject",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Atualiza os dados de um projeto existente.",
+                "summary": "Atualiza um projeto.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O ID do projeto a ser atualizado.",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados parciais do projeto para atualização.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProjectInput",
+                                "description": "Dados parciais do projeto para atualização."
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "DeleteProject",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Deleta um projeto permanentemente.",
+                "summary": "Deleta um projeto.",
+                "tags": [
+                    "Projects"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "O ID do projeto a ser deletado.",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/perspectives/projects/{projectId}": {
+            "post": {
+                "operationId": "CreatePerspective",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PerspectiveResponseType"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Cria uma nova perspectiva associada a um projeto.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "O ID do projeto ao qual a perspectiva pertence.",
+                        "in": "path",
+                        "name": "projectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Os dados da nova perspectiva a ser criada.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePerspectiveInput",
+                                "description": "Os dados da nova perspectiva a ser criada."
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "GetPerspectivesForProject",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/PerspectiveResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna todas as perspectivas de um projeto específico.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O ID do projeto para o qual as perspectivas serão buscadas.",
+                        "in": "path",
+                        "name": "projectId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/perspectives": {
+            "get": {
+                "operationId": "GetAllPerspectives",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/PerspectiveResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna todas as perspectivas de todos os projetos.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/perspectives/{perspectiveId}": {
+            "get": {
+                "operationId": "GetPerspectiveById",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PerspectiveResponseType"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna uma perspectiva específica pelo seu ID.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O ID da perspectiva a ser encontrada.",
+                        "in": "path",
+                        "name": "perspectiveId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "UpdatePerspective",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PerspectiveResponseType"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ErrorResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Atualiza uma perspectiva existente.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O ID da perspectiva a ser atualizada.",
+                        "in": "path",
+                        "name": "perspectiveId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Os dados a serem atualizados na perspectiva.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePerspectiveInput",
+                                "description": "Os dados a serem atualizados na perspectiva."
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "DeletePerspective",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Deleta uma perspectiva.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "O ID da perspectiva a ser deletada.",
+                        "in": "path",
+                        "name": "perspectiveId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/perspectives/slug/{slug}": {
+            "get": {
+                "operationId": "GetPerspectiveBySlug",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PerspectiveResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Busca um projeto único pelo seu slug.",
+                "summary": "Busca um projeto por slug.",
+                "tags": [
+                    "Perspectives"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "O slug único do projeto a ser recuperado.",
+                        "in": "path",
+                        "name": "slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/people": {
+            "post": {
+                "operationId": "CreatePerson",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PersonResponseType"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Registra uma nova pessoa no sistema.\r\nRequer autenticação JWT.",
+                "tags": [
+                    "People"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [],
+                "requestBody": {
+                    "description": "Dados da pessoa (validados via Zod)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePersonInput",
+                                "description": "Dados da pessoa (validados via Zod)"
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "operationId": "FindPeople",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/PersonResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Recupera uma lista de pessoas.",
+                "tags": [
+                    "People"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "Filtro opcional para categorizar o tipo de pessoa (ex: 'colaborador', 'cliente')",
+                        "in": "query",
+                        "name": "kind",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/people/{id}": {
+            "get": {
+                "operationId": "GetPersonById",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PersonResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Busca os detalhes de uma pessoa específica pelo ID único.",
+                "tags": [
+                    "People"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "Identificador UUID ou ID do banco de dados",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "UpdatePerson",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PersonResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Atualiza os dados de uma pessoa existente.\r\nRequer autenticação JWT.",
+                "tags": [
+                    "People"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "ID da pessoa a ser editada",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePersonInput"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "DeletePerson",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "description": "Remove permanentemente uma pessoa do registro.\r\nRequer autenticação JWT.",
+                "tags": [
+                    "People"
+                ],
+                "security": [
+                    {
+                        "jwt": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "description": "ID da pessoa a ser excluída",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ]
+            }
+        },
+        "/carousel/page": {
+            "get": {
+                "operationId": "GetAllCarouselOrder",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaginatedCarouselResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Obtém itens do carrossel com suporte a paginação.\r\nÚtil para listagens longas no painel administrativo.\r\n*",
+                "summary": "Lista paginada do carrossel",
+                "tags": [
+                    "Carousel"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "description": "Página atual (padrão: 1)",
+                        "in": "query",
+                        "name": "page",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "description": "Itens por página (padrão: 10)",
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                            "format": "double",
+                            "type": "number"
+                        }
+                    }
+                ]
+            }
+        },
+        "/carousel": {
+            "get": {
+                "operationId": "GetAllCarouselFlat",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CarouselResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna apenas os itens ativos e ordenados para exibição no site (formato flat).",
+                "summary": "Lista simplificada para o frontend público",
+                "tags": [
+                    "Carousel"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/carousel/inactive": {
+            "get": {
+                "operationId": "GetAllInactiveCarouselItems",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CarouselResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Recupera itens que estão marcados como inativos ou ocultos.",
+                "tags": [
+                    "Carousel"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/carousel/all": {
+            "get": {
+                "operationId": "GetAllCarouselCandidates",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CarouselResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna todos os itens que podem ser adicionados ao carrossel (Candidatos).\r\nGeralmente usado em seletores de busca no admin.",
+                "tags": [
+                    "Carousel"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "operationId": "Login",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponseType"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Credenciais inválidas"
+                    }
+                },
+                "description": "Autentica um usuário e retorna um token de acesso.",
+                "tags": [
+                    "Authentication"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "description": "Objeto contendo as credenciais (email e password)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginInput",
+                                "description": "Objeto contendo as credenciais (email e password)"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/request-password-reset": {
+            "post": {
+                "operationId": "RequestPasswordReset",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ],
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "E-mail não encontrado"
+                    }
+                },
+                "description": "Inicia o fluxo de recuperação de senha enviando um e-mail com instruções/token.",
+                "tags": [
+                    "Authentication"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "description": "Objeto contendo o e-mail do usuário",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestResetInput",
+                                "description": "Objeto contendo o e-mail do usuário"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/reset-password": {
+            "post": {
+                "operationId": "ResetPassword",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {}
+                                    },
+                                    "required": [
+                                        "message"
+                                    ],
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Define uma nova senha para o usuário utilizando o codigo padrao",
+                "tags": [
+                    "Authentication"
+                ],
+                "security": [],
+                "parameters": [],
+                "requestBody": {
+                    "description": "Objeto contendo o token e a nova senha",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPasswordInput",
+                                "description": "Objeto contendo o token e a nova senha"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "/"
+        }
+    ]
+}

@@ -13,12 +13,12 @@ export interface ProjectResponseType {
    */
   _id: string;
 
-  title: string;
-  subtitle: string
-  slug: string;
-  category: string;
-  year: number;
-  about_html: string;
+  title: string; // Título principal do projeto
+  subtitle: string; // Subtítulo do projeto
+  slug: string; // Identificador amigável para URL (Ex: "projeto-residencial-x")
+  category: string; // Categoria do projeto (Ex: URBANIZAÇÃO | SUSTENTABILIDADE | HABITAÇÃO SOCIAL | ARTE COMUNITÁRIA | ARQUITETURA | GERAL )
+  year: number; // Ano de conclusão ou início do projeto
+  about_html: string; // Descrição detalhada do projeto em formato HTML
   team: PersonResponseType[];
   status: "draft" | "published";
   /**

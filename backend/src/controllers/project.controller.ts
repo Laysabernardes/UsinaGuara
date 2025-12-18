@@ -47,7 +47,6 @@ export class ProjectController extends Controller {
     @Query() page: number = 1,
     @Query() limit: number = 6
   ): Promise<PaginatedProjectsResponse> { 
-    console.log(`Controller Recebeu: Page ${page}, Limit ${limit}`); 
     return await ProjectService.findPaginated(page, limit);
   }
 
