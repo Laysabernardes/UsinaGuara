@@ -76,6 +76,7 @@ __decorate([
 ], CarouselController.prototype, "getAllCarouselCandidates", null);
 exports.CarouselController = CarouselController = __decorate([
     (0, tsoa_1.Route)("carousel"),
-    (0, tsoa_1.Tags)("Carousel")
+    (0, tsoa_1.Tags)("Carousel"),
+    (0, tsoa_1.Security)("jwt")
 ], CarouselController);
 //# sourceMappingURL=carousel.controller.js.map

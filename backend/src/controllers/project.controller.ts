@@ -14,6 +14,7 @@ interface PaginatedProjectsResponse {
 
 @Route("projects")
 @Tags("Projects")
+@Security("jwt")
 export class ProjectController extends Controller {
 
   /**

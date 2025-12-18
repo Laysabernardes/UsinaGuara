@@ -479,6 +479,7 @@ export function RegisterRoutes(app: Router) {
                 limit: {"default":6,"in":"query","name":"limit","dataType":"double"},
         };
         app.get('/projects',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getAllProjects)),
 
@@ -509,6 +510,7 @@ export function RegisterRoutes(app: Router) {
                 status: {"in":"path","name":"status","required":true,"dataType":"union","subSchemas":[{"dataType":"enum","enums":["draft"]},{"dataType":"enum","enums":["published"]}]},
         };
         app.get('/projects/status/:status',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getProjectsByStatus)),
 
@@ -538,6 +540,7 @@ export function RegisterRoutes(app: Router) {
         const argsProjectController_getCarouselItems: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/projects/carousel',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getCarouselItems)),
 
@@ -567,6 +570,7 @@ export function RegisterRoutes(app: Router) {
         const argsProjectController_getCarouselItemsSorted: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/projects/carousel/sorted',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getCarouselItemsSorted)),
 
@@ -596,6 +600,7 @@ export function RegisterRoutes(app: Router) {
         const argsProjectController_getProjectsWithBanner: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/projects/with-banner',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getProjectsWithBanner)),
 
@@ -625,6 +630,7 @@ export function RegisterRoutes(app: Router) {
         const argsProjectController_getProjectsWithExtraUrl: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/projects/with-extra-url',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getProjectsWithExtraUrl)),
 
@@ -655,6 +661,7 @@ export function RegisterRoutes(app: Router) {
                 slug: {"in":"path","name":"slug","required":true,"dataType":"string"},
         };
         app.get('/projects/:slug',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getProjectBySlug)),
 
@@ -687,6 +694,7 @@ export function RegisterRoutes(app: Router) {
                 limit: {"default":6,"in":"query","name":"limit","dataType":"double"},
         };
         app.get('/projects/category/:category',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.getProjectsByCategory)),
 
@@ -718,6 +726,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"UpdateProjectInput"},
         };
         app.patch('/projects/:id',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ProjectController)),
             ...(fetchMiddlewares<RequestHandler>(ProjectController.prototype.updateProject)),
 
@@ -810,6 +819,7 @@ export function RegisterRoutes(app: Router) {
         const argsPerspectiveController_getAllPerspectives: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/perspectives',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController)),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController.prototype.getAllPerspectives)),
 
@@ -840,6 +850,7 @@ export function RegisterRoutes(app: Router) {
                 projectId: {"in":"path","name":"projectId","required":true,"dataType":"string"},
         };
         app.get('/perspectives/projects/:projectId',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController)),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController.prototype.getPerspectivesForProject)),
 
@@ -870,6 +881,7 @@ export function RegisterRoutes(app: Router) {
                 perspectiveId: {"in":"path","name":"perspectiveId","required":true,"dataType":"string"},
         };
         app.get('/perspectives/:perspectiveId',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController)),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController.prototype.getPerspectiveById)),
 
@@ -900,6 +912,7 @@ export function RegisterRoutes(app: Router) {
                 slug: {"in":"path","name":"slug","required":true,"dataType":"string"},
         };
         app.get('/perspectives/slug/:slug',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController)),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController.prototype.getPerspectiveBySlug)),
 
@@ -931,6 +944,7 @@ export function RegisterRoutes(app: Router) {
                 body: {"in":"body","name":"body","required":true,"ref":"UpdatePerspectiveInput"},
         };
         app.patch('/perspectives/:perspectiveId',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController)),
             ...(fetchMiddlewares<RequestHandler>(PerspectiveController.prototype.updatePerspective)),
 
@@ -1023,6 +1037,7 @@ export function RegisterRoutes(app: Router) {
                 kind: {"in":"query","name":"kind","dataType":"string"},
         };
         app.get('/people',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PersonController)),
             ...(fetchMiddlewares<RequestHandler>(PersonController.prototype.findPeople)),
 
@@ -1053,6 +1068,7 @@ export function RegisterRoutes(app: Router) {
                 id: {"in":"path","name":"id","required":true,"dataType":"string"},
         };
         app.get('/people/:id',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(PersonController)),
             ...(fetchMiddlewares<RequestHandler>(PersonController.prototype.getPersonById)),
 
@@ -1147,6 +1163,7 @@ export function RegisterRoutes(app: Router) {
                 limit: {"in":"query","name":"limit","dataType":"double"},
         };
         app.get('/carousel/page',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(CarouselController)),
             ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllCarouselOrder)),
 
@@ -1176,6 +1193,7 @@ export function RegisterRoutes(app: Router) {
         const argsCarouselController_getAllCarouselFlat: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/carousel',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(CarouselController)),
             ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllCarouselFlat)),
 
@@ -1205,6 +1223,7 @@ export function RegisterRoutes(app: Router) {
         const argsCarouselController_getAllInactiveCarouselItems: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/carousel/inactive',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(CarouselController)),
             ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllInactiveCarouselItems)),
 
@@ -1234,6 +1253,7 @@ export function RegisterRoutes(app: Router) {
         const argsCarouselController_getAllCarouselCandidates: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/carousel/all',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(CarouselController)),
             ...(fetchMiddlewares<RequestHandler>(CarouselController.prototype.getAllCarouselCandidates)),
 

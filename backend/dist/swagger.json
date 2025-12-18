@@ -975,15 +975,14 @@
 			"jwt": {
 				"type": "apiKey",
 				"name": "Authorization",
-				"in": "header",
-				"description": "Token JWT no formato 'Bearer {token}'"
+				"in": "header"
 			}
 		}
 	},
 	"info": {
-		"title": "backend",
+		"title": "usina-guara-backend",
 		"version": "1.0.0",
-		"description": "Backend para o TCC Usina Guara",
+		"description": "API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usina Guará. Desenvolvido para fins sociais.",
 		"contact": {}
 	},
 	"paths": {
@@ -1241,7 +1240,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O número da página desejada (padrão 1).",
@@ -1291,7 +1294,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O status para filtrar. Valores aceitos: 'draft' ou 'published'.",
@@ -1332,7 +1339,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1359,7 +1370,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1386,7 +1401,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1413,7 +1432,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1440,7 +1463,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O slug único do projeto a ser recuperado.",
@@ -1474,7 +1501,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "A categoria para filtrar.",
@@ -1533,7 +1564,11 @@
 				"tags": [
 					"Projects"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O ID do projeto a ser atualizado.",
@@ -1660,7 +1695,11 @@
 				"tags": [
 					"Perspectives"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O ID do projeto para o qual as perspectivas serão buscadas.",
@@ -1696,7 +1735,11 @@
 				"tags": [
 					"Perspectives"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -1736,7 +1779,11 @@
 				"tags": [
 					"Perspectives"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O ID da perspectiva a ser encontrada.",
@@ -1784,7 +1831,11 @@
 				"tags": [
 					"Perspectives"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O ID da perspectiva a ser atualizada.",
@@ -1871,7 +1922,11 @@
 				"tags": [
 					"Perspectives"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "O slug único do projeto a ser recuperado.",
@@ -1944,7 +1999,11 @@
 				"tags": [
 					"People"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "Filtro opcional para categorizar o tipo de pessoa (ex: 'colaborador', 'cliente')",
@@ -1980,7 +2039,11 @@
 				"tags": [
 					"People"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "Identificador UUID ou ID do banco de dados",
@@ -2093,7 +2156,11 @@
 				"tags": [
 					"Carousel"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"description": "Página atual (padrão: 1)",
@@ -2141,7 +2208,11 @@
 				"tags": [
 					"Carousel"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -2167,7 +2238,11 @@
 				"tags": [
 					"Carousel"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},
@@ -2193,7 +2268,11 @@
 				"tags": [
 					"Carousel"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": []
 			}
 		},

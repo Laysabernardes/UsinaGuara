@@ -219,6 +219,7 @@ __decorate([
 ], ProjectController.prototype, "deleteProject", null);
 exports.ProjectController = ProjectController = __decorate([
     (0, tsoa_1.Route)("projects"),
-    (0, tsoa_1.Tags)("Projects")
+    (0, tsoa_1.Tags)("Projects"),
+    (0, tsoa_1.Security)("jwt")
 ], ProjectController);
 //# sourceMappingURL=project.controller.js.map

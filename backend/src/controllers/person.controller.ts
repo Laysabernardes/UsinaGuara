@@ -13,6 +13,7 @@ type UpdatePersonInput = z.infer<typeof updatePersonSchema>['body'];
 
 @Route("people")
 @Tags("People")
+@Security("jwt")
 export class PersonController extends Controller {
 
   /**

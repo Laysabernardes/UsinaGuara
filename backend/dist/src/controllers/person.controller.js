@@ -121,6 +121,7 @@ __decorate([
 ], PersonController.prototype, "deletePerson", null);
 exports.PersonController = PersonController = __decorate([
     (0, tsoa_1.Route)("people"),
-    (0, tsoa_1.Tags)("People")
+    (0, tsoa_1.Tags)("People"),
+    (0, tsoa_1.Security)("jwt")
 ], PersonController);
 //# sourceMappingURL=person.controller.js.map

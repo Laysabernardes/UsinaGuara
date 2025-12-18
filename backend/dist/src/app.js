@@ -55,18 +55,45 @@ const startServer = async () => {
     // --- MIDDLEWARES GLOBAIS ---
     app.use(express_1.default.urlencoded({ extended: true }));
     app.use(express_1.default.json()); // Permite o processamento de JSON no corpo das requisições
-    app.use((0, cors_1.default)()); // Habilita CORS para permitir requisições de diferentes origens
+    app.use((0, cors_1.default)({
+        origin: '*', // Permite acesso de qualquer lugar (ideal para o momento de desenvolvimento/voluntariado)
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+        allowedHeaders: ['Content-Type', 'Authorization']
+    }));
     /**
      * Configuração dinâmica da Documentação Swagger.
      * Consome o swagger.json gerado pelo TSOA.
      */
-    app.use('/api-docs', swagger_ui_express_1.default.serve, async (_req, res) => {
+    app.use('/api-docs', swagger_ui_express_1.default.serve, async (req, res) => {
         try {
             const swaggerDocument = await Promise.resolve().then(() => __importStar(require('../dist/swagger.json')));
-            res.send(swagger_ui_express_1.default.generateHTML(swaggerDocument));
+            const swaggerOptions = {
+                ...swaggerDocument,
+                info: {
+                    ...swaggerDocument.info,
+                    description: `
+API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usina Guará.
+
+**Desenvolvido por:**
+* [Laysa Bernardes](https://github.com/Laysabernardes) (Backend, Database Architecture & Infra)
+* [Lucas Lopes](https://github.com/LucasLoopsT) (Frontend & UX)
+          `,
+                },
+                servers: [
+                    {
+                        url: 'http://localhost:3000',
+                        description: 'Servidor Local (Desenvolvimento)'
+                    },
+                    {
+                        url: 'https://site-v5hr.onrender.com',
+                        description: 'Servidor de Produção (Render)'
+                    }
+                ]
+            };
+            res.send(swagger_ui_express_1.default.generateHTML(swaggerOptions));
         }
         catch (error) {
-            res.status(404).send("Documentação não encontrada. Execute 'npm run dev' para gerar.");
+            res.status(404).send("Documentação não encontrada.");
         }
     });
     // Registra as rotas geradas automaticamente pelo TSOA

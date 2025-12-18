@@ -413,7 +413,7 @@ function RegisterRoutes(app) {
         page: { "default": 1, "in": "query", "name": "page", "dataType": "double" },
         limit: { "default": 6, "in": "query", "name": "limit", "dataType": "double" },
     };
-    app.get('/projects', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getAllProjects)), async function ProjectController_getAllProjects(request, response, next) {
+    app.get('/projects', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getAllProjects)), async function ProjectController_getAllProjects(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -436,7 +436,7 @@ function RegisterRoutes(app) {
     const argsProjectController_getProjectsByStatus = {
         status: { "in": "path", "name": "status", "required": true, "dataType": "union", "subSchemas": [{ "dataType": "enum", "enums": ["draft"] }, { "dataType": "enum", "enums": ["published"] }] },
     };
-    app.get('/projects/status/:status', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsByStatus)), async function ProjectController_getProjectsByStatus(request, response, next) {
+    app.get('/projects/status/:status', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsByStatus)), async function ProjectController_getProjectsByStatus(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -457,7 +457,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsProjectController_getCarouselItems = {};
-    app.get('/projects/carousel', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getCarouselItems)), async function ProjectController_getCarouselItems(request, response, next) {
+    app.get('/projects/carousel', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getCarouselItems)), async function ProjectController_getCarouselItems(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -478,7 +478,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsProjectController_getCarouselItemsSorted = {};
-    app.get('/projects/carousel/sorted', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getCarouselItemsSorted)), async function ProjectController_getCarouselItemsSorted(request, response, next) {
+    app.get('/projects/carousel/sorted', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getCarouselItemsSorted)), async function ProjectController_getCarouselItemsSorted(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -499,7 +499,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsProjectController_getProjectsWithBanner = {};
-    app.get('/projects/with-banner', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsWithBanner)), async function ProjectController_getProjectsWithBanner(request, response, next) {
+    app.get('/projects/with-banner', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsWithBanner)), async function ProjectController_getProjectsWithBanner(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -520,7 +520,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsProjectController_getProjectsWithExtraUrl = {};
-    app.get('/projects/with-extra-url', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsWithExtraUrl)), async function ProjectController_getProjectsWithExtraUrl(request, response, next) {
+    app.get('/projects/with-extra-url', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsWithExtraUrl)), async function ProjectController_getProjectsWithExtraUrl(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -543,7 +543,7 @@ function RegisterRoutes(app) {
     const argsProjectController_getProjectBySlug = {
         slug: { "in": "path", "name": "slug", "required": true, "dataType": "string" },
     };
-    app.get('/projects/:slug', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectBySlug)), async function ProjectController_getProjectBySlug(request, response, next) {
+    app.get('/projects/:slug', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectBySlug)), async function ProjectController_getProjectBySlug(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -568,7 +568,7 @@ function RegisterRoutes(app) {
         page: { "default": 1, "in": "query", "name": "page", "dataType": "double" },
         limit: { "default": 6, "in": "query", "name": "limit", "dataType": "double" },
     };
-    app.get('/projects/category/:category', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsByCategory)), async function ProjectController_getProjectsByCategory(request, response, next) {
+    app.get('/projects/category/:category', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.getProjectsByCategory)), async function ProjectController_getProjectsByCategory(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -592,7 +592,7 @@ function RegisterRoutes(app) {
         id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
         body: { "in": "body", "name": "body", "required": true, "ref": "UpdateProjectInput" },
     };
-    app.patch('/projects/:id', ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.updateProject)), async function ProjectController_updateProject(request, response, next) {
+    app.patch('/projects/:id', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController)), ...((0, runtime_1.fetchMiddlewares)(project_controller_1.ProjectController.prototype.updateProject)), async function ProjectController_updateProject(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -660,7 +660,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsPerspectiveController_getAllPerspectives = {};
-    app.get('/perspectives', ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getAllPerspectives)), async function PerspectiveController_getAllPerspectives(request, response, next) {
+    app.get('/perspectives', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getAllPerspectives)), async function PerspectiveController_getAllPerspectives(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -683,7 +683,7 @@ function RegisterRoutes(app) {
     const argsPerspectiveController_getPerspectivesForProject = {
         projectId: { "in": "path", "name": "projectId", "required": true, "dataType": "string" },
     };
-    app.get('/perspectives/projects/:projectId', ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getPerspectivesForProject)), async function PerspectiveController_getPerspectivesForProject(request, response, next) {
+    app.get('/perspectives/projects/:projectId', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getPerspectivesForProject)), async function PerspectiveController_getPerspectivesForProject(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -706,7 +706,7 @@ function RegisterRoutes(app) {
     const argsPerspectiveController_getPerspectiveById = {
         perspectiveId: { "in": "path", "name": "perspectiveId", "required": true, "dataType": "string" },
     };
-    app.get('/perspectives/:perspectiveId', ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getPerspectiveById)), async function PerspectiveController_getPerspectiveById(request, response, next) {
+    app.get('/perspectives/:perspectiveId', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getPerspectiveById)), async function PerspectiveController_getPerspectiveById(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -729,7 +729,7 @@ function RegisterRoutes(app) {
     const argsPerspectiveController_getPerspectiveBySlug = {
         slug: { "in": "path", "name": "slug", "required": true, "dataType": "string" },
     };
-    app.get('/perspectives/slug/:slug', ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getPerspectiveBySlug)), async function PerspectiveController_getPerspectiveBySlug(request, response, next) {
+    app.get('/perspectives/slug/:slug', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.getPerspectiveBySlug)), async function PerspectiveController_getPerspectiveBySlug(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -753,7 +753,7 @@ function RegisterRoutes(app) {
         perspectiveId: { "in": "path", "name": "perspectiveId", "required": true, "dataType": "string" },
         body: { "in": "body", "name": "body", "required": true, "ref": "UpdatePerspectiveInput" },
     };
-    app.patch('/perspectives/:perspectiveId', ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.updatePerspective)), async function PerspectiveController_updatePerspective(request, response, next) {
+    app.patch('/perspectives/:perspectiveId', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController)), ...((0, runtime_1.fetchMiddlewares)(perspective_controller_1.PerspectiveController.prototype.updatePerspective)), async function PerspectiveController_updatePerspective(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -822,7 +822,7 @@ function RegisterRoutes(app) {
     const argsPersonController_findPeople = {
         kind: { "in": "query", "name": "kind", "dataType": "string" },
     };
-    app.get('/people', ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController)), ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController.prototype.findPeople)), async function PersonController_findPeople(request, response, next) {
+    app.get('/people', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController)), ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController.prototype.findPeople)), async function PersonController_findPeople(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -845,7 +845,7 @@ function RegisterRoutes(app) {
     const argsPersonController_getPersonById = {
         id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
     };
-    app.get('/people/:id', ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController)), ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController.prototype.getPersonById)), async function PersonController_getPersonById(request, response, next) {
+    app.get('/people/:id', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController)), ...((0, runtime_1.fetchMiddlewares)(person_controller_1.PersonController.prototype.getPersonById)), async function PersonController_getPersonById(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -916,7 +916,7 @@ function RegisterRoutes(app) {
         page: { "in": "query", "name": "page", "dataType": "double" },
         limit: { "in": "query", "name": "limit", "dataType": "double" },
     };
-    app.get('/carousel/page', ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselOrder)), async function CarouselController_getAllCarouselOrder(request, response, next) {
+    app.get('/carousel/page', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselOrder)), async function CarouselController_getAllCarouselOrder(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -937,7 +937,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsCarouselController_getAllCarouselFlat = {};
-    app.get('/carousel', ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselFlat)), async function CarouselController_getAllCarouselFlat(request, response, next) {
+    app.get('/carousel', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselFlat)), async function CarouselController_getAllCarouselFlat(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -958,7 +958,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsCarouselController_getAllInactiveCarouselItems = {};
-    app.get('/carousel/inactive', ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllInactiveCarouselItems)), async function CarouselController_getAllInactiveCarouselItems(request, response, next) {
+    app.get('/carousel/inactive', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllInactiveCarouselItems)), async function CarouselController_getAllInactiveCarouselItems(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -979,7 +979,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsCarouselController_getAllCarouselCandidates = {};
-    app.get('/carousel/all', ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselCandidates)), async function CarouselController_getAllCarouselCandidates(request, response, next) {
+    app.get('/carousel/all', authenticateMiddleware([{ "jwt": [] }]), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselCandidates)), async function CarouselController_getAllCarouselCandidates(request, response, next) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {

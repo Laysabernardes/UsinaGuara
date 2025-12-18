@@ -1,8 +1,8 @@
-
 {
   "entryFile": "src/app.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["src/controllers/**/*.controller.ts"],
+  
   "spec": {
     "outputDirectory": "dist",
     "specVersion": 3,
@@ -10,8 +10,7 @@
       "jwt": {
         "type": "apiKey",
         "name": "Authorization",
-        "in": "header",
-        "description": "Token JWT no formato 'Bearer {token}'"
+        "in": "header"
       }
     }
   },
