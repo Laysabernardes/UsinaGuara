@@ -12,8 +12,8 @@ export interface CarouselResponseType {
 }
 
 export const CarouselService = {
-  getAllCarouselOrder: async (): Promise<CarouselResponseType[]> => {
-    const response = await api.get<CarouselResponseType[]>("/carousel");
+  getAllCarouselPublic: async (): Promise<CarouselResponseType[]> => {
+    const response = await api.get<CarouselResponseType[]>("/carousel/all/public");
     return response.data;
   },
 };

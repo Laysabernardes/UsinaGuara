@@ -179,4 +179,76 @@ export class CarouselService {
         return response;
     }
 
+    /**
+     * Retorna todos os itens públicos elegíveis ao carrossel.
+     * Apenas projetos publicados e perspectivas vinculadas a esses projetos.
+     * Usado para exibição pública do carrossel.
+     */
+    static async getAllCarouselCandidatesPublic(): Promise<CarouselResponseType[]> {
+
+        // 1. Busca todos os projetos e perspectivas
+        const [allProjects, allPerspectives] = await Promise.all([
+            ProjectService.findAll(),
+            PerspectiveService.findAll(),
+        ]);
+
+        // 2. Filtra apenas projetos publicados e marcados para o carrossel
+        const publicProjectsCarousel = allProjects.filter(
+            p => p.isCarousel === true && p.status === 'published'
+        );
+
+        // 3. Filtra perspectivas marcadas para o carrossel
+        const perspectivesCarousel = allPerspectives.filter(
+            p => p.isCarousel === true
+        );
+
+        // 4. Mantém apenas perspectivas que pertencem a projetos publicados
+        const perspectiveCarouselPublic: any[] = [];
+
+        perspectivesCarousel.forEach(pers => {
+            publicProjectsCarousel.forEach(proj => {
+                if (proj._id === pers.project._id) {
+                    perspectiveCarouselPublic.push(pers);
+                }
+            });
+        });
+
+        let response: CarouselResponseType[] = [];
+
+        // 5. Mapeia os projetos para o formato de resposta do carrossel
+        const projectItems = publicProjectsCarousel.map((p) => ({
+            _id: p._id,
+            title: p.title,
+            slug: p.slug,
+            collection_type: "project" as const,
+            banner: p.banner,
+            isCarousel: p.isCarousel,
+            orderCarousel: p.orderCarousel,
+            extraURL: p.extraURL,
+        }));
+
+        // 6. Mapeia as perspectivas para o formato de resposta do carrossel
+        const perspectiveItems = perspectiveCarouselPublic.map((p) => ({
+            _id: p._id,
+            title: p.title,
+            slug: p.slug,
+            collection_type: "perspective" as const,
+            banner: p.banner,
+            isCarousel: p.isCarousel,
+            orderCarousel: p.orderCarousel,
+            extraURL: p.extraURL,
+        }));
+
+        // 7. Combina projetos e perspectivas em um único array
+        response = [...projectItems, ...perspectiveItems];
+
+        // 8. Ordena alfabeticamente pelo título para melhor experiência no frontend
+        response.sort((a, b) => {
+            const orderA = a.orderCarousel ?? Number.MAX_SAFE_INTEGER;
+            const orderB = b.orderCarousel ?? Number.MAX_SAFE_INTEGER;
+            return orderA - orderB;
+        });
+        
+        return response;
+    }
 }

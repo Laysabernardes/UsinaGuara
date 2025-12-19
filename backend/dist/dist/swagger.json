@@ -2200,6 +2200,32 @@
                 "parameters": []
             }
         },
+        "/carousel/all/public": {
+            "get": {
+                "operationId": "GetAllCarouselCandidatesPublic",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/CarouselResponseType"
+                                    },
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Retorna todos os itens que podem ser adicionados ao carrossel (Candidatos).\r\nGeralmente usado em seletores de busca no admin.",
+                "tags": [
+                    "Carousel"
+                ],
+                "security": [],
+                "parameters": []
+            }
+        },
         "/auth/login": {
             "post": {
                 "operationId": "Login",

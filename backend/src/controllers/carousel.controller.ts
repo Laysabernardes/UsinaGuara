@@ -50,4 +50,13 @@ export class CarouselController extends Controller {
     return await CarouselService.getAllCarouselCandidates();
   }
 
+    /**
+   * Retorna todos os itens que podem ser adicionados ao carrossel (Candidatos).
+   * Geralmente usado em seletores de busca no admin.
+   */
+  @Get("/all/public")
+  public async getAllCarouselCandidatesPublic(): Promise<CarouselResponseType[]> {
+    return await CarouselService.getAllCarouselCandidatesPublic();
+  }
+
 }
