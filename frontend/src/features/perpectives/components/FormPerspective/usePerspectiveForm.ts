@@ -21,6 +21,7 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
     const [selectedPerspectiveId, setSelectedPerspectiveId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     const formMethods = useForm<PerspectiveFormData>({
         resolver: zodResolver(FormPerspectiveData),
@@ -36,7 +37,7 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
                 const token = localStorage.getItem("authToken") || "";
                 const [perspectivesData, projectsData, peopleData] = await Promise.all([
                     PerspectiveService.getAllPerspectives(),
-                    ProjectService.getAllProjects(),
+                    ProjectService.getAllProjects({ limit: 1000 }),
                     PeopleService.getAllPeople(token),
                 ]);
                 setAllPerspectives(perspectivesData);
@@ -63,9 +64,9 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
             const formData: Partial<PerspectiveFormData> = {
                 ...perspectiveToLoad,
                 authors: perspectiveToLoad.authors.map(author => author._id),
-                projectId: typeof perspectiveToLoad.projectId === 'object' && perspectiveToLoad.projectId !== null
-                    ? perspectiveToLoad.projectId._id
-                    : perspectiveToLoad.projectId,
+                projectId: typeof perspectiveToLoad.project === 'object' && perspectiveToLoad.project !== null
+                    ? perspectiveToLoad.project._id
+                    : perspectiveToLoad.project,
             };
             formMethods.reset(formData);
         }
@@ -81,33 +82,62 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
         setIsLoading(true);
         setError(null);
         try {
-            if (action === "Create") {
-                await PerspectiveService.create({
-                    ...data,
-                    banner: data.banner === null ? undefined : data.banner
-                });
-                alert("Perspectiva criada com sucesso!");
-            } else if (action === "Update" && data._id) {
-                const { _id, projectId, ...dataToUpdate } = data;
+            const selectedProject = projects.find(p => p._id === data.projectId);
 
-                // Garante que 'banner' nunca seja null, apenas string ou undefined
-                const updatePayload = {
-                    ...dataToUpdate,
-                    banner: data.banner === null ? undefined : data.banner
-                };
-
-                await PerspectiveService.update(data._id, updatePayload);
-                alert("Perspectiva atualizada com sucesso!");
-
+            if (!selectedProject) {
+                throw new Error("Projeto selecionado não encontrado na lista.");
             }
+
+            const { projectId, ...rest } = data;
+
+            // O payload deve ir sem a propriedade 'project' se a URL já contiver o ID
+            const payload = {
+                ...rest,
+                banner: data.banner || undefined
+            };
+
+            if (action === "Create") {
+                // 1. Extraímos o projectId do estado do formulário
+                const idDoProjeto = data.projectId;
+
+                // 2. Criamos o payload removendo o projectId para evitar o erro 422
+                const { projectId, ...payload } = data;
+
+                // 3. Chamamos o service com os dois argumentos
+                await PerspectiveService.create(idDoProjeto, payload as any);
+
+                setSuccessMessage("Perspectiva criada com sucesso!");
+            } else if (action === "Update" && data._id) {
+                await PerspectiveService.update(data._id, payload as any);
+                setSuccessMessage("Perspectiva atualizada com sucesso!");
+            }
+
             onFormSubmit();
         } catch (err: any) {
-            setError(err.response?.data?.message || err.message || "Ocorreu um erro ao salvar.");
-            console.error("Erro ao salvar perspectiva:", err);
+            console.error("Erro completo da API:", err.response?.data);
+
+            // Captura detalhada de erros do TSOA/Zod
+            const apiDetails = err.response?.data?.details?.body?.message;
+            const apiMessage = err.response?.data?.message;
+            const zodErrors = err.response?.data?.errors?.fieldErrors;
+
+            if (zodErrors) {
+                const messages = Object.values(zodErrors).flat();
+                setError(`Erro de validação: ${messages.join(", ")}`);
+            } else if (apiDetails) {
+                // Aqui captura o erro de "excess property" que vimos na imagem
+                setError(`Erro no Servidor: ${apiDetails}`);
+            } else if (apiMessage) {
+                setError(apiMessage);
+            } else {
+                setError("Ocorreu um erro inesperado ao salvar.");
+            }
         } finally {
             setIsLoading(false);
         }
     };
+
+
 
     const handleDelete = async () => {
         if (!selectedPerspectiveId) return;
@@ -116,7 +146,7 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
             setError(null);
             try {
                 await PerspectiveService.delete(selectedPerspectiveId);
-                alert("Perspectiva deletada com sucesso!");
+                setSuccessMessage("Perspectiva deletada com sucesso!");
                 onFormSubmit();
             } catch (err: any) {
                 setError(err.response?.data?.message || err.message || "Ocorreu um erro ao deletar.");

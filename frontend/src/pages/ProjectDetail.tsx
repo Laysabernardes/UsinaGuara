@@ -7,6 +7,7 @@ import type { PerspectiveResponseType } from '../features/perpectives/components
 import { ContentBlockRenderer } from '../features/perpectives/components/ContentBlockRenderer/index';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -46,8 +47,19 @@ export default function ProjectDetail() {
     loadData();
   }, [slug]);
 
-  if (isLoading) return <div className="text-center p-20">Carregando...</div>;
-  if (error) return <div className="text-center p-20 text-red-500">{error}</div>;
+  if (isLoading) {
+    return <LoadingOverlay />;
+  }
+  if (error) {
+    return (
+      <div className="flex items-center justify-center p-20 text-red-500 bg-gray-900 h-screen text-center">
+        <div>
+          <h1 className="text-2xl font-bold mb-4">Error</h1>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
   if (!project) return <div>Projeto não encontrado.</div>;
 
   return (
@@ -101,7 +113,7 @@ export default function ProjectDetail() {
           )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

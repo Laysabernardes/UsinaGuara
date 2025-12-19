@@ -2,27 +2,35 @@ import { Controller } from "react-hook-form";
 import { TypeInput, Selection, MultiSelect } from "../../../../components/Inputs";
 import { usePerspectiveForm } from "./usePerspectiveForm";
 import { ContentBlockEditor } from "./ContentBlockEditor";
+import LoadingOverlay from '../../../../components/LoadingOverlay';
+import { useState } from "react";
 
 export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "Update" | "Delete", onFormSubmit: () => void }) {
     const { formMethods, state, actions } = usePerspectiveForm(action, onFormSubmit);
     const { register, control, handleSubmit } = formMethods;
     const { allPerspectives, projects, people, selectedPerspectiveId, isLoading, error } = state;
     const { setSelectedPerspectiveId, onSubmit, handleDelete } = actions;
+    const [validationError, setValidationError] = useState<string | null>(null);
 
-    if (isLoading) return <p className="text-center p-4">Carregando...</p>;
-    if (error) return <p className="text-center p-4 text-red-500">Erro: {error}</p>;
+    if (isLoading) return <LoadingOverlay />;
 
     const onInvalid = (errors: any) => {
-        console.error("ERROS DE VALIDAÇÃO DO FORMULÁRIO:", errors);
-        alert("O formulário contém erros! Verifique o console do navegador (F12) para ver os detalhes.");
+        console.error("ERROS DE VALIDAÇÃO:", errors);
+        setValidationError("O formulário contém campos obrigatórios vazios ou inválidos.");
     };
 
     // Mapeamento das opções (permanece inalterado)
     const projectOptions = projects.map(p => ({ id: p._id, text: p.title }));
     const peopleOptions = people.map(p => ({ id: p._id, text: p.name }));
 
+    const handleActualSubmit = async (data: any) => {
+        setValidationError(null); 
+        await onSubmit(data);
+    };
+
+
     return (
-        <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-6 p-4">
+        <form onSubmit={handleSubmit(handleActualSubmit, onInvalid)} className="space-y-6 p-4">
             {(action === "Update" || action === "Delete") && (
                 <Selection
                     id="perspective_selector"
@@ -47,15 +55,28 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                     <fieldset className="border border-gray-700 p-4 rounded-md">
                         <legend className="text-lg font-semibold px-2">Informações Principais</legend>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Selection id="projectId" title="Projeto Associado" {...register("projectId")} options={projectOptions} required />
+                            <Controller
+                                control={control}
+                                name="projectId"
+                                render={({ field }) => (
+                                    <Selection 
+                                        id="projectId" 
+                                        title="Projeto Associado" 
+                                        options={projectOptions} 
+                                        value={field.value || ""}
+                                        onChange={field.onChange}
+                                        required 
+                                    />
+                                )}
+                            />
                             <TypeInput id="title" title="Título da Perspectiva" {...register("title")} required />
                             <TypeInput id="slug" title="Slug (URL)" {...register("slug")} required />
-                            <TypeInput id="order" type="number" title="Ordem" {...register("order", { valueAsNumber: true })} />
+                            <TypeInput id="order" type="number" title="Ordem" {...register("order", { valueAsNumber: true })} required />
                             <TypeInput id="banner" title="URL do Banner" {...register("banner")} />
                         </div>
                     </fieldset>
 
-                    <ContentBlockEditor control={control} register={register} />
+                    <ContentBlockEditor control={control} register={register}  />
 
                     <fieldset className="border border-gray-700 p-4 rounded-md">
                         <legend className="text-lg font-semibold px-2">Metadados e Associações</legend>
@@ -70,6 +91,7 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                                     options={peopleOptions}
                                     value={field.value || []}
                                     setValue={(newValue) => field.onChange(newValue)}
+                                    required 
                                 />
                             )}
                         />
@@ -84,6 +106,19 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                         </div>
                         {/* CAMPOS orderCarousel e extraURL REMOVIDOS */}
                     </fieldset>
+
+                    {error && (
+                        <div className="bg-red-600/20 border border-red-600 text-red-1 p-3 rounded-lg text-center animate-pulse mb-4">
+                            Erro: {error}
+                        </div>
+                    )}
+
+                    {/* MENSAGEM DE ERRO ESTILIZADA */}
+                    {validationError && (
+                        <div className="bg-red-600/20 border border-red-600 text-red-1 p-3 rounded-lg text-center animate-pulse">
+                            {validationError}
+                        </div>
+                    )}
 
                     <button type="submit" disabled={isLoading} className="w-full p-3 bg-green-600 hover:bg-green-500 rounded text-white text-xl font-bold transition-colors">
                         {isLoading ? "Salvando..." : (action === "Create" ? "Criar Nova Perspectiva" : "Salvar Alterações")}

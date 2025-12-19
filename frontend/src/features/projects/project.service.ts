@@ -55,8 +55,10 @@ export class ProjectService {
  * Busca *todos* os projetos, sem paginação, para uso em listagens administrativas.
  * @returns {Promise<ProjectResponseType[]>} Uma lista completa de todos os projetos.
  */
-  static async getAllProjects(): Promise<PaginatedProjectsResponse> {
-    const response = await api.get('/projects'); 
+  static async getAllProjects(params?: { limit?: number; page?: number }): Promise<PaginatedProjectsResponse> {
+    const response = await api.get('/projects', {
+      params: params // O Axios ignora automaticamente se for undefined
+    });
     return response.data;
   }
 

@@ -24,6 +24,7 @@ export function useProjectForm(action: "Create" | "Update" | "Delete", onFormSub
     const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     const formMethods = useForm({ 
         resolver: zodResolver(FormProjectData),
@@ -111,10 +112,10 @@ export function useProjectForm(action: "Create" | "Update" | "Delete", onFormSub
 
             if (action === "Create") {
                 await ProjectService.create(requestPayload);
-                alert("Projeto criado com sucesso!");
+                setSuccessMessage("Projeto criado com sucesso!");
             } else if (action === "Update" && data._id) {
                 await ProjectService.update(data._id, requestPayload);
-                alert("Projeto atualizado com sucesso!");
+                setSuccessMessage("Projeto atualizado com sucesso!");
             }
             onFormSubmit(); 
         } catch (err: any) {
@@ -135,7 +136,7 @@ export function useProjectForm(action: "Create" | "Update" | "Delete", onFormSub
             setError(null);
             try {
                 await ProjectService.delete(selectedProjectId);
-                alert("Projeto deletado com sucesso!");
+                setSuccessMessage("Projeto deletado com sucesso!");
                 onFormSubmit();
             } catch (err: any) {
                 setError(err.response?.data?.message || err.message || "Ocorreu um erro ao deletar.");

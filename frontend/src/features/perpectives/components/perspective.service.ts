@@ -57,9 +57,9 @@ export class PerspectiveService {
      * @param {PerspectiveRequestType} data - Os dados da perspectiva a ser criada.
      * @returns {Promise<PerspectiveResponseType>} A perspectiva recém-criada.
      */
-    static async create(data: PerspectiveRequest): Promise<PerspectiveResponseType> {
+    static async create(projectId: string, data: Partial<PerspectiveRequest>): Promise<PerspectiveResponseType> {
         // A rota para criar uma perspectiva depende do ID do projeto
-        const response = await api.post(`/perspectives/projects/${data.projectId}`, data);
+        const response = await api.post(`/perspectives/projects/${projectId}`, data);
         return response.data;
     }
 

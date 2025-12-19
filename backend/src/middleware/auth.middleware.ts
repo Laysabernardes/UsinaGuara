@@ -26,9 +26,14 @@ export function expressAuthentication(
     return new Promise((resolve, reject) => {
       // 1. Extração do Header Authorization
       const authHeader = request.headers.authorization;
+
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return reject(new Error('Nenhum token fornecido ou formato inválido.'));
+        return reject({
+          status: 401, // <--- O segredo está aqui!
+          message: 'Nenhum token fornecido ou formato inválido.'
+        });
       }
+
       const token = authHeader.split(' ')[1];
 
       // 2. Validação da Variável de Ambiente
@@ -40,7 +45,10 @@ export function expressAuthentication(
       // 3. Verificação do Token
       jwt.verify(token, secret, (err: any, decoded: any) => {
         if (err) {
-          return reject(new Error('Token inválido ou expirado.'));
+          return reject({
+            status: 401, // <--- Força o status 401
+            message: 'Token inválido ou expirado.'
+          });
         }
 
         // 4. Injeção de Contexto

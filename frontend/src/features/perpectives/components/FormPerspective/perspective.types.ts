@@ -17,7 +17,7 @@ export type IContentBlock = ITextBlock | ITitleBlock | IImageBlock | IHighlightB
  */
 export interface PerspectiveRequest {
   _id?: string;
-  project: {  id: string; slug: string };
+  project: { _id: string; slug: string };
   title: string;
   slug: string;
   order: number;
@@ -38,7 +38,7 @@ export interface PerspectiveRequest {
  */
 export interface PerspectiveResponseType {
   _id: string;
-  project:  { id: string; slug: string };
+  project: { _id: string; slug: string };
   title: string;
   slug: string;
   order: number;

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { PerspectiveService } from '../features/perpectives/components/perspective.service';
 import type { PerspectiveResponseType } from '../features/perpectives/components/FormPerspective/perspective.types';
 import { PerspectiveDetailView } from '../features/perpectives/components/PerspectiveDetailView';
+import LoadingOverlay from '../components/LoadingOverlay';
 
 export default function PerspectiveDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -15,44 +16,42 @@ export default function PerspectiveDetail() {
     window.scrollTo(0, 0);
     if (!slug) {
       setIsLoading(false);
-      setError("Slug não encontrado na URL.");
+      setError("Slug not found in URL.");
       return;
     };
 
     async function loadInitialPerspective() {
       setIsLoading(true);
       setError(null);
-      setPerspective(null); 
-      setOtherPerspectives([]); 
+      setPerspective(null);
+      setOtherPerspectives([]);
 
       try {
         const perspectiveData = await PerspectiveService.getBySlug(slug as string);
         if (perspectiveData) {
           setPerspective(perspectiveData);
         } else {
-          throw new Error("Perspectiva não encontrada.");
+          throw new Error("Perspective not found.");
         }
       } catch (err) {
-        setError("Não foi possível carregar a perspectiva.");
-        console.error(`Falha ao carregar dados para ${slug}`, err);
+        setError("Could not load perspective data. Please check API connection.");
         setIsLoading(false);
       }
     }
     loadInitialPerspective();
-  }, [slug]); 
+  }, [slug]);
 
   useEffect(() => {
     if (!perspective) return;
 
     async function loadOtherPerspectives() {
       try {
-        const projectId = perspective?.projectId?._id;
+        const projectId = perspective?.project?._id;
         if (!projectId) {
-          console.error("projectId não encontrado na perspectiva.");
+          console.error("projectId not found in perspective.");
           return;
         }
         const otherData = await PerspectiveService.getByProjectId(projectId);
-        console.log("OUTRAS PERSPECTIVAS RECEBIDAS:", otherData);
         setOtherPerspectives(otherData.sort((a, b) => a.order - b.order));
       } catch (err) {
         console.error("Falha ao carregar outras perspectivas:", err);
@@ -61,11 +60,21 @@ export default function PerspectiveDetail() {
       }
     }
     loadOtherPerspectives();
-  }, [perspective]); 
+  }, [perspective]);
 
-  if (isLoading) return <div className="text-center p-20 text-white bg-gray-900 h-screen">Carregando...</div>;
-  if (error) return <div className="text-center p-20 text-red-500 bg-gray-900 h-screen">{error}</div>;
-
+  if (isLoading) {
+    return <LoadingOverlay />;
+  }
+  if (error) {
+    return (
+      <div className="flex items-center justify-center p-20 text-red-500 bg-gray-900 h-screen text-center">
+        <div>
+          <h1 className="text-2xl font-bold mb-4">Error</h1>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
   if (!perspective) return <div className="text-center p-20 text-white bg-gray-900 h-screen">Perspectiva não encontrada.</div>;
 
   return <PerspectiveDetailView perspective={perspective} otherPerspectives={otherPerspectives} />;
