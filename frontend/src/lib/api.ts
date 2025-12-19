@@ -1,8 +1,8 @@
 import axios from 'axios';
 import toast from 'react-hot-toast'; 
 const api = axios.create({
-  baseURL: 'http://localhost:3000', 
-  //baseURL: 'https://site-v5hr.onrender.com',
+  //baseURL: 'http://localhost:3000', 
+  baseURL: 'https://site-v5hr.onrender.com',
 });
 
 // INTERCEPTADOR DE REQUISIÇÃO: Envia o token automaticamente
