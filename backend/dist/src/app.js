@@ -142,7 +142,7 @@ API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usi
             const isUserError = businessErrors.some(keyword => err.message.toLowerCase().includes(keyword.toLowerCase()));
             if (isUserError) {
                 return res.status(409).json({
-                    message: err.message // Envia a mensagem real: "A ordem 10 já está em uso..."
+                    message: err.message
                 });
             }
             // Se for um erro técnico real (banco caiu, código errado), aí sim 500
