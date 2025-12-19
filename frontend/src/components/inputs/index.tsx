@@ -40,7 +40,7 @@ function TypeInput({
           placeholder={placeholder}
           {...rest}
           required={required}
-          className="w-full bg-dark-1 p-2 pl-7 rounded-lg text-red-3"
+          className="w-full bg-gray-800 p-2 pl-7 rounded-lg text-red-3 border border-gray-3 focus:border-red-2 outline-none"
         />
       </div>
     </div>
@@ -71,9 +71,10 @@ function PasswordInput({
         <input
           id={id}
           type={showPassword ? "text" : "password"}
-          className={`w-full bg-dark-1 p-2 pl-10 pr-10 rounded-lg text-light-2 border 
-            ${errors?.[id] ? "border-red-3" : "border-dark-4"} 
-            focus:outline-none focus:ring-2 focus:ring-red-2`}
+          // Altere a linha do input para:
+          className={`w-full bg-gray-500 p-2 pl-10 pr-10 rounded-lg text-red-3 border 
+          ${errors?.[id] ? "border-red-1" : "border-gray-3"} 
+          focus:outline-none focus:ring-2 focus:ring-red-2`}
           {...rest}
         />
         <button
@@ -140,8 +141,7 @@ function Textarea({
           placeholder={placeholder}
           {...rest}
           required={required}
-          className="w-full h-50 max-h-50 bg-dark-1 p-2 pl-4 rounded-lg text-red-3 resize-none"
-        />
+          className="w-full h-50 max-h-50 bg-gray-800 p-2 pl-4 rounded-lg text-red-3 border border-gray-3 resize-none outline-none focus:border-red-2" />
       </div>
     </div>
   );
@@ -163,46 +163,79 @@ interface SelectionProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   required?: boolean;
 }
 
+
 function Selection({
   id,
   title,
   placeholder,
   icon,
-  nullOption = true,
   options,
   required,
-  ...rest
+  value,
+  onChange,
 }: SelectionProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSelect = (optionId: string | number) => {
+    const event = {
+      target: { value: optionId.toString(), id }
+    } as React.ChangeEvent<HTMLSelectElement>;
+    
+    onChange(event);
+    setIsOpen(false); 
+  };
+
+  const selectedText = options.find(opt => opt.id.toString() === value?.toString())?.text;
+
   return (
-    <div className="my-5 flex flex-col gap-2">
-      <label htmlFor={id} className="text-lg font-bold text-light-3">
+    <div className="my-5 flex flex-col gap-2 relative" ref={dropdownRef}>
+      <label className="text-lg font-bold text-gray-400">
         {title} {required && <span className="text-red-3">*</span>}
       </label>
-      <div className="relative">
-        <div
-          id="icon"
-          className="absolute left-2 h-full flex items-center justify-center text-red-3"
-        >
+
+      {/* Botão que abre/fecha o dropdown */}
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full bg-gray-800 p-2 pl-10 rounded-lg text-red-3 border border-gray-900 cursor-pointer flex items-center justify-between min-h-[42px]"
+      >
+        <div className="absolute left-3 text-red-3">
           {icon}
         </div>
-        <select
-          id={id}
-          {...rest}
-          required={required}
-          className="w-full bg-dark-1 p-2 pl-7 rounded-lg text-red-3"
-        >
-          {nullOption && (
-            <option disabled selected>
-              {placeholder}
-            </option>
-          )}
-          {options.map((opt) => (
-            <option key={opt.id} value={opt.id}>
-              {opt.text}
-            </option>
-          ))}
-        </select>
+        
+        <span className={selectedText ? "text-red-3" : "text-gray-400 opacity-60"}>
+          {selectedText || placeholder || "Selecione..."}
+        </span>
+
+        <FaArrowDown className={`transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </div>
+
+      {/* Lista de Opções (Abre apenas se isOpen for true) */}
+      {isOpen && (
+        <div className="absolute top-[100%] left-0 w-full mt-1 bg-gray-800 border border-gray-900 rounded-lg shadow-2xl z-50 overflow-hidden">
+          <div className="max-h-[200px] overflow-y-auto custom-scrollbar">
+            {options.map((opt) => (
+              <div
+                key={opt.id}
+                onClick={() => handleSelect(opt.id)}
+                className="px-4 py-2 text-red-3 cursor-pointer hover:bg-gray-900 transition-colors"
+              >
+                {opt.text}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -286,12 +319,11 @@ function MultiSelect({
 
       <div
         onClick={toggleDropdown}
-        className="w-full min-h-[44px] bg-dark-1 p-2 rounded-lg text-red-3 flex flex-wrap items-center cursor-pointer gap-2"
-      >
+        className="w-full min-h-[44px] bg-gray-800 p-2 rounded-lg text-red-3 flex flex-wrap items-center cursor-pointer gap-2 border border-gray-3"      >
         {icon && <span className="text-red-3 mr-2">{icon}</span>}
 
         {selected.length === 0 && (
-          <span className="text-red-3 opacity-50 absolute ml-5">
+          <span className="text-red-3 opacity-10 absolute ml-5">
             {placeholder}
           </span>
         )}
@@ -299,7 +331,7 @@ function MultiSelect({
         {selected.map((item) => (
           <span
             key={item.id}
-            className="bg-gray-300 text-dark-2 px-3 py-1 rounded-full flex items-center ml-2"
+            className="bg-gray-400 text-black px-3 py-1 rounded-full flex items-center ml-2"
           >
             {item.text}
             <button
@@ -318,11 +350,11 @@ function MultiSelect({
       </div>
 
       {isOpen && (
-        <div className="mt-1 rounded-lg bg-dark-1 max-h-60 overflow-y-auto z-10 w-full">
+        <div className="mt-1 rounded-lg bg-gray-800 border border-gray-300 max-h-[200px] overflow-y-auto z-10 w-full shadow-lg">
           {options.map((item) => (
             <label
               key={item.id}
-              className="flex items-center px-4 py-2 text-red-3 hover:bg-dark-2 cursor-pointer"
+              className="flex items-center px-4 py-2 text-red-3 hover:bg-gray-400 cursor-pointer"
             >
               <input
                 type="checkbox"

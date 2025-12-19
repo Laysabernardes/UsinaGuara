@@ -11,11 +11,33 @@ import { useState, useEffect } from "react";
 import { CarouselService, type CarouselResponseType } from "../service/carousel.service";
 import { ProjectService } from "../service/projects/project.service";
 import { type PaginatedProjectsResponse, type ProjectResponseType } from "../features/projects/project.types";
+import LoadingOverlay from '../components/LoadingOverlay'; // 1. Importe o componente
+
 
 function Home() {
   const [slidesToShow, setSlidesToShow] = useState(3);
   const [carouselData, setCarouselData] = useState<CarouselResponseType[]>([]);
   const [lastProjectsData, setLastProjectsData] = useState<PaginatedProjectsResponse>();
+  const [loading, setLoading] = useState(true);
+
+  // 2. Agrupar as chamadas em uma função principal
+  const loadPageData = async () => {
+    try {
+      setLoading(true);
+      
+      // Executa as duas buscas em paralelo para ganhar tempo
+      await Promise.all([
+        getAllCarousel(),
+        getAllProjectsAndOrderByDate()
+      ]);
+      
+    } catch (e) {
+      console.error("Error loading home data:", e);
+    } finally {
+      // 3. Desativa o spinner após o término de ambas (ou erro)
+      setLoading(false);
+    }
+  };
 
   const getAllCarousel = async () => {
     try {
@@ -40,6 +62,7 @@ function Home() {
       setLastProjectsData({ ...projects, data: sortedProjects });
     } catch (e) {
       console.log(e);
+      throw e;
     }
   };
   
@@ -52,17 +75,12 @@ function Home() {
 }
 
   useEffect(() => {
-    getAllCarousel();
-    getAllProjectsAndOrderByDate();
+    loadPageData();
 
     const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setSlidesToShow(1);
-      } else if (window.innerWidth < 1024) {
-        setSlidesToShow(2);
-      } else {
-        setSlidesToShow(3);
-      }
+      if (window.innerWidth < 640) setSlidesToShow(1);
+      else if (window.innerWidth < 1024) setSlidesToShow(2);
+      else setSlidesToShow(3);
     };
 
     handleResize();
@@ -90,6 +108,7 @@ function Home() {
   return (
     <>
       <Header />
+      {loading && <LoadingOverlay />}
       <header className="relative w-full min-h-[82vh] h-full py-5 flex flex-col items-center justify-center text-center bg-cover bg-center text-white"
         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(${background})` }}>
         <h2 className="h-max max-w-5xl text-white text-center text-3xl sm:text-4xl lg:text-5xl font-bold px-4 mb-3">Transformando Comunidades Através da Economia Criativa e do Urbanismo</h2>

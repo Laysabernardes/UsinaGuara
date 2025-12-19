@@ -1,6 +1,8 @@
 import { Controller } from "react-hook-form";
 import { TypeInput, Selection, MultiSelect } from "../../../../components/inputs";
 import { useProjectForm } from "../../useProjectForm";
+import LoadingOverlay from '../../../../components/LoadingOverlay';
+import { useState } from "react";
 
 interface FormProjectProps {
     action: "Create" | "Update" | "Delete";
@@ -12,14 +14,15 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
     const { register, control, handleSubmit } = formMethods;
     const { allProjects, people, selectedProjectId, isLoading, error } = state;
     const { setSelectedProjectId, onSubmit, handleDelete } = actions;
+    const [validationError, setValidationError] = useState<string | null>(null);
 
-
-    if (isLoading) return <p className="text-center p-4 text-gray-400">Carregando dados de Projetos e Pessoas...</p>;
-    if (error) return <p className="text-center p-4 text-red-500">Erro: {error}</p>;
+    if (isLoading) {
+        return <LoadingOverlay />;
+    }
 
     const onInvalid = (errors: any) => {
-        console.error("ERROS DE VALIDAÇÃO DO FORMULÁRIO:", errors);
-        alert("O formulário contém erros! Verifique o console do navegador (F12) para ver os detalhes.");
+        console.error("ERROS DE VALIDAÇÃO:", errors);
+        setValidationError("O formulário contém campos obrigatórios vazios ou inválidos.");
     };
 
     const projectOptions = allProjects.map(p => ({
@@ -32,6 +35,13 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
         text: p.name
     }));
 
+    // Crie esta função dentro do seu componente FormProject
+    const handleActualSubmit = async (data: any) => {
+        setValidationError(null); // Limpa o erro de validação local
+        // Aqui você também deve garantir que o erro da API seja limpo se o seu hook permitir
+        await onSubmit(data);
+    };
+
     const categoryOptions = [
         { id: "URBANIZAÇÃO", text: "Urbanização" },
         { id: "SUSTENTABILIDADE", text: "Sustentabilidade" },
@@ -42,7 +52,7 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
     ];
 
     return (
-        <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-6 p-4">
+        <form onSubmit={handleSubmit(handleActualSubmit, onInvalid)} className="space-y-6 p-4">
 
             {(action === "Update" || action === "Delete") && (
                 <Selection
@@ -124,11 +134,11 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
 
                     {/* Campo about_html (usando textarea simples) */}
                     <fieldset className="border border-gray-700 p-4 rounded-md">
-                        <legend className="text-lg font-semibold px-2 text-light-3">Sobre (HTML)</legend>
+                        <legend className="text-lg font-semibold px-2 text-light-3">Sobre: </legend>
                         <textarea
                             id="about_html"
                             {...register("about_html")}
-                            className="w-full bg-dark-3 text-light-3 border border-gray-600 rounded p-2"
+                            className="w-full bg-dark-3 text-light-3 border border-gray-700 rounded p-2"
                             rows={6}
                         />
                     </fieldset>
@@ -179,10 +189,23 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                         {/* CAMPOS orderCarousel */}
                     </fieldset>
 
+                    {error && (
+                        <div className="bg-red-600/20 border border-red-600 text-red-1 p-3 rounded-lg text-center animate-pulse mb-4">
+                            Erro: {error}
+                        </div>
+                    )}
+
+                    {/* MENSAGEM DE ERRO ESTILIZADA */}
+                    {validationError && (
+                        <div className="bg-red-600/20 border border-red-600 text-red-1 p-3 rounded-lg text-center animate-pulse">
+                            {validationError}
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full p-3 bg-blue-600 hover:bg-blue-500 rounded text-white text-xl font-bold transition-colors"
+                        className="w-full p-3 bg-red-600 hover:bg-red-400 rounded text-white text-xl font-bold transition-colors"
                     >
                         {isLoading ? "Salvando..." : (action === "Create" ? "Criar Novo Projeto" : "Salvar Alterações")}
                     </button>
