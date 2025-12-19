@@ -1,6 +1,7 @@
 import { Controller } from "react-hook-form";
 import { TypeInput, Selection } from "../../../../components/Inputs";
 import { usePeopleForm } from "../../usePeopleForm";
+import LoadingOverlay from '../../../../components/LoadingOverlay';
 
 interface FormPeopleProps {
     action: "Create" | "Update" | "Delete";
@@ -15,8 +16,8 @@ export function FormPeople({ action, onFormSubmit }: FormPeopleProps) {
     const { allPeople, selectedPeopleId, isLoading, error } = state;
     const { setSelectedPeopleId, onSubmit, handleDelete } = actions;
 
-    if (isLoading)
-        return <p className="text-center p-4 text-gray-400">Carregando dados de Pessoas...</p>;
+    if (isLoading) return <LoadingOverlay />;
+
     if (error)
         return <p className="text-center p-4 text-red-500">Erro: {error}</p>;
 
@@ -131,7 +132,7 @@ export function FormPeople({ action, onFormSubmit }: FormPeopleProps) {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full p-3 bg-blue-600 hover:bg-blue-500 rounded text-white text-xl font-bold transition-colors"
+                        className="w-full p-3 bg-green-600 hover:bg-green-500 rounded text-white text-xl font-bold transition-colors"
                     >
                         {isLoading
                             ? "Salvando..."

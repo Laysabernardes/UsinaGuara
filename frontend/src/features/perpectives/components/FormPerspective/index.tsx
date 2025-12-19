@@ -53,7 +53,7 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
             {(action === "Create" || (action === "Update" && selectedPerspectiveId)) && (
                 <>
                     <fieldset className="border border-gray-700 p-4 rounded-md">
-                        <legend className="text-lg font-semibold px-2">Informações Principais</legend>
+                        <legend className="text-lg font-semibold px-2 text-white">Informações Principais</legend>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <Controller
                                 control={control}
@@ -79,7 +79,7 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
                     <ContentBlockEditor control={control} register={register}  />
 
                     <fieldset className="border border-gray-700 p-4 rounded-md">
-                        <legend className="text-lg font-semibold px-2">Metadados e Associações</legend>
+                        <legend className="text-lg font-semibold px-2 text-white">Metadados e Associações</legend>
                         <Controller
                             control={control}
                             name="authors"
@@ -99,8 +99,8 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
 
                     {/* Opções de Destaque - AGORA SIMPLES */}
                     <fieldset className="border border-gray-700 p-4 rounded-md">
-                        <legend className="text-lg font-semibold px-2">Opções de Carrossel</legend>
-                        <div className="flex items-center gap-4">
+                        <legend className="text-lg font-semibold px-2 text-white">Opções de Carrossel</legend>
+                        <div className="flex items-center gap-4 text-white">
                             <input id="isCarousel" type="checkbox" {...register("isCarousel")} className="h-5 w-5" />
                             <label htmlFor="isCarousel">Quero incluir no Carrossel Principal?</label>
                         </div>

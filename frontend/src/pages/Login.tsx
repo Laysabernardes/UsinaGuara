@@ -106,7 +106,7 @@ function Login() {
             {/* Campo de Email */}
             <TypeInput
               id="email"
-              title="Email"
+              title="Username"
               type="email"
               placeholder="seuemail@exemplo.com"
               icon={<FaRegUser />}

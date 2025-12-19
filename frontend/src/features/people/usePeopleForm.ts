@@ -16,6 +16,8 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
     const [selectedPeopleId, setSelectedPeopleId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
 
     const formMethods = useForm<Inputs>({
         resolver: zodResolver(FormPeopleData),
@@ -119,7 +121,7 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
             if (action === "Create") {
                 console.log("🆕 API → CREATE");
                 await PeopleService.create(requestPayload);
-                alert("Pessoa cadastrada com sucesso!");
+                setSuccessMessage("Pessoa criada com sucesso!");
             }
 
             if (action === "Update" && data._id) {
@@ -129,7 +131,7 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
                 });
 
                 await PeopleService.update(data._id, requestPayload);
-                alert("Pessoa atualizada com sucesso!");
+                setSuccessMessage("Pessoa atualizada com sucesso!");
             }
 
             onFormSubmit();
@@ -154,7 +156,7 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
 
         try {
             await PeopleService.delete(selectedPeopleId);
-            alert("Pessoa deletada!");
+            setSuccessMessage("Pessoa deletada com sucesso!");
             onFormSubmit();
         } catch (err: any) {
             setError(err.response?.data?.message || "Erro ao deletar pessoa.");

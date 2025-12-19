@@ -99,7 +99,7 @@ export function ContentBlockEditor({ register, control }: ContentBlockEditorProp
 
   return (
     <fieldset className="border border-gray-700 p-4 rounded-md">
-      <legend className="text-lg font-semibold px-2">Conteúdo da Página</legend>
+      <legend className="text-lg font-semibold px-2 text-white">Conteúdo da Página <span className="text-red-500">*</span></legend>
       
       <DndContext
         collisionDetection={closestCenter}
@@ -127,10 +127,10 @@ export function ContentBlockEditor({ register, control }: ContentBlockEditorProp
 
       {/* Botões para adicionar novos blocos */}
       <div className="flex flex-wrap gap-4 mt-6 border-t border-gray-700 pt-4">
-        <button type="button" onClick={() => addBlock('title')} className="p-2 bg-blue-600 hover:bg-blue-500 rounded font-semibold">Adicionar Título</button>
-        <button type="button" onClick={() => addBlock('text')} className="p-2 bg-blue-600 hover:bg-blue-500 rounded font-semibold">Adicionar Texto</button>
-        <button type="button" onClick={() => addBlock('image')} className="p-2 bg-blue-600 hover:bg-blue-500 rounded font-semibold">Adicionar Imagem</button>
-        <button type="button" onClick={() => addBlock('highlight')} className="p-2 bg-blue-600 hover:bg-blue-500 rounded font-semibold">Adicionar Destaque</button>
+        <button type="button" onClick={() => addBlock('title')} className="p-2 bg-red-600 hover:bg-red-400 rounded font-semibold">Adicionar Título</button>
+        <button type="button" onClick={() => addBlock('text')} className="p-2 bg-red-600 hover:bg-red-400 rounded font-semibold">Adicionar Texto</button>
+        <button type="button" onClick={() => addBlock('image')} className="p-2 bg-red-600 hover:bg-red-400 rounded font-semibold">Adicionar Imagem</button>
+        <button type="button" onClick={() => addBlock('highlight')} className="p-2 bg-red-600 hover:bg-red-400 rounded font-semibold">Adicionar Destaque</button>
       </div>
     </fieldset>
   );

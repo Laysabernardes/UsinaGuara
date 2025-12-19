@@ -205,7 +205,7 @@ export function FormProject({ action, onFormSubmit }: FormProjectProps) {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full p-3 bg-red-600 hover:bg-red-400 rounded text-white text-xl font-bold transition-colors"
+                        className="w-full p-3 bg-green-600 hover:bg-green-500 rounded text-white text-xl font-bold transition-colors"
                     >
                         {isLoading ? "Salvando..." : (action === "Create" ? "Criar Novo Projeto" : "Salvar Alterações")}
                     </button>
