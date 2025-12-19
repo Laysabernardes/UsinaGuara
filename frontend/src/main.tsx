@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "react-hot-toast"; // 1. Importe o Toaster
 import "./index.css";
 import Home from "./pages/Home";
 import AdmManagement from "./pages/AdmManagement";
@@ -25,22 +26,22 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-   path: "/projetos",
-   element: <AllProjects />,
+    path: "/projetos",
+    element: <AllProjects />,
   },
-  { 
-    path: "/projeto/:slug", 
-    element: <ProjectPage /> 
+  {
+    path: "/projeto/:slug",
+    element: <ProjectPage />
   },
-  { 
+  {
     path: "/projeto/:slug/complete",
     element: <ProjectDetail />
   },
-    { 
+  {
     path: "/perspectiva/:slug",
     element: <PerspectiveDetail />
   },
-  { 
+  {
     path: "/parceiros",
     element: <Parceiros />
   },
@@ -68,6 +69,17 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+      toastOptions={{
+        style: {
+          borderRadius: '8px',
+          background: '#333',
+          color: '#fff',
+        },
+      }}
+    />
     <RouterProvider router={router} />
   </StrictMode>
 );
