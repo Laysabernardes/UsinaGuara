@@ -79,7 +79,7 @@ API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usi
    * Centraliza o formato de erro enviado ao cliente.
    */
   app.use(function errorHandler(
-    err: unknown,
+    err: any,
     req: ExRequest,
     res: ExResponse,
     next: NextFunction
@@ -99,15 +99,23 @@ API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usi
       });
     }
     // Tratamento de erros genéricos e regras de negócio
+    if (err.status) {
+      return res.status(err.status).json({
+        message: err.message || "Unauthorized",
+      });
+    }
+
+    // 4. Tratamento de erros genéricos (Error instanciados)
     if (err instanceof Error) {
       console.error("ERRO CAPTURADO PELO SERVIDOR:", err);
 
-      // Tratamento específico para conflitos de banco (ex: slugs duplicados)
       if (err.message === 'Este slug já está em uso.') {
         return res.status(409).json({ message: err.message });
       }
+
+      // Se não tiver um status definido, aí sim retornamos 500
       return res.status(500).json({
-        message: "Internal Server Error",
+        message: err.message || "Internal Server Error",
       });
     }
 
