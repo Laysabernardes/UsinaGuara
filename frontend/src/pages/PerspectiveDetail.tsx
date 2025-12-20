@@ -8,7 +8,6 @@ import LoadingOverlay from '../components/LoadingOverlay';
 export default function PerspectiveDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [perspective, setPerspective] = useState<PerspectiveResponseType | null>(null);
-  const [otherPerspectives, setOtherPerspectives] = useState<PerspectiveResponseType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +23,6 @@ export default function PerspectiveDetail() {
       setIsLoading(true);
       setError(null);
       setPerspective(null);
-      setOtherPerspectives([]);
 
       try {
         const perspectiveData = await PerspectiveService.getBySlug(slug as string);
@@ -51,8 +49,6 @@ export default function PerspectiveDetail() {
           console.error("projectId not found in perspective.");
           return;
         }
-        const otherData = await PerspectiveService.getByProjectId(projectId);
-        setOtherPerspectives(otherData.sort((a, b) => a.order - b.order));
       } catch (err) {
         console.error("Falha ao carregar outras perspectivas:", err);
       } finally {
@@ -77,5 +73,5 @@ export default function PerspectiveDetail() {
   }
   if (!perspective) return <div className="text-center p-20 text-white bg-gray-900 h-screen">Perspectiva não encontrada.</div>;
 
-  return <PerspectiveDetailView perspective={perspective} otherPerspectives={otherPerspectives} />;
+  return <PerspectiveDetailView perspective={perspective}/>;
 }

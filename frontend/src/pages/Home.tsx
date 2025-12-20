@@ -41,7 +41,7 @@ function Home() {
 
   const getAllCarousel = async () => {
     try {
-      const carouselNumbers = await CarouselService.getAllCarouselOrder();
+      const carouselNumbers = await CarouselService.getAllCarouselPublic();
       setCarouselData(carouselNumbers);
     } catch (e) {
       console.log(e);
@@ -110,14 +110,14 @@ function Home() {
     <>
       <Header />
       {loading && <LoadingOverlay />}
-      <header className="relative w-full min-h-[82vh] h-full py-5 flex flex-col items-center justify-center text-center bg-cover bg-center text-white"
+      <section className="relative w-full min-h-[82vh] h-full py-5 flex flex-col items-center justify-center text-center bg-cover bg-center text-white"
         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(${background})` }}>
         <h2 className="h-max max-w-5xl text-white text-center text-3xl sm:text-4xl lg:text-5xl font-bold px-4 mb-3">Transformando Comunidades Através da Economia Criativa e do Urbanismo</h2>
         <p className="mx-2 h-max max-w-3xl text-white text-center text-base sm:text-lg font-bold px-6 py-2 bg-gray-700/70 rounded-2xl">
           Promovemos projetos que conectam arte, urbanismo e desenvolvimento social
           para criar espaços mais humanos e sustentáveis.
         </p>
-      </header>
+      </section>
       <section className="w-full flex flex-col items-center justify-center bg-gray-800 p-6">
         <div id="destaques" className="w-full max-w-[1380px] mt-20 mb-15">
           <h2 className="text-white text-3xl font-bold text-center mb-7">

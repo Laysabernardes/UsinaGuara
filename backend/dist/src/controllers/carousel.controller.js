@@ -46,6 +46,13 @@ let CarouselController = class CarouselController extends tsoa_1.Controller {
     async getAllCarouselCandidates() {
         return await carousel_service_1.CarouselService.getAllCarouselCandidates();
     }
+    /**
+   * Retorna todos os itens que podem ser adicionados ao carrossel (Candidatos).
+   * Geralmente usado em seletores de busca no admin.
+   */
+    async getAllCarouselCandidatesPublic() {
+        return await carousel_service_1.CarouselService.getAllCarouselCandidatesPublic();
+    }
 };
 exports.CarouselController = CarouselController;
 __decorate([
@@ -74,6 +81,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], CarouselController.prototype, "getAllCarouselCandidates", null);
+__decorate([
+    (0, tsoa_1.Get)("/all/public"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], CarouselController.prototype, "getAllCarouselCandidatesPublic", null);
 exports.CarouselController = CarouselController = __decorate([
     (0, tsoa_1.Route)("carousel"),
     (0, tsoa_1.Tags)("Carousel")

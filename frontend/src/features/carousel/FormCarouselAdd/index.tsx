@@ -5,12 +5,15 @@ import type { CarouselResponseType, CollectionType } from '../carousel.types';
 // --- Componente de Linha (Itens Inativos) ---
 const InactiveItemRow: React.FC<{
     item: CarouselResponseType,
+    updateField: (id: string, field: keyof CarouselResponseType, value: any) => void,
     handleActivate: (item: CarouselResponseType) => Promise<{ success: boolean, message: string }>,
     isSaving: boolean,
-}> = ({ item, handleActivate, isSaving }) => {
+    availableOrders: number[]
+}> = ({ item, updateField, handleActivate, isSaving, availableOrders }) => {
 
     const [rowFeedback, setRowFeedback] = useState('');
     const [isActivating, setIsActivating] = useState(false);
+    const isItemCarouselValid = item.orderCarousel === undefined || item.orderCarousel === null || item.orderCarousel < 1 || item.orderCarousel > 10;
 
     const activateItem = async () => {
         setIsActivating(true);
@@ -25,7 +28,7 @@ const InactiveItemRow: React.FC<{
     };
 
     const typeColor = item.collection_type === 'project' ? 'text-orange-400' : 'text-purple-400';
-    const buttonContent = isActivating ? 'Ativando...' : (rowFeedback || 'Adicionar ao Carrossel');
+    const buttonContent = isActivating ? 'Ativando...' : 'Adicionar ao Carrossel';
     const feedbackStyle = rowFeedback.includes('Erro') ? 'text-red-400' : 'text-green-400';
 
     return (
@@ -37,11 +40,27 @@ const InactiveItemRow: React.FC<{
                 </span>
             </td>
             <td className="px-6 py-3 text-center">
+                <select
+                    value={item.orderCarousel ?? ""}
+                    onChange={(e) => {
+                    const value = e.target.value === "" ? undefined : Number(e.target.value);
+                    updateField(item._id, 'orderCarousel', value);
+                    setRowFeedback('');
+                    }}
+                    className="w-24 p-2 border border-gray-600 rounded bg-dark-1 text-gray-100 focus:ring-blue-500 focus:border-blue-500"
+                >
+                    <option value="">Selecione</option>
+                    {availableOrders.map(order => (
+                    <option key={order} value={order}>{order}</option>
+                    ))}
+                </select>
+            </td>
+            <td className="px-6 py-3 text-center">
                 <button
                     onClick={activateItem}
-                    disabled={isSaving || isActivating}
+                    disabled={isSaving || isActivating || isItemCarouselValid}
                     className={`px-4 py-1 rounded text-white text-sm font-bold transition-colors 
-                       ${isSaving || isActivating
+                       ${isSaving || isActivating || isItemCarouselValid
                             ? 'bg-gray-600 cursor-not-allowed'
                             : 'bg-red-700 hover:bg-red-500'} `}
                 >
@@ -57,8 +76,8 @@ const InactiveItemRow: React.FC<{
 
 export const FormCarouselAdd: React.FC = () => {
     const { state, actions } = useCarouselForm();
-    const { isLoading, error, inactiveItems, isSaving } = state;
-    const { handleActivateItem } = actions;
+    const { isLoading, error, inactiveItems, isSaving, availableOrders } = state;
+    const { updateItemField, handleActivateItem } = actions;
     const [page, setPage] = useState(1);
     const limit = 5;
 
@@ -68,7 +87,7 @@ export const FormCarouselAdd: React.FC = () => {
 
 
     const activateItemWrapper = (item: CarouselResponseType) => {
-        return actions.handleActivateItem(item.collection_type as CollectionType, item._id);
+        return actions.handleActivateItem(item.collection_type as CollectionType, item._id, item.orderCarousel as number);
     };
 
 
@@ -101,6 +120,7 @@ export const FormCarouselAdd: React.FC = () => {
                         <thead className="text-xs text-gray-200 uppercase bg-gray-600">
                             <tr>
                                 <th className="py-2 px-4">Item (Inativo)</th>
+                                <th className="py-2 px-4 text-center">Ordem</th>
                                 <th className="py-2 px-4 text-center">Ação</th>
                             </tr>
                         </thead>
@@ -109,8 +129,10 @@ export const FormCarouselAdd: React.FC = () => {
                                 <InactiveItemRow
                                     key={item._id}
                                     item={item}
+                                    updateField={updateItemField}
                                     handleActivate={activateItemWrapper}
                                     isSaving={isSaving}
+                                    availableOrders={availableOrders}
                                 />
                             ))}
                         </tbody>

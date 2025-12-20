@@ -999,6 +999,27 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argsCarouselController_getAllCarouselCandidatesPublic = {};
+    app.get('/carousel/all/public', ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController)), ...((0, runtime_1.fetchMiddlewares)(carousel_controller_1.CarouselController.prototype.getAllCarouselCandidatesPublic)), async function CarouselController_getAllCarouselCandidatesPublic(request, response, next) {
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args: argsCarouselController_getAllCarouselCandidatesPublic, request, response });
+            const controller = new carousel_controller_1.CarouselController();
+            await templateService.apiHandler({
+                methodName: 'getAllCarouselCandidatesPublic',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsAuthController_login = {
         body: { "in": "body", "name": "body", "required": true, "ref": "LoginInput" },
     };
