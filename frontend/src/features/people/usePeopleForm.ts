@@ -59,7 +59,6 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
     // -------------------------------------------------------------------------
     useEffect(() => {
 
-        console.log("🔎 selectedPeopleId mudou:", selectedPeopleId);
 
         // Se não é update ou nada selecionado → zera formulário
         if (action !== "Update" || !selectedPeopleId) {
@@ -98,7 +97,6 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
     // Resetar seleção ao trocar ação
     // -------------------------------------------------------------------------
     useEffect(() => {
-        console.log("🔁 Ação mudou → limpando selectedPeopleId");
         setSelectedPeopleId(null);
     }, [action]);
 
@@ -119,17 +117,11 @@ export function usePeopleForm(action: "Create" | "Update" | "Delete", onFormSubm
             };
 
             if (action === "Create") {
-                console.log("🆕 API → CREATE");
                 await PeopleService.create(requestPayload);
                 setSuccessMessage("Pessoa criada com sucesso!");
             }
 
             if (action === "Update" && data._id) {
-                console.log("⚙️ API → UPDATE", {
-                    id: data._id,
-                    requestPayload
-                });
-
                 await PeopleService.update(data._id, requestPayload);
                 setSuccessMessage("Pessoa atualizada com sucesso!");
             }

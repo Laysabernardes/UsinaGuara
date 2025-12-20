@@ -35,8 +35,14 @@ const CardCarousel = ({variant, theme, date, title, subtitle, img, slug, collect
       <div className="relative w-full h-45 overflow-hidden">
           <img src={img} alt={title} className="w-full h-full object-cover transition duration-500 group-hover:scale-110"/>
       </div>
-      <div className={`w-full h-40 flex flex-col justify-between p-6 text-gray-200 transition-colors duration-300 ${theme == "dark" ? "!bg-gray-1" : "!bg-gray-2"}`}>
+      <div className={`w-full h-48 flex flex-col justify-between p-6 text-gray-200 transition-colors duration-300 ${theme == "dark" ? "!bg-gray-1" : "!bg-gray-2"}`}>
         <div>
+          <span 
+           className={`${collection === "project" ? "bg-red-1":"bg-teal-600"} px-3 py-1 rounded-full tracking-wider text-xs mb-2 inline-block`}
+          >
+            {collection === "project" ? "Projeto" : "Cápitulo"}
+          </span>
+          
           <h3 className="text-2xl font-bold overflow-hidden mb-2">{title}</h3>
         </div>
         <Link to={collection === "project" ? `/projeto/${slug}` : `/perspectiva/${slug}`} className="w-max font-semibold transition flex items-center text-red-500 hover:text-red-300">

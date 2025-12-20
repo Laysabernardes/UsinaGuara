@@ -47,18 +47,26 @@ const AllProjects: React.FC = () => {
                 category
             );
 
-            // Concatena ou substitui os dados
-            setProjects(prevProjects =>
-                append ? [...prevProjects, ...result.data] : result.data
+            const publishedProjects = result.data.filter(
+                proj => proj.status === 'published'
             );
 
-            setTotalPages(result.totalPages);
+            // Concatena ou substitui os dados
+            setProjects(prevProjects =>
+                append ? [...prevProjects, ...publishedProjects] : publishedProjects
+            );
+
+            const calculatedTotalPages =
+                page === 1 && publishedProjects.length < PROJECTS_PER_PAGE
+                    ? 1
+                    : result.totalPages;
+
+            setTotalPages(calculatedTotalPages);
             setCurrentPage(page);
 
         } catch (err) {
             console.error('Fetch error:', err);
             console.log(err);
-            // Mensagem de erro em English, conforme sua instrução
             setError("Error loading projects. Please check API connection.");
             setProjects([]);
             
