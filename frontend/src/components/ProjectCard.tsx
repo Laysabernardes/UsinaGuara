@@ -35,7 +35,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const projectUrl = `/projeto/${slug}`; 
   
   const { badgeClasses, linkClass } = getCategoryClasses(mainCategory);
-  console.log("Categoria atual:", mainCategory);
 
   return (
     // Card Container

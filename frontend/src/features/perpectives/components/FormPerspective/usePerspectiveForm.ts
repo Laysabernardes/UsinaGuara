@@ -44,7 +44,6 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
                 setProjects(projectsData.data);
                 setPeople(peopleData);
             } catch (err) {
-                setError("Falha ao carregar dados. Verifique a conexão com a API.");
                 console.error("Erro ao buscar dados iniciais:", err);
             } finally {
                 setIsLoading(false);
@@ -81,6 +80,8 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
     const onSubmit = async (data: PerspectiveFormData) => {
         setIsLoading(true);
         setError(null);
+        setSuccessMessage(null);
+
         try {
             const selectedProject = projects.find(p => p._id === data.projectId);
 
@@ -88,7 +89,8 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
                 throw new Error("Projeto selecionado não encontrado na lista.");
             }
 
-            const { projectId, ...rest } = data;
+            // Isso evita o erro 422 de "excess property" no Backend
+            const { _id, projectId, ...rest } = data;
 
             // O payload deve ir sem a propriedade 'project' se a URL já contiver o ID
             const payload = {
@@ -97,17 +99,12 @@ export function usePerspectiveForm(action: "Create" | "Update" | "Delete", onFor
             };
 
             if (action === "Create") {
-                // 1. Extraímos o projectId do estado do formulário
-                const idDoProjeto = data.projectId;
-
-                // 2. Criamos o payload removendo o projectId para evitar o erro 422
-                const { projectId, ...payload } = data;
-
-                // 3. Chamamos o service com os dois argumentos
-                await PerspectiveService.create(idDoProjeto, payload as any);
-
+               // Passa o ID na URL e o payload no Body
+                await PerspectiveService.create(data.projectId, payload as any);
                 setSuccessMessage("Perspectiva criada com sucesso!");
+
             } else if (action === "Update" && data._id) {
+                // Passa o ID na URL e o payload (sem _id) no Body
                 await PerspectiveService.update(data._id, payload as any);
                 setSuccessMessage("Perspectiva atualizada com sucesso!");
             }
