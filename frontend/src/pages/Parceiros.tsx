@@ -40,11 +40,6 @@ export default function ParceirosPage() {
             style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url(${background})` }}>
               <h2 className="text-5xl md:text-7xl font-bold mb-3">Nossos Parceiros</h2>
               <p className="max-w-3xl mx-auto text-lg">Quem nos apoia a construir a Usina Guará</p>
-              <div className="flex justify-center flex-wrap gap-3 mt-4">
-                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">Urbanização</span>
-                <span className="bg-gray-700/80 text-gray-200 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">2024</span>
-                <span className="bg-gray-700/80 text-gray-200 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">15 meses de desenvolvimento</span>
-            </div>
           </section>
         <Parceiros />
         <div className="flex flex-col items-center gap-16 max-w-7xl w-full mx-auto py-16">

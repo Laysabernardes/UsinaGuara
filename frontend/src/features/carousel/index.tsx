@@ -9,18 +9,31 @@ const CarouselItemRow: React.FC<{
     handleSaveItem: (item: CarouselResponseType) => Promise<{ success: boolean, message: string }>,
     handleDeactivateItem: (item: CarouselResponseType) => Promise<{ success: boolean, message: string }>,
     isSaving: boolean,
-}> = ({ item, updateField, handleSaveItem, handleDeactivateItem, isSaving }) => {
+    availableOrders: number[]
+}> = ({ item, updateField, handleSaveItem, handleDeactivateItem, isSaving, availableOrders }) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [rowFeedback, setRowFeedback] = useState('');
     const [isRowSaving, setIsRowSaving] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
+    const [localOrder, setLocalOrder] = useState<number | "">(item.orderCarousel && item.orderCarousel >= 1 && item.orderCarousel <= 10 ? item.orderCarousel : "");
+    
+    const currentOrder =
+    item.orderCarousel && item.orderCarousel >= 1 && item.orderCarousel <= 10
+        ? item.orderCarousel
+        : null;
 
-    const handleOrderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        const numValue = value === "" ? undefined : parseInt(value, 10);
-        updateField(item._id, 'orderCarousel', numValue);
-        setRowFeedback('');
+    const ordersForRow = currentOrder
+    ? Array.from(new Set([currentOrder, ...availableOrders])).sort((a, b) => a - b)
+    : availableOrders;
+
+    const startEdit = () => {
+    setLocalOrder(
+        item.orderCarousel && item.orderCarousel >= 1 && item.orderCarousel <= 10
+        ? item.orderCarousel
+        : ""
+    );
+    setIsEditing(true);
     };
 
     const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,11 +45,14 @@ const CarouselItemRow: React.FC<{
     const saveCurrentItem = async () => {
         setIsRowSaving(true);
         setRowFeedback('');
-        setApiError(null); // Limpa erros anteriores
 
-        const result = await handleSaveItem(item);
+        updateField(item._id, 'orderCarousel', localOrder === "" ? undefined : localOrder);
 
-        // Se falhou, o result.message conterá "Conflito de dados: O campo 'order'..."
+        const result = await handleSaveItem({
+            ...item,
+            orderCarousel: localOrder === "" ? undefined : localOrder,
+        });
+
         setRowFeedback(result.message);
         setIsRowSaving(false);
 
@@ -44,10 +60,9 @@ const CarouselItemRow: React.FC<{
             setIsEditing(false);
         }
 
-        // Deixa a mensagem de erro por mais tempo se for falha (ex: 6 segundos)
-        const timer = result.success ? 4000 : 6000;
-        setTimeout(() => setRowFeedback(''), timer);
+        setTimeout(() => setRowFeedback(''), result.success ? 4000 : 6000);
     };
+
 
     const removeCurrentItem = async () => {
         if (!window.confirm(`Tem certeza que deseja REMOVER "${item.title}" do carrossel?`)) return;
@@ -70,7 +85,7 @@ const CarouselItemRow: React.FC<{
 
     // Cores de destaque para o tipo de coleção (Laranja para Projeto, Roxo para Perspectiva)
     const typeColor = item.collection_type === 'project' ? 'text-orange-400' : 'text-purple-400';
-    const isOrdered = item.orderCarousel !== undefined && item.orderCarousel !== null && item.orderCarousel >= 0;
+    const isOrdered = item.orderCarousel !== undefined && item.orderCarousel !== null && item.orderCarousel >= 1 && item.orderCarousel <= 10;
     const feedbackStyle = rowFeedback.includes('Erro') ? 'text-red-400' : 'text-green-400';
 
 
@@ -87,15 +102,30 @@ const CarouselItemRow: React.FC<{
             </td>
 
             <td className="px-6 py-4">
-                <input
-                    type="number"
-                    min="0"
-                    value={item.orderCarousel === undefined || item.orderCarousel === null ? "" : item.orderCarousel}
-                    onChange={handleOrderChange}
+                <select
+                    value={localOrder}
                     disabled={!isEditing || isRowSaving}
-                    className="w-20 p-2 border border-gray-600 rounded focus:ring-blue-500 focus:border-blue-500 bg-dark-1 text-gray-100" // Input escuro
-                    placeholder="Sem ordem"
-                />
+                    onChange={(e) => {
+                        const value = e.target.value === "" ? "" : Number(e.target.value);
+                        setLocalOrder(value);
+                        setRowFeedback('');
+                    }}
+                    className="w-24 p-2 border border-gray-600 rounded bg-dark-1 text-gray-100 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-60"
+                >
+                    <option value="">Selecione</option>
+
+                    {Array.from(new Set([
+                        ...(localOrder !== "" ? [localOrder] : []),
+                        ...availableOrders
+                    ]))
+                        .sort((a, b) => a - b)
+                        .map(order => (
+                        <option key={order} value={order}>
+                            {order}
+                        </option>
+                        ))}
+                </select>
+
                 {!isOrdered && <p className="text-xs text-red-400 mt-1">Item **inativo**</p>}
             </td>
 
@@ -116,7 +146,7 @@ const CarouselItemRow: React.FC<{
 
                     <div className="space-y-1">
                         <button
-                            onClick={() => setIsEditing(true)}
+                            onClick={startEdit}
                             disabled={isSaving}
                             className={`p-2 rounded text-white text-xs font-bold transition-colors w-24 bg-teal-600 hover:bg-teal-500`}
                         >
@@ -135,9 +165,9 @@ const CarouselItemRow: React.FC<{
                     <div className="space-y-1">
                         <button
                             onClick={saveCurrentItem}
-                            disabled={isRowSaving || isSaving}
+                            disabled={isRowSaving || isSaving || !isOrdered}
                             className={`p-2 rounded text-white text-xs font-bold transition-colors w-24
-                            ${isRowSaving || isSaving ? 'bg-gray-00 cursor-not-allowed' : 'bg-green-700 hover:bg-green-600'}`}
+                            ${isRowSaving || isSaving || !isOrdered ? 'bg-gray-00 cursor-not-allowed' : 'bg-green-700 hover:bg-green-600'}`}
                         >
                             {isRowSaving ? 'Salvando...' : 'Salvar'}
                         </button>
@@ -164,7 +194,7 @@ const CarouselItemRow: React.FC<{
 
 export const FormCarouselHighlights: React.FC = () => {
     const { state, actions } = useCarouselForm();
-    const { highlightItems, isLoading, error, isSaving, page, totalPages } = state;
+    const { highlightItems, isLoading, error, isSaving, page, totalPages, availableOrders } = state;
     const { setPage } = actions;
 
     const { handleSaveItem, updateItemField, handleDeactivateItem } = actions;
@@ -226,6 +256,7 @@ export const FormCarouselHighlights: React.FC = () => {
                                 handleSaveItem={handleSaveItem}
                                 handleDeactivateItem={handleDeactivateItem}
                                 isSaving={isSaving}
+                                availableOrders={availableOrders}
                             />
                         ))}
                     </tbody>

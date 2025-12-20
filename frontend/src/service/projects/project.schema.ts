@@ -45,8 +45,20 @@ export const FormProjectData = z.object({
             .int("A ordem deve ser um número inteiro.")
     ).optional(), // <--- Garante o tipo number | undefined
 
-    banner: z.string().url("URL do banner inválida").or(z.literal("")).nullable().optional(),
-    extraURL: z.string().url("URL extra inválida").or(z.literal("")).optional(),
+   // ... restante do seu código
+
+    banner: z
+        .string()
+        .trim()
+        .optional()
+        .or(z.literal(""))
+        .nullable(),
+
+    extraURL: z
+        .string()
+        .trim()
+        .optional()
+        .or(z.literal("")),
 });
 
 export type ProjectFormData = z.infer<typeof FormProjectData>;
