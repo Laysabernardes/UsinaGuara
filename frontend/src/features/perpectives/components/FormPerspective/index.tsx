@@ -11,7 +11,18 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
     const { allPerspectives, projects, people, selectedPerspectiveId, isLoading, error } = state;
     const { setSelectedPerspectiveId, onSubmit, handleDelete } = actions;
     const [validationError, setValidationError] = useState<string | null>(null);
+    const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
+    const filteredPerspectives = selectedProjectId ? allPerspectives.filter(p => {
+        const projectId =
+            typeof p.project === "object" && p.project !== null
+                ? p.project._id
+                : p.project;
+
+        return projectId === selectedProjectId;
+    }) : [];
+
+    
     if (isLoading) return <LoadingOverlay />;
 
     const onInvalid = (errors: any) => {
@@ -32,14 +43,32 @@ export function FormPerspective({ action, onFormSubmit }: { action: "Create" | "
     return (
         <form onSubmit={handleSubmit(handleActualSubmit, onInvalid)} className="space-y-6 p-4">
             {(action === "Update" || action === "Delete") && (
-                <Selection
-                    id="perspective_selector"
-                    title="Selecione uma Perspectiva para Editar ou Deletar"
-                    value={selectedPerspectiveId ?? ""}
-                    onChange={(e) => setSelectedPerspectiveId(e.target.value)}
-                    options={allPerspectives.map(p => ({ id: p._id, text: p.title }))}
-                    required
-                />
+                <>
+                    <Selection
+                        id="project_selector"
+                        title={`Selecione um Projeto para listar suas Perspectivas para ${action === "Update" ? "Edição" : "Deleção"}`}
+                        value={selectedProjectId ?? ""}
+                        onChange={(e) => {
+                                const projectId = e.target.value;
+
+                                setSelectedProjectId(projectId);
+                                setSelectedPerspectiveId(null);
+                                formMethods.reset({ contentBlocks: [], authors: [] });
+                            }}
+                        options={projects.map(p => ({ id: p._id, text: p.title }))}
+                        required
+                    />
+                    {selectedProjectId && (
+                        <Selection
+                            id="perspective_selector"
+                            title={`Selecione uma Perspectiva para ${action === "Update" ? "Editar" : "Deletar"}`}
+                            value={selectedPerspectiveId ?? ""}
+                            onChange={(e) => setSelectedPerspectiveId(e.target.value)}
+                            options={filteredPerspectives.map(p => ({ id: p._id, text: p.title }))}
+                            required
+                        />
+                    )}
+                </>
             )}
 
             {action === "Delete" && selectedPerspectiveId && (

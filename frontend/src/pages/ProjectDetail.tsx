@@ -84,7 +84,6 @@ export default function ProjectDetail() {
                 {project.year}
               </span>
             )}
-            {project.about_html && <span className="bg-gray-700/80 text-gray-200 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">{project.about_html}</span>}
           </div>
         </section>
 
@@ -97,7 +96,7 @@ export default function ProjectDetail() {
                 ? 'bg-red-600'
                 : 'bg-gray-700 hover:bg-gray-600'}`}
             >
-              Pers. {p.order}
+              Cap. {p.order}
             </button>
           ))}
         </nav>

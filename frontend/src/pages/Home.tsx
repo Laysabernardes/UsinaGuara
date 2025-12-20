@@ -42,7 +42,12 @@ function Home() {
   const getAllCarousel = async () => {
     try {
       const carouselNumbers = await CarouselService.getAllCarouselPublic();
-      setCarouselData(carouselNumbers);
+      
+      const ordered = [...carouselNumbers].sort(
+        (a, b) => (a.orderCarousel ?? Infinity) - (b.orderCarousel ?? Infinity)
+      ).filter(item => item.orderCarousel !== null && item.orderCarousel !== undefined && item.orderCarousel <= 10);
+
+      setCarouselData(ordered);
     } catch (e) {
       console.log(e);
     }

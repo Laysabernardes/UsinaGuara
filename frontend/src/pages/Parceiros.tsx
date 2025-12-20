@@ -47,7 +47,7 @@ export default function ParceirosPage() {
             <h3 className="text-2xl font-bold mb-4">Agradecimentos</h3>
             <div className="flex flex-col gap-5 w-full mt-6">
               {parceiros.map((parceiro, index) => (
-                <div key={index} className="flex flex-col sm:flex-row items-center gap-5 bg-gray-100 p-8 rounded-2xl w-full text-center sm:text-left">
+                <div key={index} className="flex flex-col sm:flex-row items-center gap-5 bg-gray-200 p-8 rounded-2xl w-full text-center sm:text-left">
                   <img src={parceiro.image} alt={parceiro.title} className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover"/>
                   <div className="flex flex-col items-center sm:items-start">
                     <p className="text-lg font-bold text-gray-1 mb-0.5 sm:mb-0">{parceiro.title}</p>

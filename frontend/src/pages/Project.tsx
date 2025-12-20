@@ -69,7 +69,6 @@ export default function ProjectDetailPage() {
                 {project.year}
               </span>
             )}
-            {project.about_html && <span className="bg-gray-700/80 text-gray-200 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">{project.about_html}</span>}
           </div>
         </section>
 
