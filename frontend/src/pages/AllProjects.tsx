@@ -12,11 +12,11 @@ import background from "../assets/bg_projetos.png";
 // Lista de categorias MOCKADA (Inalterada)
 const MOCK_CATEGORIES = [
     'Todos',
-    'Urbanização',
-    'Habitação Social',
-    'Arte Comunitária',
-    'Arquitetura',
-    'Sustentabilidade'
+    'URBANIZAÇÃO',
+    'HABITAÇÃO SOCIAL',
+    'ARTE COMUNITÁRIA',
+    'ARQUITETURA',
+    'SUSTENTABILIDADE'
 ];
 
 const PROJECTS_PER_PAGE = 6;
