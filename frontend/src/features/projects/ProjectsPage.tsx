@@ -9,11 +9,11 @@ import type { ProjectResponseType, PaginatedProjectsResponse } from './project.t
 // Lista de categorias MOCKADA (Inalterada)
 const MOCK_CATEGORIES = [
     'Todos',
-    'Urbanização',
-    'Habitação Social',
-    'Arte Comunitária',
-    'Arquitetura',
-    'Sustentabilidade'
+    'URBANIZAÇÃO',
+    'HABITAÇÃO SOCIA',
+    'ARTE COMUNITÁRIA',
+    'ARQUITETURA',
+    'SUSTENTABILIDADE'
 ];
 
 const PROJECTS_PER_PAGE = 6;
