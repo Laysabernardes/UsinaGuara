@@ -23,7 +23,7 @@ api.interceptors.request.use(
   }
 );
 
-// INTERCEPTADOR DE RESPOSTA
+// INTERCEPTADOR DE RESPOSTA : Trata erros de autenticação globalmente
 api.interceptors.response.use(
   (response) => response,
   (error) => {
