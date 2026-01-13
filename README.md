@@ -1,5 +1,7 @@
+# 🏭 Usina Guará — Plataforma Digital
+
 <div align="center">
- <img 
+  <img 
     src="./frontend/src/assets/img.png" 
     alt="Header Usina Guará" 
     width="100%" 
@@ -7,7 +9,7 @@
     style="object-fit: cover; object-position: center;"
   />
 
-  # 🏭 Usina Guará - Plataforma Digital
+  <br/>
 
   [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
   [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
@@ -16,40 +18,144 @@
   [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
   <p align="center">
-    <b>Infraestrutura digital completa para gerenciamento de conteúdo, visibilidade e autonomia do coletivo Usina Guará.</b>
+    <b>Plataforma digital completa para gestão de conteúdo, identidade e presença online do coletivo Usina Guará.</b>
   </p>
 
-  [🌐 Acessar Site Oficial](https://usinaguara.com/) • [📄 Documentação da API](https://site-v5hr.onrender.com/api-docs/) • [🐛 Reportar Bug](https://github.com/UsinaGuara/site/issues)
-
+  <p align="center">
+    <a href="https://usinaguara.com/">🌐 Site Oficial</a> • 
+    <a href="https://site-v5hr.onrender.com/api-docs/">📄 Documentação da API</a>
+  </p>
 </div>
 
 ---
 
-## 📋 Sobre o Projeto
+## 📌 Visão Geral
 
-Este projeto é um **Monorepo** que unifica toda a tecnologia por trás do portal da Usina Guará. O sistema consiste em um CMS (Content Management System) personalizado que permite ao coletivo gerenciar seus artigos, projetos, membros e identidade visual de forma autônoma e segura.
+Este repositório concentra toda a **infraestrutura digital da Usina Guará**, integrando frontend e backend de forma desacoplada, escalável e segura.
 
-O projeto está dividido em duas grandes estruturas:
+A plataforma foi desenvolvida para oferecer **autonomia total** ao coletivo na gestão de:
 
-| Módulo | Tecnologia | Descrição |
-| :--- | :--- | :--- |
-| **[Backend](./backend)** | Node.js + TSOA | API RESTful, Regras de Negócio, Segurança e Banco de Dados. |
-| **[Frontend](./frontend)** | React + Tailwind | Interface Visual Responsiva, Painel Administrativo e UX. |
+- Conteúdos editoriais e institucionais
+- Projetos culturais
+- Membros e colaboradores
+- Identidade visual e presença digital
+
+Tudo isso através de um **CMS personalizado**, adaptado às necessidades reais da organização.
+
+> [!IMPORTANT]
+> O projeto segue a arquitetura de **monorepo**, onde **frontend e backend são aplicações independentes**.  
+> Cada módulo possui seu próprio fluxo de desenvolvimento, build e deploy.
+
+
 
 ---
 
-## 🚀 Como Executar o Projeto Completo
+## 🧱 Arquitetura do Projeto
 
-Para rodar o ambiente de desenvolvimento completo em sua máquina, você precisará configurar os dois módulos separadamente.
+O sistema é dividido em dois módulos principais, cada um com responsabilidades bem definidas:
 
-### Pré-requisitos
-* **Node.js** (v18 ou superior)
-* **Git**
-* **MongoDB** (URL de conexão local ou Atlas)
+| Módulo | Stack | Responsabilidade |
+|------|------|------------------|
+| **[Backend](./backend)** | Node.js · TypeScript · TSOA | API REST, regras de negócio, autenticação e persistência de dados |
+| **[Frontend](./frontend)** | React · TypeScript · Tailwind | Interface pública, painel administrativo e experiência do usuário |
 
-### Passo a Passo
+> 🔎 Cada módulo possui seu próprio README com instruções detalhadas de setup, padrões e deploy.
 
-1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/UsinaGuara/site.git](https://github.com/UsinaGuara/site.git)
-   cd site
+> [!NOTE]
+> Apesar de compartilharem o mesmo repositório, os módulos **não dependem diretamente entre si** em tempo de execução.
+> A comunicação ocorre exclusivamente via API REST.
+
+
+---
+
+## 🚀 Executando o Projeto Localmente
+
+Para rodar o ambiente completo em desenvolvimento, é necessário configurar **backend e frontend separadamente**.
+
+### 🔧 Pré-requisitos
+
+- **Node.js** (v18 ou superior)
+- **Git**
+- **MongoDB** (local ou MongoDB Atlas)
+
+> [!WARNING]
+> As variáveis de ambiente do backend são obrigatórias para o funcionamento da aplicação.
+> Certifique-se de configurar corretamente o `.env` antes de iniciar o servidor.
+
+
+---
+
+### ▶️ Passo a Passo
+
+#### 1️⃣ Clone o repositório
+```bash
+git clone https://github.com/UsinaGuara/site.git
+cd site
+```
+A API estará disponível em:
+
+- **API:** http://localhost:3000  
+- **Swagger:** http://localhost:3000/api-docs
+
+---
+
+### 3️⃣ Frontend
+
+Em um novo terminal, siga as instruções no  
+[README do Frontend](./frontend/README.md).
+
+```bash
+cd frontend
+npm install
+npm run dev
+
+```
+
+A interface será iniciada em:
+
+- **Frontend:** http://localhost:5173  
+  *(ou outra porta definida pelo Vite)*
+
+---
+
+## ☁️ Infraestrutura & Deploy
+
+A plataforma adota uma arquitetura moderna, desacoplada e orientada a serviços:
+
+- **Backend:**  
+  Hospedado no **Render**, com deploy automático via branch `main`.
+
+- **Frontend:**  
+  Publicado no **GitHub Pages**, utilizando **GitHub Actions** para CI/CD.
+
+- **Banco de Dados:**  
+  Cluster gerenciado no **MongoDB Atlas**, garantindo escalabilidade, segurança e alta disponibilidade.
+
+> [!TIP]
+> A separação entre frontend e backend garante **escalabilidade independente**,  
+> melhor controle de custos e maior segurança operacional.
+
+---
+
+## 👥 Time de Desenvolvimento
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Laysabernardes">
+        <img src="https://github.com/Laysabernardes.png" width="100px;" alt="Laysa Bernardes"/><br />
+        <sub><b>Laysa Bernardes</b></sub>
+      </a><br />
+      🚀 Backend & Data Architect
+    </td>
+    <td align="center">
+      <a href="https://github.com/LucasLoopsT">
+        <img src="https://github.com/LucasLoopsT.png" width="100px;" alt="Lucas Lopes"/><br />
+        <sub><b>Lucas Lopes</b></sub>
+      </a><br />
+      🎨 Frontend & Fullstack
+    </td>
+  </tr>
+</table>
+
+
