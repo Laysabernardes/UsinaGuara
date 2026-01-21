@@ -1,11 +1,22 @@
-# 🏛️ Usina Guará - API Engine
+<div align="center">
+ <img 
+    src="../frontend/src/assets/img.png" 
+    alt="Header Usina Guará" 
+    width="100%" 
+    height="200px" 
+    style="object-fit: cover; object-position: center;"
+  />
 
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
-![TSOA](https://img.shields.io/badge/TSOA-API-blue?style=for-the-badge)
+  # 🏛️ Usina Guará - Sistema de Gestão de Conteúdo
 
-API REST robusta e escalável desenvolvida para a gestão digital da **Usina Guará**. Este software é fruto de uma iniciativa voluntária focada em fornecer infraestrutura tecnológica para a preservação histórica e gerenciamento de conteúdo da organização.
+  [![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+  ![TSOA](https://img.shields.io/badge/TSOA-API-blue?style=flat-square)
+
+</div>
+
+Este repositório contém o backend da **Usina Guará**. Ele é responsável por gerenciar o banco de dados e fornecer as informações necessárias para o funcionamento do site, garantindo que o acervo histórico e os dados da organização estejam sempre organizados.
 
 ---
 
@@ -13,86 +24,130 @@ API REST robusta e escalável desenvolvida para a gestão digital da **Usina Gua
 
 O projeto utiliza uma stack moderna focada em segurança, tipagem estrita e documentação automatizada:
 
-- **Linguagem:** TypeScript para garantir integridade de dados e facilitar a manutenção.
-- **Framework Web:** Express.js com **TSOA** para geração automática de rotas e documentação Swagger.
-- **Banco de Dados:** MongoDB (via Mongoose) com modelagem flexível.
-- **Validação:** Zod para validação rigorosa dos esquemas de dados.
-- **Segurança:** Autenticação via JWT (JSON Web Tokens) e criptografia de senhas com Bcrypt.
+* **Linguagem:** `TypeScript` para integridade de dados e manutenção simplificada.
+* **Framework Web:** `Express.js` aliado ao **TSOA** para rotas tipadas e Swagger automático.
+* **Persistência:** `MongoDB` com Mongoose para modelagem de dados flexível.
+* **Validação:** `Zod` para garantia de esquemas e contratos de dados.
+* **Segurança:** Autenticação via `JWT` e criptografia `Bcrypt`.
 
 ---
 
 ## ⚙️ Configuração do Ambiente
 
-O sistema utiliza variáveis de ambiente para gerenciar as conexões. 
-Crie um arquivo `.env` na raiz da pasta `backend` seguindo o modelo abaixo (disponível em `.env.example`):
+O sistema utiliza variáveis de ambiente para gerenciar as conexões. Crie um arquivo `.env` na raiz da pasta `backend` seguindo este modelo:
 
-```bash
-# Porta do Servidor
-PORT=3000
-
-# Conexão com o Banco de Dados (MongoDB Atlas)
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/usina_guara
-
-# Segurança e Autenticação
-JWT_SECRET=sua_chave_secreta_longa_e_segura
-MASTER_RESET_CODE=codigo_para_redefinicao_critica
-
-# Ambiente da Aplicação
-NODE_ENV=development ou production
-
-## 🛠️ Scripts Disponíveis
-
-| Script | Comando | Descrição |
+| Variável | Descrição | Exemplo / Sugestão |
 | :--- | :--- | :--- |
-| **Build** | `npm run build` | Gera as rotas TSOA e transpila o TS para JS na pasta `/dist`. |
-| **Dev** | `npm run dev` | Inicia o ambiente com hot-reload e geração automática de rotas. |
-| **Start** | `npm start` | Inicia o servidor em produção consumindo apenas a pasta `/dist`. |
+| `PORT` | Porta de saída do servidor | `3000` |
+| `MONGO_URI` | String de conexão MongoDB Atlas | `mongodb+srv://user:pass@cluster...` |
+| `JWT_SECRET` | Chave de criptografia para tokens | `chave_longa_e_aleatoria` |
+| `MASTER_RESET_CODE` | Código para redefinições críticas | `admin_master_code` |
+| `NODE_ENV` | Ambiente da aplicação | `development` ou `production` |
+
+> [!CAUTION]
+> **Segurança:** Nunca comite o seu arquivo `.env`. Certifique-se de que ele esteja listado no seu `.gitignore`.
 
 ---
 
-## ☁️ Estratégia de Deploy (Render)
+## 🛠️ Scripts de Desenvolvimento
 
-Para otimizar o uso de recursos no plano gratuito (limite de 512MB de RAM), o projeto utiliza um fluxo de **Build Local**:
-
-1. O código é transpilado localmente via `npm run build`.
-2. A pasta `/dist` é enviada ao repositório GitHub.
-3. No painel do **Render**, configuramos:
-   - **Build Command:** `npm install` (Instala apenas dependências necessárias).
-   - **Start Command:** `node dist/src/app.js` (Execução direta do código leve).
-
-Isso evita o erro de `Out of Memory` durante a compilação no servidor.
+| Comando | Descrição |
+| :--- | :--- |
+| `npm run dev` | Inicia em modo **Desenvolvimento** com hot-reload (Nodemon). |
+| `npm run build` | Transpila o TS para JS e gera as rotas do **TSOA**. |
+| `npm start` | Inicia o servidor em **Produção** a partir da pasta `/dist`. |
 
 ---
 
-## 📂 Estrutura de Diretórios
+## ☁️ Notas de Deploy & Infraestrutura (Render)
+
+Como o projeto é estruturado em um monorepo, a configuração correta no painel do **Render** é vital para o funcionamento da API. Siga as diretrizes abaixo:
+
+### 📂 Configuração de Diretório
+> [!IMPORTANT]
+> O **Root Directory** deve ser definido como `backend`. O servidor falhará ao iniciar se tentar executar a partir da raiz do repositório principal.
+
+### 🔑 Variáveis de Ambiente
+Todas as chaves detalhadas na seção [Configuração do Ambiente](#-configuração-do-ambiente) precisam ser cadastradas manualmente na aba **Environment** do Render.
+
+> [!NOTE]
+> Se a API retornar erros de conexão ou `401 Unauthorized` em produção, a primeira causa a ser verificada deve ser a integridade destas chaves.
+
+### 🛠️ Estratégia de Build Otimizada
+Para operar dentro do limite de **512MB de RAM** do plano gratuito e evitar erros de `Out of Memory`, adotamos o fluxo de **Build Local**:
+
+1. **Transpilação:** Execute `npm run build` localmente para gerar a pasta `/dist`.
+2. **Sincronização:** Envie a pasta `/dist` atualizada para o GitHub.
+3. **Provisionamento:** No painel do Render, utilize os seguintes comandos:
+   - **Build Command:** `npm install`
+   - **Start Command:** `node dist/src/app.js`
+
+> [!TIP]
+> Esta abordagem garante que o servidor utilize recursos apenas para a execução do código, deixando o processo pesado de compilação para a sua máquina local.
+
+---
+
+## 📂 Estrutura de Pastas
 
 ```text
-├── dist/               # Código compilado pronto para produção
+├── dist/                # Artefatos compilados (Produção)
 ├── src/
-│   ├── config/         # Configurações de banco de dados e globais
-│   ├── controllers/    # Controllers com decoradores TSOA
-│   ├── dtos/           # Data Transfer Objects e Schemas Zod
-│   ├── middleware/     # Tratamento de erros e segurança (Auth)
-│   ├── models/         # Definições de modelos Mongoose
-│   ├── services/       # Regras de negócio e lógica de persistência
-│   └── app.ts          # Ponto de entrada da aplicação
-├── tsoa.json           # Configurações do motor TSOA
-└── tsconfig.json       # Configurações do compilador TypeScript
+│   ├── config/          # Configurações globais e DB
+│   ├── controllers/     # Handlers com decoradores TSOA
+│   ├── dtos/            # Data Transfer Objects & Schemas Zod
+│   ├── middleware/      # Segurança, Auth e Tratamento de Erros
+│   ├── models/          # Schemas do Mongoose
+│   ├── services/        # Lógica de negócio (Business Logic)
+│   └── app.ts           # Entry point do servidor
+├── tsoa.json            # Configuração do motor TSOA
+└── tsconfig.json        # Configuração do TypeScript
+```
 
-## 📖 Documentação da API
+## 📖 Documentação Interativa
 
-A documentação interativa (Swagger UI) permite testar os endpoints em tempo real:
+Acesse a interface do **Swagger** para explorar e testar os endpoints em tempo real:
 
-- **Local:** `http://localhost:3000/api-docs`
-- **Produção:** [https://site-v5hr.onrender.com/api-docs/](https://site-v5hr.onrender.com/api-docs/)
-
-> **Nota:** No topo da interface Swagger, você pode alternar entre o servidor local e o servidor de produção através do seletor "Servers".
+* **🌐 Ambiente Local:** [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+* **🚀 Ambiente de Produção:** [API Usina Guará no Render](https://site-v5hr.onrender.com/api-docs/#/)
 
 ---
 
-## 👥 Contribuidores
+## 🛡️ Padrões de Desenvolvimento & Segurança
 
-Este projeto foi desenolvido por:
+Para manter a consistência e segurança da API Engine, seguimos os seguintes protocolos:
 
-* **Laysa Bernardes** - *Backend (Estrutura, Modelagem & Banco de Dados) & Fullstack Developer* - [GitHub](https://github.com/Laysabernardes)
-* **Lucas Lopes** - *Frontend Developer & Fullstack Develope* - [GitHub](https://github.com/LucasLoopsT)
+* **Validação de Dados:** Utilizamos o `Zod` em conjunto com decorators do `TSOA`. Se um dado enviado não estiver no formato correto, a API retornará automaticamente um erro `400 (Bad Request)`.
+* **Autenticação:** Endpoints sensíveis exigem o Header `Authorization: Bearer <JWT_TOKEN>`.
+
+---
+
+## 🛠️ Como Contribuir Localmente
+
+1.  Clone o repositório principal.
+2.  Navegue até a pasta do backend: `cd backend`.
+3.  Instale as dependências: `npm install`.
+4.  Configure seu `.env` com base no `.env.example`.
+5.  Gere as rotas e inicie o servidor: `npm run dev`.
+
+## 👥 Time de Desenvolvimento
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Laysabernardes">
+        <img src="https://github.com/Laysabernardes.png" width="100px;" alt="Laysa Bernardes Profile"/><br />
+        <sub><b>Laysa Bernardes</b></sub>
+      </a><br />
+      🚀 Backend & Data Architect
+    </td>
+    <td align="center">
+      <a href="https://github.com/LucasLoopsT">
+        <img src="https://github.com/LucasLoopsT.png" width="100px;" alt="Lucas Lopes Profile"/><br />
+        <sub><b>Lucas Lopes</b></sub>
+      </a><br />
+      🎨 Frontend & Fullstack
+    </td>
+  </tr>
+</table>
+
+<p align="center"> Desenvolvido voluntariamente para o projeto <b>Usina Guará</b>. </p>

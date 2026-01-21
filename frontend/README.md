@@ -1,107 +1,138 @@
-# React + TypeScript + Vite
+<div align="center">
+ <img 
+    src="./src/assets/img.png" 
+    alt="Header Usina Guará" 
+    width="100%" 
+    height="200px" 
+    style="object-fit: cover; object-position: center;"
+  />
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  # 🎨 Usina Guará - Interface Web
 
-Currently, two official plugins are available:
+  [![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+  [![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white)](https://pages.github.com/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+</div>
 
-## Expanding the ESLint configuration
+Este diretório contém o **Frontend** da aplicação. Trata-se de uma **Single Page Application (SPA)** moderna, desenvolvida para oferecer uma experiência fluida e responsiva aos administradores e visitantes do acervo da Usina Guará.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## ⚡ Tecnologias & Arquitetura
+
+A interface foi construída priorizando performance, design responsivo e modularização:
+
+* **Core:** `React` com `TypeScript` rodando sobre **Vite** (build ultra-rápido).
+* **Estilização:** **`Tailwind CSS`**. Utilizamos a abordagem *utility-first* para criar layouts customizáveis, responsivos e consistentes sem sair do HTML/JSX.
+* **Arquitetura:** **Feature-Based**. O código não é separado por tipo técnico, mas por domínio de negócio (ex: tudo sobre `Carrossel` fica na pasta `features/carousel`).
+* **Validação:** `Zod` integrado aos formulários para garantir integridade antes do envio ao backend.
+
+---
+
+## 🚀 Executando o Frontend Localmente
+
+Siga os passos abaixo para rodar a interface web em ambiente de desenvolvimento.
+
+### Pré-requisitos
+
+- **Node.js** (v18 ou superior)
+- **Backend em execução** (local ou produção)
+
+> [!IMPORTANT]
+> O frontend depende diretamente da API.  
+> Certifique-se de que o backend esteja rodando antes de iniciar a aplicação.
+
+---
+
+### ▶️ Passo a Passo
+
+1️⃣ **Acesse a pasta do frontend**
+```bash
+cd frontend
+```
+2️⃣ **Instale as dependências**
+
+```bash
+npm install
+```
+3️⃣ **Inicie o servidor de desenvolvimento**
+
+```bash
+npm run dev
+```
+A aplicação estará disponível em:
+
+- **Frontend:** http://localhost:5173  
+  *(ou outra porta definida automaticamente pelo Vite)*
+
+> [!TIP]
+> Durante o desenvolvimento, o Vite oferece **Hot Module Replacement (HMR)**,  
+> aplicando alterações em tempo real sem recarregar a página.
+
+
+## 🛠️ Scripts Disponíveis
+
+| Comando | Descrição |
+| :--- | :--- |
+| `npm run dev` | Inicia o servidor local (geralmente na porta 5173). |
+| `npm run build` | Gera os arquivos estáticos otimizados na pasta `/dist`. |
+| `npm run preview` | Visualiza localmente a versão final de produção. |
+
+---
+
+## ☁️ CI/CD & Deploy (GitHub Actions)
+
+A publicação deste frontend é **100% automatizada**. Não realizamos uploads manuais.
+
+### Como funciona o Pipeline:
+1. **Push na Main:** O GitHub Actions detecta alterações.
+2. **Build Automático:** Um container Linux instala dependências e roda o `npm run build`.
+3. **Deploy:** A pasta `/dist` gerada é enviada automaticamente para o **GitHub Pages**.
+
+> [!IMPORTANT]
+> O workflow de deploy encontra-se na raiz do repositório em `.github/workflows/deploy.yml`. Evite alterar a estrutura de pastas (`frontend/`) para não quebrar este script.
+
+---
+
+## 📂 Estrutura de Pastas (Feature-Based)
+
+```text
+frontend/src/
+├── assets/          # Imagens e ícones estáticos
+├── components/      # Componentes Globais (Header, Footer, Inputs)
+├── features/        # Núcleo do Sistema (Lógica de Negócio)
+│   ├── auth/        # Login e Recuperação de senha
+│   ├── carousel/    # Gestão do Carrossel da Home
+│   ├── people/      # Gestão de Membros
+│   └── projects/    # Gestão de Projetos e Artigos
+├── pages/           # Montagem das Telas (Roteamento)
+├── lib/             # Configurações do Axios (API)
+└── styles/          # Configurações globais do Tailwind
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 👥 Time de Desenvolvimento
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Laysabernardes">
+        <img src="https://github.com/Laysabernardes.png" width="100px;" alt="Laysa Bernardes Profile"/><br />
+        <sub><b>Laysa Bernardes</b></sub>
+      </a><br />
+      🚀 Backend & Data Architect
+    </td>
+    <td align="center">
+      <a href="https://github.com/LucasLoopsT">
+        <img src="https://github.com/LucasLoopsT.png" width="100px;" alt="Lucas Lopes Profile"/><br />
+        <sub><b>Lucas Lopes</b></sub>
+      </a><br />
+      🎨 Frontend & Fullstack
+    </td>
+  </tr>
+</table>
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-
-
-```
-/frontend
-└── src/
-    ├── assets/
-    │
-    ├── components/ # <-- APENAS componentes de UI GENÉRICOS e REUTILIZÁVEIS
-    │   ├── inputs/
-    │   │   └── index.tsx          # Seus inputs (TypeInput, Selection, etc.)
-    │   ├── layout/
-    │   │   ├── Header.tsx         # O cabeçalho do site
-    │   │   └── Footer.tsx         # O rodapé do site
-    │   └── ui/
-    │       ├── Button.tsx         # Um componente de botão genérico
-    │       └── Spinner.tsx        # Um ícone de carregamento
-    │
-    ├── features/ # <-- CORAÇÃO DO PROJETO: Cada funcionalidade vive aqui
-    │   ├── auth/                  # Lógica de autenticação
-    │   │   └── auth.service.ts
-    │   │
-    │   ├── perspectives/
-    │   │   ├── components/
-    │   │   │   ├── FormPerspective/ # O formulário de admin
-    │   │   │   │   ├── index.tsx
-    │   │   │   │   ├── usePerspectiveForm.ts
-    │   │   │   │   ├── ContentBlockEditor.tsx
-    │   │   │   │   └── perspective.schema.ts
-    │   │   │   └── PerspectiveDetail.tsx # A view de detalhe da perspectiva
-    │   │   ├── perspective.service.ts
-    │   │   └── perspective.types.ts
-    │   │
-    │   └── projects/
-    │       ├── components/
-    │       │   ├── FormProject/
-    │       │   │   └── index.tsx
-    │       │   ├── ProjectCard.tsx      # O card de um projeto na lista
-    │       │   └── ProjectList.tsx      # A grade de projetos com o filtro
-    │       ├── project.service.ts
-    │       └── project.types.ts
-    │
-    ├── lib/ # Para código auxiliar, como a configuração do Axios
-    │   └── axios.ts
-    │
-    ├── pages/ # <-- APENAS para definir as ROTAS e MONTAR as páginas
-    │   ├── AdmManagementPage.tsx
-    │   ├── HomePage.tsx
-    │   ├── LoginPage.tsx
-    │   ├── ProjectDetailPage.tsx
-    │   └── ProjectsListPage.tsx
-    │
-    └── main.tsx # Arquivo principal que configura o ROTEAMENTO
-´´´
+<p align="center"> Desenvolvido voluntariamente para o projeto <b>Usina Guará</b>. </p>
