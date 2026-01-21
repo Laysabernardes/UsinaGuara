@@ -2,7 +2,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast'; 
 const api = axios.create({
   //baseURL: 'http://localhost:3000', 
-  baseURL: 'https://site-v5hr.onrender.com',
+  baseURL: 'https://usinaguara.onrender.com/api-docs/',
 });
 
 // INTERCEPTADOR DE REQUISIÇÃO: Envia o token automaticamente
