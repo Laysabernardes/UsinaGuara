@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {createHashRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast"; // 1. Importe o Toaster
 import "./index.css";
 import Home from "./pages/Home";
@@ -16,7 +16,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Sobre from "./pages/Sobre";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
     element: <Sobre />
   },
   {
-    path: "guara-adm",
+    path: "/guara-adm",
     element: (
       <ProtectedRoute>
         <AdmManagement />
