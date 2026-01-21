@@ -1,16 +1,19 @@
 import axios from 'axios';
-import toast from 'react-hot-toast'; 
+import toast from 'react-hot-toast';
+const isProduction = import.meta.env.PROD;
+const redirectPath = isProduction ? '/#/login?reason=expired' : '/#/login?reason=expired';
+
 const api = axios.create({
   //baseURL: 'http://localhost:3000', 
   baseURL: 'https://usinaguara.onrender.com/api-docs/',
 });
 
-// INTERCEPTADOR DE REQUISIÇÃO: Envia o token automaticamente
+// INTERCEPTADOR DE REQUISIÇÃO: Envia o token automaticamentes em cada requisição
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`; 
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -19,7 +22,7 @@ api.interceptors.request.use(
   }
 );
 
-// INTERCEPTADOR DE RESPOSTA
+// INTERCEPTADOR DE RESPOSTA : 
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -40,8 +43,8 @@ api.interceptors.response.use(
 
       // 3. ESPERA O USUÁRIO LER E DEPOIS REDIRECIONA
       setTimeout(() => {
-        window.location.href = '/login?reason=expired';
-      },2500); 
+        window.location.href = redirectPath;
+      }, 2500);
     }
 
     return Promise.reject(error);
