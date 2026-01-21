@@ -5,7 +5,7 @@ const redirectPath = isProduction ? '/#/login?reason=expired' : '/#/login?reason
 
 const api = axios.create({
   //baseURL: 'http://localhost:3000', 
-  baseURL: 'https://usinaguara.onrender.com/api-docs/',
+  baseURL: 'https://usinaguara.onrender.com/',
 });
 
 // INTERCEPTADOR DE REQUISIÇÃO: Envia o token automaticamentes em cada requisição
