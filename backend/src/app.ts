@@ -58,7 +58,7 @@ API REST robusta para gerenciamento de conteúdo e infraestrutura digital da Usi
             description: 'Servidor Local (Desenvolvimento)'
           },
           {
-            url: 'https://site-v5hr.onrender.com',
+            url: 'https://usinaguara.onrender.com/api-docs/',
             description: 'Servidor de Produção (Render)'
           }
         ]

@@ -4,9 +4,8 @@ const isProduction = import.meta.env.PROD;
 const redirectPath = isProduction ? '/#/login?reason=expired' : '/#/login?reason=expired';
 
 const api = axios.create({
-  baseURL: import.meta.env.PROD 
-    ? 'https://site-v5hr.onrender.com' 
-    : 'http://localhost:3000',
+  //baseURL: 'http://localhost:3000', 
+  baseURL: 'https://usinaguara.onrender.com/api-docs/',
 });
 
 // INTERCEPTADOR DE REQUISIÇÃO: Envia o token automaticamentes em cada requisição
