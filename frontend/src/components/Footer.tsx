@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import regua from "../assets/regua.png";
+
 function Footer() {
     const scrollToTop = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -13,7 +15,7 @@ function Footer() {
           <a href="https://www.instagram.com/usinaguara/" target='blank' className="w-max font-semibold text-white cursor-pointer transition hover:text-gray-400">Instagram</a>
         </div>
         <div className="mt-8 mb-6 w-[90%]">
-          <p className="w-full p-4 rounded-lg bg-blue-1 text-white text-lg font-bold text-center">Projeto viabilizado pela Lei Paulo Gustavo (Edital 123456)</p>
+           <img src={regua} alt="footer" />
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:gap-0 items-center justify-between w-[90%]">
           <a href="mailto:usinaguara@gmail.com" target="blank" className="w-max transition text-sm text-gray-4 hover:text-blue-1">usinaguara@gmail.com</a>
